@@ -1,0 +1,27 @@
+{
+  "name": "adw-components-workspace",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "ds:check": "echo 'ds:check: no rules yet (adw-components-15)'",
+    "lint": "bun run ds:check && biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "bun test",
+    "build": "bun run --filter './packages/*' build"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.3",
+    "@happy-dom/global-registrator": "^20.14.5",
+    "@preact/signals": "^2.11.2",
+    "@testing-library/preact": "^3.2.4",
+    "bun-types": "^1.2.0",
+    "preact": "^10.29.8",
+    "typescript": "^5.8.0"
+  }
+}

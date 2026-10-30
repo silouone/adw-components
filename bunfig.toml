@@ -1,0 +1,6 @@
+[test]
+# Tests sit beside their component under packages/, and repo-level tests under test/.
+# .adw/ holds the factory snapshot the copy tickets read; its tests must never run here.
+root = "."
+pathIgnorePatterns = [".adw/**", "node_modules/**", "dist/**", "storybook-static/**"]
+preload = ["./test/setup/happy-dom.ts"]

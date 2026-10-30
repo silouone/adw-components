@@ -1,0 +1,9 @@
+{
+  "name": "@adw-factory/components",
+  "version": "0.0.0",
+  "type": "module",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "echo '@adw-factory/components: nothing to build yet'"
+  }
+}
