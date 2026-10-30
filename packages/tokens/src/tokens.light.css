@@ -1,0 +1,23 @@
+/*
+ *
+ * The light layer. Load it after tokens.css.
+ *
+ * Two selectors switch the colour scheme:
+ *   1. @media (prefers-color-scheme: light) { :root:not([data-theme='dark']) } follows the OS
+ *      unless the page opted out of light with data-theme='dark'.
+ *   2. :root[data-theme='light'] forces light whatever the OS says.
+ * Both have specificity (0,2,0), so they beat tokens.css's :root (0,1,0) wherever they sit in
+ * the cascade.
+ *
+ * Only semantic tokens flip; primitives never do. This file sets color-scheme and nothing else
+ * until adw-components-17 fills in the semantic overrides.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}

@@ -1,0 +1,30 @@
+/*
+ * Motion tokens: durations and easings, nothing else.
+ *
+ * The keyframes (arm-drain, wk-pulse, sweep, beacon, live-edge, dg-sweep, dg-spin, dg-alarm,
+ * dg-flow) stay in their components; arm-drain takes a runtime --arm-ms and has no token here.
+ * A loop timing is named for its keyframe, even where two share a value.
+ */
+:root {
+  /* transitions: the factory's .08s .1s .12s .14s .15s snap to these three */
+  --dur-instant: 80ms;
+  --dur-fast: 120ms;
+  --dur-base: 150ms;
+
+  /* loops */
+  --dur-wk-pulse: 1.4s;
+  --dur-beacon: 2s;
+  --dur-live-edge-1: 1.2s;
+  --dur-live-edge-2: 1.4s;
+  --dur-live-edge-3: 1.6s;
+  --dur-sweep: 3.2s;
+  --dur-dg-sweep: 2.4s;
+  --dur-dg-spin: 1.6s;
+  --dur-dg-alarm: 3s;
+  --dur-dg-flow: 1s;
+
+  --ease-standard: ease;
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
+  --ease-linear: linear;
+}

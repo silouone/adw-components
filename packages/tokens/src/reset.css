@@ -1,0 +1,30 @@
+/*
+ * The page floor: box model, body font and colours, visible keyboard focus, and the
+ * prefers-reduced-motion floor. Needs tokens.css and typography.css (for --font-mono).
+ * The page's zoom is the page's own and is not set here.
+ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: var(--fs-base) / 1.45 var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    /* biome-ignore lint/complexity/noImportantStyles: the floor must beat every component's own motion */
+    transition: none !important;
+    /* biome-ignore lint/complexity/noImportantStyles: the floor must beat every component's own motion */
+    animation: none !important;
+  }
+}

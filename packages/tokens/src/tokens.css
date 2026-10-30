@@ -1,0 +1,238 @@
+/*
+ *
+ * @adw-factory/tokens — the console's palette, type, space, radius, shadow and motion scales.
+ *
+ * Three tiers, in this order inside :root:
+ *   1. primitives  one declaration per distinct colour, named family-lightness (--grey-951).
+ *   2. semantic    the role a colour plays (--bg, --ink, --surface-card-top, --pc-build): each
+ *                  resolves to a primitive or to a color-mix over one.
+ *   3. (nothing component-level lives here: a component declares --adw-<component>-<thing>
+ *      with a token fallback in its own folder.)
+ * The scales (--fs-*, --sp-*, --r-*, --z-*, --hue-s-*, --hue-l-*) are plain lengths and numbers.
+ *
+ * Rule: a primitive is declared once; a semantic token resolves to a primitive or a color-mix.
+ *
+ * This layer is the dark theme and is identical, name for name and value for value, to the
+ * factory's :root. --zoom is the page's scale and stays in the factory. tokens.light.css
+ * switches color-scheme and, from adw-components-17, the semantic tokens.
+ */
+
+/* biome-ignore format: hex case is part of the parity contract with the factory (#0A0B0F) */
+:root {
+  color-scheme: dark;
+
+  /* primitives: one declaration per distinct colour, named family-lightness
+  (N = 1000 - round(HSL lightness x 1000)); grey = low saturation or the blue-grey surfaces */
+  --amber-278: #E6C68A;
+  --amber-416: #E0B44A;
+  --amber-425: #E8A33D;
+  --blue-257: #7CC5FF;
+  --blue-265: #8FB8E8;
+  --blue-296: #8FA8D8;
+  --blue-386: #4F8FEA;
+  --blue-453: #4E7FC9;
+  --blue-551: #3F87A6;
+  --green-445: #5BC08A;
+  --green-627: #2F8F60;
+  --grey-0: #fff;
+  --grey-69: #E6ECF5;
+  --grey-80: #E4E8F1;
+  --grey-176: #C9CFDB;
+  --grey-180: #C6CEDC;
+  --grey-333: #9AA6BA;
+  --grey-494: #727C90;
+  --grey-539: #6B7280;
+  --grey-649: #4B5568;
+  --grey-722: #3A4254;
+  --grey-841: #1F2532;
+  --grey-853: #1B2130;
+  --grey-873: #181D29;
+  --grey-876: #161C29;
+  --grey-886: #141A26;
+  --grey-887: #151A25;
+  --grey-890: #121826;
+  --grey-891: #141A24;
+  --grey-894: #141822;
+  --grey-898: #121722;
+  --grey-899: #131721;
+  --grey-906: #101520;
+  --grey-918: #0F131B;
+  --grey-919: #10131A;
+  --grey-931: #0C1017;
+  --grey-932: #0d1016;
+  --grey-935: #0e1013;
+  --grey-939: #0B0E14;
+  --grey-941: #0b0e13;
+  --grey-951: #0A0B0F;
+  --grey-965: #07080B;
+  --grey-1000: #000;
+  --lime-384: #A8C07A;
+  --orange-333: #D8A87C;
+  --orange-337: #E8956A;
+  --orange-443: #E0873C;
+  --pink-194: #FF9CCB;
+  --pink-282: #ff6fa8;
+  --pink-296: #D88FA8;
+  --pink-308: #E879B9;
+  --red-190: #E9B4B4;
+  --red-198: #F0A9A9;
+  --red-222: #EBA6A2;
+  --red-318: #E08A7C;
+  --red-380: #E0615C;
+  --teal-359: #7FC8B8;
+  --teal-400: #5FD3C0;
+  --teal-529: #2CC4B0;
+  --violet-194: #B49CFF;
+  --violet-237: #A78BFA;
+  --violet-257: #C79BE0;
+
+  /* the thirteen legacy tokens, same values through the ramps */
+  --bg: var(--grey-951);
+  --panel: var(--grey-919);
+  --panel2: var(--grey-894);
+  --line: var(--grey-841);
+  --ink: var(--grey-80);
+  --dim: var(--grey-494);
+  --faint: var(--grey-722);
+  --model: var(--orange-443);
+  --tool: var(--blue-551);
+  --ok: var(--green-445);
+  --bad: var(--red-380);
+  --warn: var(--amber-416);
+  --live: var(--blue-257);
+
+  /* phase colours */
+  --pc-setup: var(--grey-649);
+  --pc-plan: var(--violet-237);
+  --pc-build: var(--blue-386);
+  --pc-test: var(--teal-529);
+  --pc-gates: var(--amber-425);
+  --pc-review: var(--pink-308);
+  --pc-ship: var(--grey-333);
+  --pc-other: var(--grey-539);
+
+  /* overlays and shadows: a light layer flips these */
+  --overlay-ink: var(--grey-0);
+  --overlay-bg: var(--grey-1000);
+  --shadow-1: 0 8px 24px color-mix(in srgb, var(--overlay-bg) 35%, transparent);
+  --shadow-2: 0 14px 40px color-mix(in srgb, var(--overlay-bg) 65%, transparent);
+  --shadow-3: 0 22px 64px color-mix(in srgb, var(--overlay-bg) 72%, transparent);
+
+  /* the live accent's fixed hues */
+  --live-deep: hsl(200 62% 58%);
+  --live-soft: hsl(200 55% 68%);
+  --live-fill: hsl(200 62% 62%);
+  --live-line: hsl(200 45% 45%);
+  --live-span: hsl(210 70% 58%);
+
+  /* hue maths: saturation and lightness per role, so one rule reads on both backgrounds */
+  --hue-s-text: 58%;
+  --hue-l-text: 74%;
+  --hue-s-line: 58%;
+  --hue-l-line: 62%;
+  --hue-s-edge: 62%;
+  --hue-l-edge: 62%;
+  --hue-s-rule: 50%;
+  --hue-l-rule: 56%;
+  --hue-s-fill: 48%;
+  --hue-l-fill: 52%;
+  --hue-s-dot: 62%;
+  --hue-l-dot: 66%;
+  --hue-s-name: 62%;
+  --hue-l-name: 68%;
+  --hue-s-muted: 40%;
+  --hue-l-muted: 62%;
+  --hue-s-soft: 30%;
+  --hue-l-soft: 62%;
+  --hue-s-deep: 45%;
+  --hue-l-deep: 42%;
+  --hue-s-focus: 70%;
+  --hue-l-focus: 70%;
+  --hue-s-mark: 70%;
+  --hue-l-mark: 76%;
+  --hue-s-ph-text: 60%;
+  --hue-l-ph-text: 72%;
+  --hue-s-ph-ring: 55%;
+  --hue-l-ph-ring: 60%;
+  --hue-s-ph-dim: 50%;
+  --hue-l-ph-dim: 70%;
+
+  /* surfaces, inks, accents and project hues, named for their role */
+  --surface-card-top: var(--grey-873);
+  --surface-card-bottom: var(--grey-899);
+  --surface-popover: var(--grey-853);
+  --surface-dock: var(--grey-918);
+  --surface-dock-head: var(--grey-898);
+  --surface-sunken: var(--grey-931);
+  --surface-hover: var(--grey-890);
+  --surface-tab-on: var(--grey-876);
+  --surface-section: var(--grey-906);
+  --surface-raised: var(--grey-886);
+  --surface-deep: var(--grey-965);
+  --surface-selected: var(--grey-887);
+  --surface-lane-even: var(--grey-932);
+  --surface-lane-odd: var(--grey-941);
+  --code-bg: var(--grey-939);
+  --code-inline-bg: var(--grey-876);
+  --line-soft: var(--grey-891);
+  --ink-strong: var(--grey-69);
+  --ink-body: var(--grey-180);
+  --ink-prose: var(--grey-176);
+  --ink-on-fill: var(--grey-0);
+  --ink-on-accent: var(--grey-939);
+  --ink-on-bad: var(--grey-935);
+  --code-ink: var(--amber-278);
+  --bad-soft: var(--red-190);
+  --bad-text: var(--red-198);
+  --bad-alert-text: var(--red-222);
+  --gate-fill: var(--green-627);
+  --ledger-ok: var(--blue-453);
+  --pr-accent: var(--pink-282);
+  --lane-bug: var(--red-318);
+  --lane-feat: var(--blue-265);
+  --accent-claude: var(--orange-337);
+  --accent-codex: var(--teal-400);
+  --accent-thinking-lo: var(--violet-194);
+  --accent-thinking-hi: var(--pink-194);
+  --ansi-magenta: var(--pink-308);
+  --ansi-cyan: var(--teal-529);
+  --project-0: var(--blue-296);
+  --project-1: var(--violet-257);
+  --project-2: var(--teal-359);
+  --project-3: var(--orange-333);
+  --project-4: var(--lime-384);
+  --project-5: var(--pink-296);
+
+  /* the scales every font-size, gap, padding, margin, radius and z-index reads */
+  --fs-2xs: 9px;
+  --fs-xs: 10px;
+  --fs-sm: 10.5px;
+  --fs-md: 11.5px;
+  --fs-base: 13px;
+  --fs-lg: 14px;
+  --fs-xl: 17px;
+  --fs-2xl: 20px;
+  --sp-1: 1px;
+  --sp-2: 2px;
+  --sp-3: 3px;
+  --sp-4: 4px;
+  --sp-6: 6px;
+  --sp-8: 8px;
+  --sp-12: 12px;
+  --sp-16: 16px;
+  --sp-24: 24px;
+  --r-xs: 2px;
+  --r-sm: 4px;
+  --r-md: 6px;
+  --r-lg: 10px;
+  --r-pill: 999px;
+  --r-round: 50%;
+  --z-base: 1;
+  --z-raised: 5;
+  --z-sticky: 10;
+  --z-rail: 20;
+  --z-dropdown: 30;
+  --z-popover: 50;
+  --z-panel: 60;
+  --z-toast: 99;
+}

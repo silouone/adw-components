@@ -1,0 +1,82 @@
+/*
+ * Type: font stacks, the size ladder (.t-2xs … .t-2xl), the text utilities and the colour
+ * utilities. Sizes come from the --fs-* scale in tokens.css.
+ *
+ * --faint has no .c- utility: it is a rule colour, never text, and fails contrast on purpose.
+ */
+:root {
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+  --font-sans: system-ui, sans-serif;
+  --tracking-eyebrow: 0.08em;
+}
+
+.t-2xs {
+  font-size: var(--fs-2xs);
+}
+.t-xs {
+  font-size: var(--fs-xs);
+}
+.t-sm {
+  font-size: var(--fs-sm);
+}
+.t-md {
+  font-size: var(--fs-md);
+}
+.t-base {
+  font-size: var(--fs-base);
+}
+.t-lg {
+  font-size: var(--fs-lg);
+}
+.t-xl {
+  font-size: var(--fs-xl);
+}
+.t-2xl {
+  font-size: var(--fs-2xl);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+}
+.t-sans {
+  font-family: var(--font-sans);
+}
+.t-tabular {
+  font-variant-numeric: tabular-nums;
+}
+.t-eyebrow {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+}
+.t-truncate {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.t-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--adw-t-clamp-lines, 2);
+  overflow: hidden;
+}
+
+.c-dim {
+  color: var(--dim);
+}
+.c-ink {
+  color: var(--ink);
+}
+.c-ok {
+  color: var(--ok);
+}
+.c-bad {
+  color: var(--bad);
+}
+.c-warn {
+  color: var(--warn);
+}
+.c-live {
+  color: var(--live);
+}

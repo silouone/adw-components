@@ -3,7 +3,23 @@
   "version": "0.0.0",
   "type": "module",
   "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./tokens.light.css": "./dist/tokens.light.css",
+    "./typography.css": "./dist/typography.css",
+    "./reset.css": "./dist/reset.css",
+    "./motion.css": "./dist/motion.css"
+  },
   "scripts": {
-    "build": "echo '@adw-factory/tokens: nothing to build yet'"
+    "build": "rm -rf dist && mkdir -p dist && cp src/*.css dist/"
   }
 }
