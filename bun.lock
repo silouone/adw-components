@@ -14,9 +14,23 @@
         "typescript": "^5.8.0",
       },
     },
+    "examples/consumer": {
+      "name": "@adw-factory/example-consumer",
+      "version": "0.0.0",
+      "dependencies": {
+        "@adw-factory/components": "workspace:*",
+        "preact": "^10.29.8",
+      },
+    },
     "packages/components": {
       "name": "@adw-factory/components",
       "version": "0.0.0",
+      "dependencies": {
+        "@adw-factory/tokens": "workspace:*",
+      },
+      "peerDependencies": {
+        "preact": "^10.29",
+      },
     },
     "packages/tokens": {
       "name": "@adw-factory/tokens",
@@ -25,6 +39,8 @@
   },
   "packages": {
     "@adw-factory/components": ["@adw-factory/components@workspace:packages/components"],
+
+    "@adw-factory/example-consumer": ["@adw-factory/example-consumer@workspace:examples/consumer"],
 
     "@adw-factory/tokens": ["@adw-factory/tokens@workspace:packages/tokens"],
 

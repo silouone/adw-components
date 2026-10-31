@@ -1,0 +1,28 @@
+.arm-err {
+  flex-basis: 100%;
+  color: var(--bad);
+  font-size: var(--fs-xs);
+}
+.arm-btn {
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: var(--sp-1) var(--sp-8);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.arm-btn:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--dim);
+}
+.arm-btn.armed {
+  color: var(--ink);
+  border-color: var(--live);
+}
+.arm-btn:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
