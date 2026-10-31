@@ -1,4 +1,5 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["packages", "test", "examples"]
+  "include": ["packages", "test", "examples"],
+  "exclude": ["**/node_modules", "**/dist", "examples/consumer/entry.tsx"]
 }

@@ -1,0 +1,72 @@
+/* phase strip: every node of the run as one 8px row, in the card's percent coordinates */
+.tc-strip {
+  position: relative;
+  flex: none;
+  height: var(--adw-phase-strip-height, var(--sp-8));
+  border-radius: var(--r-xs);
+  overflow: hidden;
+  background: color-mix(in srgb, var(--overlay-ink) 3%, transparent);
+}
+/* a 1px dark seam on each segment's right edge keeps abutting phases countable */
+/* colour = the run page phase (the .ph-* colours);
+   thickness = who did it: an agent fills the strip, code runs inset */
+.tc-ph {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: var(--sp-2);
+  box-sizing: border-box;
+  border-radius: var(--r-xs);
+  box-shadow: inset -1px 0 0 color-mix(in srgb, var(--overlay-bg) 45%, transparent);
+  background: var(--pc, var(--faint));
+}
+.tc-ph.ph-setup {
+  --pc: var(--pc-setup);
+}
+.tc-ph.ph-plan {
+  --pc: var(--pc-plan);
+}
+.tc-ph.ph-build {
+  --pc: var(--pc-build);
+}
+.tc-ph.ph-test {
+  --pc: var(--pc-test);
+}
+.tc-ph.ph-gates {
+  --pc: var(--pc-gates);
+}
+.tc-ph.ph-review {
+  --pc: var(--pc-review);
+}
+.tc-ph.ph-ship {
+  --pc: var(--pc-ship);
+}
+.tc-ph.ph-other {
+  --pc: var(--pc-other);
+}
+.tc-ph.k-det {
+  top: var(--sp-2);
+  bottom: var(--sp-2);
+  opacity: 0.8;
+}
+.tc-ph.blocked {
+  background: var(--bad);
+}
+.tc-ph.warn {
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--overlay-bg) 45%, transparent) 0 var(--sp-2),
+    transparent var(--sp-2) var(--sp-4)
+  );
+}
+.tc-ph.live {
+  animation: live-edge var(--dur-live-edge-2) var(--ease-in-out) infinite;
+  box-shadow: 0 0 0 1px var(--live);
+}
+.tc-ph.wait {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--faint) 0 var(--sp-3),
+    transparent var(--sp-3) var(--sp-6)
+  );
+}

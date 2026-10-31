@@ -1,0 +1,13 @@
+{
+  "name": "@adw-factory/example-consumer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@adw-factory/components": "workspace:*",
+    "preact": "^10.29.8"
+  },
+  "scripts": {
+    "build": "bun build.ts"
+  }
+}

@@ -3,7 +3,37 @@
   "version": "0.0.0",
   "type": "module",
   "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    "./Kpi": {
+      "types": "./dist/atoms/Kpi/Kpi.d.ts",
+      "import": "./dist/atoms/Kpi/Kpi.js"
+    },
+    "./ArmButton": {
+      "types": "./dist/molecules/ArmButton/ArmButton.d.ts",
+      "import": "./dist/molecules/ArmButton/ArmButton.js"
+    },
+    "./PhaseStrip": {
+      "types": "./dist/molecules/PhaseStrip/PhaseStrip.d.ts",
+      "import": "./dist/molecules/PhaseStrip/PhaseStrip.js"
+    },
+    "./components.css": "./dist/components.css"
+  },
+  "peerDependencies": {
+    "preact": "^10.29"
+  },
+  "dependencies": {
+    "@adw-factory/tokens": "workspace:*"
+  },
   "scripts": {
-    "build": "echo '@adw-factory/components: nothing to build yet'"
+    "build": "bun build.ts"
   }
 }
