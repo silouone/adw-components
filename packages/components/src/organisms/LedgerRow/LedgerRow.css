@@ -1,0 +1,195 @@
+/* ledger view: one shared eleven-column template so the strips align down the page;
+   the attempt dots hold the last column so they never crowd the PR chips out of theirs */
+.lr,
+.lr-cols {
+  --adw-lr-cols: var(
+    --adw-ledger-cols,
+    calc(var(--sp-2) * 7) minmax(calc(var(--sp-6) * 25), 1fr) calc(var(--sp-12) * 5)
+      calc(var(--sp-4) * 55) calc(var(--sp-6) * 25) calc(var(--sp-2) * 35) calc(var(--sp-2) * 35)
+      calc(var(--sp-12) * 5) calc(var(--sp-8) * 8) calc(var(--sp-8) * 25) calc(var(--sp-12) * 6)
+  );
+}
+.lr {
+  --adw-pr-num-display: none;
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--adw-lr-cols);
+  column-gap: var(--sp-8);
+  align-items: center;
+  padding: var(--sp-6) var(--sp-12);
+  border-bottom: 1px solid var(--line);
+}
+.lr:hover {
+  background: var(--panel2);
+}
+.lr:focus-within {
+  box-shadow: inset var(--sp-2) 0 0 var(--live);
+}
+.lr-cols {
+  position: sticky;
+  top: var(--ledger-top, 0);
+  z-index: var(--z-raised);
+  display: grid;
+  grid-template-columns: var(--adw-lr-cols);
+  column-gap: var(--sp-8);
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--adw-lr-cols-height, calc(var(--sp-2) * 13));
+  padding: 0 var(--sp-12);
+  margin: 0 0 var(--sp-8);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.lr-cols span:nth-child(n + 7) {
+  text-align: right;
+}
+.lr-cols span:nth-child(6) {
+  text-align: left;
+}
+.lr-cols span:nth-child(n + 10) {
+  text-align: left;
+}
+.lr-beacon {
+  font-style: normal;
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.lr-beacon.live {
+  color: var(--live);
+}
+.lr-beacon.waiting,
+.lr-beacon.paused {
+  color: var(--dim);
+}
+.lr-beacon.green {
+  color: var(--ok);
+}
+.lr-beacon.blocked {
+  color: var(--bad);
+}
+.lr-beacon.deferred {
+  color: var(--warn);
+}
+.lr-idt {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.lr-id {
+  font-size: var(--fs-md);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: hsl(var(--hue) var(--hue-s-text) var(--hue-l-text));
+}
+.lr.live .lr-id {
+  color: var(--live);
+}
+.lr:focus-within .lr-id {
+  text-decoration: underline;
+}
+.lr-title {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lr-lane {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  min-width: 0;
+  overflow: hidden;
+}
+.lr-now {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.lr-now.run {
+  color: var(--live);
+}
+.lr-now.ok {
+  color: var(--dim);
+}
+.lr-now.warn {
+  color: var(--warn);
+}
+.lr-now.bad {
+  color: var(--bad);
+}
+/* the ledger's chips sit in a narrow column: card-sized, never the KPI pill */
+.lr-end .lr-pr {
+  margin: 0;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.lr-att {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.lr-att a,
+.lr-att .lr-dot {
+  position: relative;
+  z-index: var(--z-base);
+}
+.lr-where {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lr-time,
+.lr-cost,
+.lr-tok {
+  text-align: right;
+  font-size: var(--fs-md);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lr-time {
+  color: var(--dim);
+}
+.lr-cost {
+  color: var(--ink);
+}
+.lr-tok {
+  color: var(--dim);
+}
+.lr-end {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  min-width: 0;
+  overflow: hidden;
+}
+.lr-end a,
+.lr-end .lr-dot {
+  position: relative;
+  z-index: var(--z-base);
+}
+.lr.paused {
+  opacity: 0.78;
+}
+.tc-tag {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.lr.sel {
+  outline: 1px solid var(--live);
+  outline-offset: -1px;
+}

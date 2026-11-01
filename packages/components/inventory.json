@@ -114,5 +114,17 @@
   {
     "source": "src/web/ui/components/Card",
     "target": "packages/components/src/organisms/Card"
+  },
+  {
+    "source": "src/web/ui/components/LedgerRow",
+    "target": "packages/components/src/organisms/LedgerRow"
+  },
+  {
+    "source": "src/web/ui/components/Section",
+    "target": "packages/components/src/organisms/SectionView"
+  },
+  {
+    "source": "src/web/ui/components/KpiPanel",
+    "target": "packages/components/src/organisms/KpiPanel"
   }
 ]
