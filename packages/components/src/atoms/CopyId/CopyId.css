@@ -1,0 +1,21 @@
+.tc-copy {
+  position: relative;
+  z-index: var(--z-base);
+  opacity: var(--adw-tc-copy-opacity, 0);
+  padding: 0 var(--sp-2);
+  border: 0;
+  background: none;
+  color: var(--dim);
+  font: inherit;
+  font-size: var(--fs-md);
+  cursor: pointer;
+}
+.tc-copy:focus-visible {
+  opacity: 1;
+}
+.tc-copy.tc-copy-shown {
+  opacity: 1;
+  color: var(--dim);
+  cursor: pointer;
+  font: inherit;
+}

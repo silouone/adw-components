@@ -1,0 +1,39 @@
+/* the board's one key to the strip (PhaseLegend.tsx) */
+.ph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-4) var(--sp-12);
+  margin: 0 0 var(--sp-8);
+  font-size: var(--fs-sm);
+  color: var(--dim);
+}
+.pl-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+.pl-sw {
+  display: inline-block;
+  width: var(--adw-phase-legend-swatch-width, calc(var(--sp-12) + var(--sp-2)));
+  height: var(--adw-phase-legend-swatch-height, var(--sp-6));
+  border-radius: var(--r-xs);
+  background: var(--pc);
+}
+.pl-sw.wait {
+  background: repeating-linear-gradient(
+    135deg,
+    var(--faint) 0 var(--sp-3),
+    transparent var(--sp-3) var(--sp-6)
+  );
+}
+.pl-sw.blocked {
+  background: var(--bad);
+}
+.pl-item.sep {
+  margin-left: var(--sp-8);
+}
+.pl-hint {
+  margin-left: auto;
+  color: var(--dim);
+}

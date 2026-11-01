@@ -1,0 +1,35 @@
+/* The "up next" strip — OFF the time axis, deliberately its own class family,
+   never .nd/.k-*: a pending node must never visually collide with a real (if
+   dashed and dim) deterministic block. */
+.un {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+  padding: var(--sp-12) var(--sp-16);
+  border-top: 1px solid var(--line);
+  color: var(--dim);
+}
+.un-label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  margin-right: var(--sp-4);
+}
+.un-item {
+  font-size: var(--fs-md);
+  padding: var(--sp-2) var(--sp-8);
+  border-radius: var(--r-pill);
+  border: 1px dotted var(--faint);
+  color: var(--dim);
+}
+.un-item.un-gone {
+  color: var(--faint);
+  border-style: solid;
+  text-decoration: line-through;
+}
+.un-sep {
+  color: var(--faint);
+  font-size: var(--fs-md);
+}

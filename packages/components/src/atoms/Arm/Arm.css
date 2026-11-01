@@ -1,0 +1,77 @@
+.arm {
+  position: relative;
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-8);
+  cursor: pointer;
+  text-decoration: none;
+}
+.arm:hover {
+  color: var(--ink);
+}
+.arm.t-live:hover {
+  color: var(--live);
+}
+.arm.t-bad:hover {
+  color: var(--bad);
+}
+.arm.t-ok {
+  color: var(--ok);
+}
+.arm.dashed {
+  border-style: dashed;
+  border-color: var(--ok);
+}
+.arm.armed {
+  color: var(--ink);
+  border-color: var(--live);
+}
+.arm.armed.t-bad {
+  border-color: var(--bad);
+}
+.arm.armed::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: var(--adw-arm-drain-height, var(--sp-2));
+  background: var(--live);
+  transform-origin: left;
+  animation: arm-drain var(--arm-ms) linear forwards;
+}
+.arm.armed.t-bad::after {
+  background: var(--bad);
+}
+.arm:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+@keyframes arm-drain {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+/* rail density: set by density="rail" */
+.arm.arm-rail {
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-8);
+  border: 1px solid color-mix(in srgb, var(--overlay-ink) 10%, transparent);
+  border-radius: var(--r-md);
+}
+.arm.arm-rail:hover {
+  border-color: var(--dim);
+}
+.arm.arm-rail.armed {
+  border-color: var(--live);
+}
+.arm.arm-rail.armed.t-bad {
+  border-color: var(--bad);
+}

@@ -4,7 +4,14 @@
 
 import { copyFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { concatCss, type Entry, entriesOf, orderEntries, stripCssImports } from "./tools/entries";
+import {
+  concatCss,
+  entriesOf,
+  type ModuleEntry,
+  modulesOf,
+  orderEntries,
+  stripCssImports,
+} from "./tools/entries";
 
 const PACKAGE_DIR = import.meta.dir;
 const DIST = join(PACKAGE_DIR, "dist");
@@ -18,7 +25,7 @@ const stripCss: Bun.BunPlugin = {
   },
 };
 
-const bundle = async (entry: Entry): Promise<void> => {
+const bundle = async (entry: Pick<ModuleEntry, "subpath" | "src">): Promise<void> => {
   const result = await Bun.build({
     entrypoints: [at(entry.src)],
     outdir: DIST,
@@ -38,7 +45,7 @@ const bundle = async (entry: Entry): Promise<void> => {
   }
 };
 
-const emitDeclarations = (entries: readonly Entry[]): void => {
+const emitDeclarations = (entries: readonly Pick<ModuleEntry, "subpath" | "dts">[]): void => {
   const tsc = Bun.spawnSync(
     [process.execPath, "x", "tsc", "--emitDeclarationOnly", "-p", "tsconfig.build.json"],
     {
@@ -62,10 +69,12 @@ const emitDeclarations = (entries: readonly Entry[]): void => {
 const manifest = JSON.parse(readFileSync(at("package.json"), "utf8")) as {
   readonly exports: Readonly<Record<string, unknown>>;
 };
-const entries = orderEntries(entriesOf(manifest.exports, (path) => existsSync(at(path))));
+const sourceExists = (path: string): boolean => existsSync(at(path));
+const entries = orderEntries(entriesOf(manifest.exports, sourceExists));
+const modules = modulesOf(manifest.exports, sourceExists);
 
 rmSync(DIST, { recursive: true, force: true });
-for (const entry of entries) await bundle(entry);
+for (const entry of [...entries, ...modules]) await bundle(entry);
 
 for (const entry of entries) {
   const sourceCss = at(entry.src.replace(/\.tsx$/, ".css"));
@@ -77,4 +86,4 @@ writeFileSync(
   concatCss(entries.map((entry) => readFileSync(at(entry.css), "utf8"))),
 );
 
-emitDeclarations(entries);
+emitDeclarations([...entries, ...modules]);

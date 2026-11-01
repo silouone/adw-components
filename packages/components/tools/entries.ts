@@ -15,7 +15,23 @@ export interface Entry {
   readonly css: string;
 }
 
+/** A module export (`./glyphs`): a bare `src/<name>.ts`, no stylesheet, no layer. */
+export interface ModuleEntry {
+  readonly subpath: string;
+  readonly name: string;
+  readonly src: string;
+  readonly js: string;
+  readonly dts: string;
+}
+
 const IMPORT_TARGET = new RegExp(`^\\./dist/(${LAYERS.join("|")})/([A-Za-z0-9]+)/\\2\\.js$`);
+const MODULE_TARGET = /^\.\/dist\/([A-Za-z0-9]+)\.js$/;
+
+const importOf = (value: Readonly<Record<string, unknown>>): string | undefined =>
+  typeof value.import === "string" ? value.import : undefined;
+
+const isObject = (value: unknown): value is Readonly<Record<string, unknown>> =>
+  typeof value === "object" && value !== null;
 
 const entryOf = (
   key: string,
@@ -53,15 +69,50 @@ const entryOf = (
   };
 };
 
-/** One entry per object-valued export; string exports (`./components.css`) are not components. */
+const isModuleExport = (value: unknown): boolean => {
+  const target = isObject(value) ? importOf(value) : undefined;
+  return target !== undefined && MODULE_TARGET.test(target);
+};
+
+const moduleOf = (
+  key: string,
+  value: Readonly<Record<string, unknown>>,
+  exists: (path: string) => boolean,
+): ModuleEntry => {
+  const name = MODULE_TARGET.exec(importOf(value) ?? "")?.[1] as string;
+  if (key !== `./${name}`) {
+    throw new Error(
+      `export "${key}": the subpath must be "./${name}" to match ${String(value.import)}`,
+    );
+  }
+  if (value.types !== `./dist/${name}.d.ts`) {
+    throw new Error(
+      `export "${key}": "types" must be ./dist/${name}.d.ts to mirror "import", got ${JSON.stringify(value.types)}`,
+    );
+  }
+  const src = `src/${name}.ts`;
+  if (!exists(src)) throw new Error(`export "${key}" has no source at ${src}`);
+  return { subpath: key, name, src, js: `dist/${name}.js`, dts: `dist/${name}.d.ts` };
+};
+
+/** One entry per layered component export; string exports (`./components.css`) and module exports (`./glyphs`) are not. */
 export const entriesOf = (
   exportsMap: Readonly<Record<string, unknown>>,
   exists: (path: string) => boolean,
 ): readonly Entry[] =>
   Object.entries(exportsMap).flatMap(([key, value]) =>
-    typeof value === "string" || typeof value !== "object" || value === null
-      ? []
-      : [entryOf(key, value as Readonly<Record<string, unknown>>, exists)],
+    !isObject(value) || isModuleExport(value) ? [] : [entryOf(key, value, exists)],
+  );
+
+/**
+ * One entry per module export (`./glyphs` → `src/glyphs.ts`).
+ */
+export const modulesOf = (
+  exportsMap: Readonly<Record<string, unknown>>,
+  exists: (path: string) => boolean,
+): readonly ModuleEntry[] =>
+  Object.entries(exportsMap).flatMap(([key, value]) =>
+    isObject(value) && isModuleExport(value) ? [moduleOf(key, value, exists)] : [],
   );
 
 const layerRank = (layer: string): number => LAYERS.indexOf(layer as (typeof LAYERS)[number]);

@@ -17,6 +17,46 @@
       "types": "./dist/atoms/Kpi/Kpi.d.ts",
       "import": "./dist/atoms/Kpi/Kpi.js"
     },
+    "./Arm": {
+      "types": "./dist/atoms/Arm/Arm.d.ts",
+      "import": "./dist/atoms/Arm/Arm.js"
+    },
+    "./Badge": {
+      "types": "./dist/atoms/Badge/Badge.d.ts",
+      "import": "./dist/atoms/Badge/Badge.js"
+    },
+    "./BaseRedChip": {
+      "types": "./dist/atoms/BaseRedChip/BaseRedChip.d.ts",
+      "import": "./dist/atoms/BaseRedChip/BaseRedChip.js"
+    },
+    "./CopyId": {
+      "types": "./dist/atoms/CopyId/CopyId.d.ts",
+      "import": "./dist/atoms/CopyId/CopyId.js"
+    },
+    "./DockStrip": {
+      "types": "./dist/atoms/DockStrip/DockStrip.d.ts",
+      "import": "./dist/atoms/DockStrip/DockStrip.js"
+    },
+    "./PhaseLegend": {
+      "types": "./dist/atoms/PhaseLegend/PhaseLegend.d.ts",
+      "import": "./dist/atoms/PhaseLegend/PhaseLegend.js"
+    },
+    "./TabSection": {
+      "types": "./dist/atoms/TabSection/TabSection.d.ts",
+      "import": "./dist/atoms/TabSection/TabSection.js"
+    },
+    "./UpNext": {
+      "types": "./dist/atoms/UpNext/UpNext.d.ts",
+      "import": "./dist/atoms/UpNext/UpNext.js"
+    },
+    "./Verdict": {
+      "types": "./dist/atoms/Verdict/Verdict.d.ts",
+      "import": "./dist/atoms/Verdict/Verdict.js"
+    },
+    "./glyphs": {
+      "types": "./dist/glyphs.d.ts",
+      "import": "./dist/glyphs.js"
+    },
     "./ArmButton": {
       "types": "./dist/molecules/ArmButton/ArmButton.d.ts",
       "import": "./dist/molecules/ArmButton/ArmButton.js"

@@ -1,5 +1,12 @@
 import { describe, expect, test } from "bun:test";
-import { concatCss, type Entry, entriesOf, orderEntries, stripCssImports } from "../tools/entries";
+import {
+  concatCss,
+  type Entry,
+  entriesOf,
+  modulesOf,
+  orderEntries,
+  stripCssImports,
+} from "../tools/entries";
 
 const kpi = {
   types: "./dist/atoms/Kpi/Kpi.d.ts",
@@ -53,6 +60,41 @@ describe("entriesOf", () => {
   test("throws when the folder and file name differ", () => {
     const bad = { types: "./dist/atoms/Kpi/Chip.d.ts", import: "./dist/atoms/Kpi/Chip.js" };
     expect(() => entriesOf({ "./Kpi": bad }, always)).toThrow('export "./Kpi"');
+  });
+});
+
+const glyphs = { types: "./dist/glyphs.d.ts", import: "./dist/glyphs.js" };
+
+describe("modulesOf", () => {
+  test("maps ./glyphs to src/glyphs.ts and dist/glyphs.{js,d.ts}, with no stylesheet", () => {
+    expect(modulesOf({ "./glyphs": glyphs, "./Kpi": kpi }, always)).toEqual([
+      {
+        subpath: "./glyphs",
+        name: "glyphs",
+        src: "src/glyphs.ts",
+        js: "dist/glyphs.js",
+        dts: "dist/glyphs.d.ts",
+      },
+    ]);
+  });
+
+  test("entriesOf leaves a module export to modulesOf", () => {
+    expect(entriesOf({ "./glyphs": glyphs, "./Kpi": kpi }, always).map((e) => e.subpath)).toEqual([
+      "./Kpi",
+    ]);
+  });
+
+  test("throws naming the export and the expected source when the source is missing", () => {
+    expect(() => modulesOf({ "./glyphs": glyphs }, () => false)).toThrow(
+      'export "./glyphs" has no source at src/glyphs.ts',
+    );
+  });
+
+  test("throws when the subpath, the types or the import disagree", () => {
+    expect(() => modulesOf({ "./icons": glyphs }, always)).toThrow('export "./icons"');
+    expect(() =>
+      modulesOf({ "./glyphs": { ...glyphs, types: "./dist/other.d.ts" } }, always),
+    ).toThrow('export "./glyphs"');
   });
 });
 
