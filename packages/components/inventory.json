@@ -110,5 +110,9 @@
   {
     "source": "src/web/ui/components/SlotsPanel",
     "target": "packages/components/src/organisms/SlotsPanel"
+  },
+  {
+    "source": "src/web/ui/components/Card",
+    "target": "packages/components/src/organisms/Card"
   }
 ]

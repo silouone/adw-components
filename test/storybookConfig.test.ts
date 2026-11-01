@@ -88,7 +88,7 @@ describe("aliasesOf", () => {
     const components = aliases.filter(
       (a) => a.find instanceof RegExp && a.find.source.includes("components"),
     );
-    expect(components).toHaveLength(30);
+    expect(components).toHaveLength(31);
     for (const { replacement } of components) expect(existsSync(replacement)).toBe(true);
     expect(resolveImport(aliases, "@adw-factory/components/components.css")).toBeUndefined();
   });
