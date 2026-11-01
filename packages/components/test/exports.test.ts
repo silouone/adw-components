@@ -68,6 +68,9 @@ const components = [
   ["RunHeader", "RunHeader"],
   ["GanttStrip", "GanttStrip"],
   ["FailureView", "FailureView"],
+  ["Drawer", "Drawer"],
+  ["RunScopeSection", "RunScopeSection"],
+  ["Dock", "Dock"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -122,8 +125,11 @@ const namedProps = new Set([
   "RunHeader",
   "GanttStrip",
   "FailureView",
+  "Drawer",
+  "RunScopeSection",
+  "Dock",
 ]);
-const modules = ["glyphs", "FocusPanel/focusTabs"] as const;
+const modules = ["glyphs", "FocusPanel/focusTabs", "RunScopeSection/markdown"] as const;
 const expectedExports = [
   ...new Set([...components.map(([name]) => name), ...modules]),
   "components.css",
@@ -224,5 +230,15 @@ describe("export targets", () => {
     const dts = readFileSync(abs("dist/organisms/FocusPanel/focusTabs.d.ts"), "utf8");
     expect(dts).toMatch(/export declare function focusBodyOf\b/);
     expect(dts).toMatch(/export type FocusBody\b/);
+  });
+
+  test("./RunScopeSection/markdown resolves to mdToHtml, in the RunScopeSection folder", async () => {
+    const mod = (await import(abs("dist/organisms/RunScopeSection/markdown.js"))) as Record<
+      string,
+      unknown
+    >;
+    expect(Object.keys(mod)).toEqual(["mdToHtml"]);
+    const dts = readFileSync(abs("dist/organisms/RunScopeSection/markdown.d.ts"), "utf8");
+    expect(dts).toMatch(/export declare function mdToHtml\b/);
   });
 });

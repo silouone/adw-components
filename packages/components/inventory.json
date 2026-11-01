@@ -218,5 +218,17 @@
   {
     "source": "src/web/ui/components/FailureView",
     "target": "packages/components/src/organisms/FailureView"
+  },
+  {
+    "source": "src/web/ui/components/Drawer",
+    "target": "packages/components/src/organisms/Drawer"
+  },
+  {
+    "source": "src/web/ui/components/RunScopeSection",
+    "target": "packages/components/src/organisms/RunScopeSection"
+  },
+  {
+    "source": "src/web/ui/components/Dock",
+    "target": "packages/components/src/organisms/Dock"
   }
 ]
