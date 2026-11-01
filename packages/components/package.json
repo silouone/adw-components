@@ -137,6 +137,10 @@
       "types": "./dist/organisms/SlotsPanel/SlotsPanel.d.ts",
       "import": "./dist/organisms/SlotsPanel/SlotsPanel.js"
     },
+    "./Card": {
+      "types": "./dist/organisms/Card/Card.d.ts",
+      "import": "./dist/organisms/Card/Card.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {
