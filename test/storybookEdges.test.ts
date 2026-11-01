@@ -209,7 +209,9 @@ describe("every component is documented", () => {
 
   test("every exported component has its stories file", () => {
     const missing = Object.keys(exportsMap)
-      .filter((key) => typeof exportsMap[key] === "object" && key !== "./glyphs")
+      .filter(
+        (key) => typeof exportsMap[key] === "object" && key !== "./glyphs" && !key.includes("/", 2),
+      )
       .map((key) => key.slice(2))
       .filter(
         (name) =>

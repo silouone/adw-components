@@ -78,6 +78,24 @@ describe("modulesOf", () => {
     ]);
   });
 
+  test("maps ./FocusPanel/focusTabs to the .tsx in its component folder, with no stylesheet", () => {
+    const tabs = {
+      types: "./dist/organisms/FocusPanel/focusTabs.d.ts",
+      import: "./dist/organisms/FocusPanel/focusTabs.js",
+    };
+    const exists = (path: string) => path === "src/organisms/FocusPanel/focusTabs.tsx";
+    expect(modulesOf({ "./FocusPanel/focusTabs": tabs, "./Kpi": kpi }, exists)).toEqual([
+      {
+        subpath: "./FocusPanel/focusTabs",
+        name: "FocusPanel/focusTabs",
+        src: "src/organisms/FocusPanel/focusTabs.tsx",
+        js: "dist/organisms/FocusPanel/focusTabs.js",
+        dts: "dist/organisms/FocusPanel/focusTabs.d.ts",
+      },
+    ]);
+    expect(entriesOf({ "./FocusPanel/focusTabs": tabs }, exists)).toEqual([]);
+  });
+
   test("entriesOf leaves a module export to modulesOf", () => {
     expect(entriesOf({ "./glyphs": glyphs, "./Kpi": kpi }, always).map((e) => e.subpath)).toEqual([
       "./Kpi",

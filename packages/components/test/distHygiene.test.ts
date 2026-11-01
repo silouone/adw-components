@@ -31,7 +31,7 @@ describe("dist hygiene", () => {
     const expected = [
       ...targets.map((t) => rel(t).replace(/^dist\//, "")),
       ...targets
-        .filter((t) => /^\.\/dist\/[a-z]+\/[^/]+\/[^/]+\.js$/.test(t))
+        .filter((t) => /^\.\/dist\/[a-z]+\/([^/]+)\/\1\.js$/.test(t))
         .map((t) =>
           rel(t)
             .replace(/^dist\//, "")
