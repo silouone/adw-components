@@ -69,6 +69,10 @@
       "types": "./dist/molecules/BucketHint/BucketHint.d.ts",
       "import": "./dist/molecules/BucketHint/BucketHint.js"
     },
+    "./CopyRunMenu": {
+      "types": "./dist/molecules/CopyRunMenu/CopyRunMenu.d.ts",
+      "import": "./dist/molecules/CopyRunMenu/CopyRunMenu.js"
+    },
     "./Dropdown": {
       "types": "./dist/molecules/Dropdown/Dropdown.d.ts",
       "import": "./dist/molecules/Dropdown/Dropdown.js"
@@ -80,6 +84,10 @@
     "./Handles": {
       "types": "./dist/molecules/Handles/Handles.d.ts",
       "import": "./dist/molecules/Handles/Handles.js"
+    },
+    "./LaneNames": {
+      "types": "./dist/molecules/LaneNames/LaneNames.d.ts",
+      "import": "./dist/molecules/LaneNames/LaneNames.js"
     },
     "./PhaseStrip": {
       "types": "./dist/molecules/PhaseStrip/PhaseStrip.d.ts",
@@ -97,9 +105,37 @@
       "types": "./dist/molecules/Rig/Rig.d.ts",
       "import": "./dist/molecules/Rig/Rig.js"
     },
+    "./RunRounds": {
+      "types": "./dist/molecules/RunRounds/RunRounds.d.ts",
+      "import": "./dist/molecules/RunRounds/RunRounds.js"
+    },
+    "./SlotsChip": {
+      "types": "./dist/molecules/SlotsChip/SlotsChip.d.ts",
+      "import": "./dist/molecules/SlotsChip/SlotsChip.js"
+    },
+    "./StageHeader": {
+      "types": "./dist/molecules/StageHeader/StageHeader.d.ts",
+      "import": "./dist/molecules/StageHeader/StageHeader.js"
+    },
     "./StepThread": {
       "types": "./dist/molecules/StepThread/StepThread.d.ts",
       "import": "./dist/molecules/StepThread/StepThread.js"
+    },
+    "./UsageChip": {
+      "types": "./dist/molecules/UsageChip/UsageChip.d.ts",
+      "import": "./dist/molecules/UsageChip/UsageChip.js"
+    },
+    "./ViewTabs": {
+      "types": "./dist/molecules/ViewTabs/ViewTabs.d.ts",
+      "import": "./dist/molecules/ViewTabs/ViewTabs.js"
+    },
+    "./ViewToggle": {
+      "types": "./dist/molecules/ViewToggle/ViewToggle.d.ts",
+      "import": "./dist/molecules/ViewToggle/ViewToggle.js"
+    },
+    "./SlotsPanel": {
+      "types": "./dist/organisms/SlotsPanel/SlotsPanel.d.ts",
+      "import": "./dist/organisms/SlotsPanel/SlotsPanel.js"
     },
     "./components.css": "./dist/components.css"
   },

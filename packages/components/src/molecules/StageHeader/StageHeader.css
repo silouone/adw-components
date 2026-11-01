@@ -1,0 +1,30 @@
+.cr {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.cr-eb {
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+}
+.cr-v {
+  font-weight: 600;
+  font-size: var(--fs-md);
+  white-space: nowrap;
+}
+.cr-bar .cr-copy {
+  align-self: flex-end;
+  font-size: var(--fs-md);
+}
+.cr-bar .cr-full {
+  margin-left: auto;
+  align-self: center;
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-8);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+}

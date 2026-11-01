@@ -1,0 +1,13 @@
+.sl-bays {
+  display: inline-flex;
+  gap: var(--sp-2);
+}
+.sl-bay {
+  width: var(--adw-sl-bay-width, calc(var(--sp-2) * 3.5));
+  height: var(--adw-sl-bay-height, calc(var(--sp-2) * 5));
+  border-radius: var(--r-xs);
+  background: var(--faint);
+}
+.sl-bay.held {
+  background: var(--live);
+}

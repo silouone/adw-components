@@ -74,5 +74,41 @@
   {
     "source": "src/web/ui/components/StepThread",
     "target": "packages/components/src/molecules/StepThread"
+  },
+  {
+    "source": "src/web/ui/components/CopyRunMenu",
+    "target": "packages/components/src/molecules/CopyRunMenu"
+  },
+  {
+    "source": "src/web/ui/components/LaneNames",
+    "target": "packages/components/src/molecules/LaneNames"
+  },
+  {
+    "source": "src/web/ui/components/RunRounds",
+    "target": "packages/components/src/molecules/RunRounds"
+  },
+  {
+    "source": "src/web/ui/components/SlotsChip",
+    "target": "packages/components/src/molecules/SlotsChip"
+  },
+  {
+    "source": "src/web/ui/components/StageHeader",
+    "target": "packages/components/src/molecules/StageHeader"
+  },
+  {
+    "source": "src/web/ui/components/UsageChip",
+    "target": "packages/components/src/molecules/UsageChip"
+  },
+  {
+    "source": "src/web/ui/components/ViewTabs",
+    "target": "packages/components/src/molecules/ViewTabs"
+  },
+  {
+    "source": "src/web/ui/components/ViewToggle",
+    "target": "packages/components/src/molecules/ViewToggle"
+  },
+  {
+    "source": "src/web/ui/components/SlotsPanel",
+    "target": "packages/components/src/organisms/SlotsPanel"
   }
 ]

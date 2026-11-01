@@ -1,0 +1,38 @@
+.dg-lanename {
+  padding: var(--sp-8) var(--sp-8) var(--sp-8) var(--sp-12);
+  box-sizing: border-box;
+  border-right: 1px solid var(--line);
+  overflow: hidden;
+}
+.dg-lanebar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--sp-3);
+  background: var(--proj, var(--faint));
+}
+.dg-lanename b {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dg-lanename span {
+  display: block;
+  margin-top: var(--sp-2);
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dg-lanename.dg-lanename-folded {
+  padding-top: var(--sp-4);
+  padding-bottom: var(--sp-4);
+}
+.dg-lanename.dg-lanename-folded span {
+  margin-top: 0;
+  line-height: 1.1;
+}
