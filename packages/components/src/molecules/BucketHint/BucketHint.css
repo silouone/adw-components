@@ -1,0 +1,5 @@
+.bl-buckets {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  white-space: nowrap;
+}

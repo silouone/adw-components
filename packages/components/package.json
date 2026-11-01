@@ -61,9 +61,45 @@
       "types": "./dist/molecules/ArmButton/ArmButton.d.ts",
       "import": "./dist/molecules/ArmButton/ArmButton.js"
     },
+    "./AutonomyChips": {
+      "types": "./dist/molecules/AutonomyChips/AutonomyChips.d.ts",
+      "import": "./dist/molecules/AutonomyChips/AutonomyChips.js"
+    },
+    "./BucketHint": {
+      "types": "./dist/molecules/BucketHint/BucketHint.d.ts",
+      "import": "./dist/molecules/BucketHint/BucketHint.js"
+    },
+    "./Dropdown": {
+      "types": "./dist/molecules/Dropdown/Dropdown.d.ts",
+      "import": "./dist/molecules/Dropdown/Dropdown.js"
+    },
+    "./FeatureMenu": {
+      "types": "./dist/molecules/FeatureMenu/FeatureMenu.d.ts",
+      "import": "./dist/molecules/FeatureMenu/FeatureMenu.js"
+    },
+    "./Handles": {
+      "types": "./dist/molecules/Handles/Handles.d.ts",
+      "import": "./dist/molecules/Handles/Handles.js"
+    },
     "./PhaseStrip": {
       "types": "./dist/molecules/PhaseStrip/PhaseStrip.d.ts",
       "import": "./dist/molecules/PhaseStrip/PhaseStrip.js"
+    },
+    "./PrChips": {
+      "types": "./dist/molecules/PrChips/PrChips.d.ts",
+      "import": "./dist/molecules/PrChips/PrChips.js"
+    },
+    "./RangeChips": {
+      "types": "./dist/molecules/RangeChips/RangeChips.d.ts",
+      "import": "./dist/molecules/RangeChips/RangeChips.js"
+    },
+    "./Rig": {
+      "types": "./dist/molecules/Rig/Rig.d.ts",
+      "import": "./dist/molecules/Rig/Rig.js"
+    },
+    "./StepThread": {
+      "types": "./dist/molecules/StepThread/StepThread.d.ts",
+      "import": "./dist/molecules/StepThread/StepThread.js"
     },
     "./components.css": "./dist/components.css"
   },

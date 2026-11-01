@@ -1,0 +1,58 @@
+.dd-chip {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-md);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-8);
+  padding: var(--sp-4) var(--sp-12);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.dd-chip:hover {
+  border-color: var(--faint);
+}
+.dd-chip em {
+  font-style: normal;
+  color: var(--dim);
+}
+.dd {
+  position: relative;
+  min-width: 0;
+}
+.dd-on > .dd-chip {
+  border-color: var(--live);
+}
+.dd-chip b {
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: var(--adw-dropdown-chip-max-width, calc(var(--sp-8) * 40));
+}
+.dd-chip i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-xs);
+}
+.dd-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: var(--z-rail);
+  padding-top: var(--sp-6);
+}
+.dd-panel > * {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  padding: var(--sp-12) var(--sp-12);
+  box-shadow: var(--shadow-1);
+}
+.dd > .dd-chip.dd-chip-warn {
+  border-color: var(--warn);
+}

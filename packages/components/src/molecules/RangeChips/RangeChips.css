@@ -1,0 +1,29 @@
+/* the time-window chips: the .chip buttons ride the filters panel's .fp .chip rules;
+   this styles the histogram and the label that ride alongside them in the window row */
+.range {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+.range-hist {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: var(--sp-2);
+  height: var(--adw-range-hist-height, calc(var(--sp-2) * 7));
+  padding: 0 var(--sp-2);
+}
+.range-bar {
+  display: block;
+  width: var(--sp-3);
+  min-height: var(--sp-2);
+  border-radius: var(--r-xs);
+  background: var(--line);
+}
+.range-bar.lit {
+  background: var(--ok);
+}
+.range-label {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  white-space: nowrap;
+}

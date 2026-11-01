@@ -1,11 +1,20 @@
 [
-  { "source": "src/web/ui/components/Arm", "target": "packages/components/src/atoms/Arm" },
-  { "source": "src/web/ui/components/Badge", "target": "packages/components/src/atoms/Badge" },
+  {
+    "source": "src/web/ui/components/Arm",
+    "target": "packages/components/src/atoms/Arm"
+  },
+  {
+    "source": "src/web/ui/components/Badge",
+    "target": "packages/components/src/atoms/Badge"
+  },
   {
     "source": "src/web/ui/components/BaseRedChip",
     "target": "packages/components/src/atoms/BaseRedChip"
   },
-  { "source": "src/web/ui/components/CopyId", "target": "packages/components/src/atoms/CopyId" },
+  {
+    "source": "src/web/ui/components/CopyId",
+    "target": "packages/components/src/atoms/CopyId"
+  },
   {
     "source": "src/web/ui/components/DockStrip",
     "target": "packages/components/src/atoms/DockStrip"
@@ -18,7 +27,52 @@
     "source": "src/web/ui/components/TabSection",
     "target": "packages/components/src/atoms/TabSection"
   },
-  { "source": "src/web/ui/components/UpNext", "target": "packages/components/src/atoms/UpNext" },
-  { "source": "src/web/ui/components/Verdict", "target": "packages/components/src/atoms/Verdict" },
-  { "source": "src/web/ui/glyphs.ts", "target": "packages/components/src/glyphs.ts" }
+  {
+    "source": "src/web/ui/components/UpNext",
+    "target": "packages/components/src/atoms/UpNext"
+  },
+  {
+    "source": "src/web/ui/components/Verdict",
+    "target": "packages/components/src/atoms/Verdict"
+  },
+  {
+    "source": "src/web/ui/glyphs.ts",
+    "target": "packages/components/src/glyphs.ts"
+  },
+  {
+    "source": "src/web/ui/components/AutonomyChips",
+    "target": "packages/components/src/molecules/AutonomyChips"
+  },
+  {
+    "source": "src/web/ui/components/BucketHint",
+    "target": "packages/components/src/molecules/BucketHint"
+  },
+  {
+    "source": "src/web/ui/components/Dropdown",
+    "target": "packages/components/src/molecules/Dropdown"
+  },
+  {
+    "source": "src/web/ui/components/FeatureMenu",
+    "target": "packages/components/src/molecules/FeatureMenu"
+  },
+  {
+    "source": "src/web/ui/components/Handles",
+    "target": "packages/components/src/molecules/Handles"
+  },
+  {
+    "source": "src/web/ui/components/PrChips",
+    "target": "packages/components/src/molecules/PrChips"
+  },
+  {
+    "source": "src/web/ui/components/RangeChips",
+    "target": "packages/components/src/molecules/RangeChips"
+  },
+  {
+    "source": "src/web/ui/components/Rig",
+    "target": "packages/components/src/molecules/Rig"
+  },
+  {
+    "source": "src/web/ui/components/StepThread",
+    "target": "packages/components/src/molecules/StepThread"
+  }
 ]

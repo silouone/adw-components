@@ -1,0 +1,118 @@
+/* the step thread: one dot per node, grouped by phase; a dot shrinks with
+   the count (--n dots, --gaps phase breaks) so the thread never leaves the
+   card, and its hover card is its own ::after (never clipped here) */
+.tc-thread {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: var(--adw-step-thread-height, var(--sp-12));
+  max-width: 100%;
+}
+.st-dot {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  aspect-ratio: 1;
+  border-radius: var(--r-round);
+  background: var(--pc);
+  width: max(
+    var(--sp-2),
+    min(
+      calc(var(--sp-1) * 7),
+      calc((100% - (var(--n) - 1) * var(--sp-3) - var(--gaps) * var(--sp-6)) / var(--n))
+    )
+  );
+}
+/* colour = the run page phase */
+.st-dot.ph-setup {
+  --pc: var(--pc-setup);
+}
+.st-dot.ph-plan {
+  --pc: var(--pc-plan);
+}
+.st-dot.ph-build {
+  --pc: var(--pc-build);
+}
+.st-dot.ph-test {
+  --pc: var(--pc-test);
+}
+.st-dot.ph-gates {
+  --pc: var(--pc-gates);
+}
+.st-dot.ph-review {
+  --pc: var(--pc-review);
+}
+.st-dot.ph-ship {
+  --pc: var(--pc-ship);
+}
+.st-dot.ph-other {
+  --pc: var(--pc-other);
+}
+.st-dot.gap {
+  margin-left: var(--sp-6);
+}
+.st-dot + .st-dot::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: var(--sp-3);
+  height: 1px;
+  background: var(--line);
+}
+.st-dot.gap::before {
+  width: calc(var(--sp-3) * 3);
+}
+.st-dot.k-det,
+.st-dot.k-gate {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--pc);
+}
+.st-dot.blocked {
+  background: var(--bad);
+  box-shadow: none;
+}
+.st-dot.warn {
+  box-shadow: 0 0 0 calc(var(--sp-1) * 1.5) var(--warn);
+}
+.st-dot.live {
+  background: var(--live);
+  box-shadow: 0 0 0 var(--sp-3) color-mix(in srgb, var(--live) 25%, transparent);
+  animation: live-edge var(--dur-live-edge-1) infinite;
+}
+.st-dot.wait {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--dim);
+  animation: live-edge var(--dur-live-edge-2) infinite;
+}
+.st-dot:hover {
+  z-index: var(--z-sticky);
+  outline: var(--sp-2) solid color-mix(in srgb, var(--overlay-ink) 35%, transparent);
+  outline-offset: 1px;
+}
+.st-dot::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + var(--sp-3) * 3);
+  transform: translateX(-50%);
+  white-space: pre;
+  padding: var(--sp-6) var(--sp-8);
+  border-radius: var(--r-md);
+  background: var(--surface-popover);
+  border: 1px solid var(--faint);
+  color: var(--ink);
+  font-size: var(--fs-md);
+  font-style: normal;
+  line-height: 1.45;
+  box-shadow: 0 var(--sp-8) var(--sp-24) color-mix(in srgb, var(--overlay-bg) 55%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-instant);
+  z-index: var(--z-popover);
+}
+.st-dot:hover::after {
+  opacity: 1;
+}
