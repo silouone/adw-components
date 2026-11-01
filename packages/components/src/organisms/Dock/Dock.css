@@ -1,0 +1,173 @@
+/* The dock: an app-shell peer taking every pixel the Gantt does not use, and owning the only scroll region. */
+.dock {
+  flex: 1 0 calc(var(--sp-4) * 55);
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  margin: var(--sp-8) var(--sp-16) var(--sp-12);
+  max-width: 100%;
+  overflow: hidden;
+  position: static;
+}
+.dock:has(.rp.shut) {
+  flex: 0 0 auto;
+}
+.rp-kpis {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  flex-wrap: wrap;
+  flex: 0 0 auto;
+  padding: var(--sp-8) var(--sp-12);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-dock-head);
+}
+.rp-id {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.rp-crumb {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  white-space: nowrap;
+}
+.rp-crumb a {
+  color: var(--live-soft);
+  text-decoration: none;
+}
+.rp-crumb a:hover {
+  text-decoration: underline;
+}
+.rp-tools {
+  display: flex;
+  gap: var(--sp-6);
+  align-items: center;
+}
+.rp-t {
+  background: var(--code-bg);
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  font: inherit;
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-8);
+  cursor: pointer;
+  min-width: calc(var(--sp-4) * 8);
+}
+.rp-t:hover {
+  color: var(--ink-strong);
+  border-color: var(--live-line);
+}
+.rp-t.on {
+  color: var(--ink-on-accent);
+  background: var(--live-fill);
+  border-color: transparent;
+}
+.rp-x {
+  font-size: var(--fs-md);
+  line-height: 1;
+}
+/* Rail + pane: a fixed-width rail navigates, the pane reads. Both grids name their row: without
+   one the track sizes to its content and a child's height:100% resolves against nothing. */
+.rp-sections {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: calc(var(--sp-4) * 43) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+}
+.rp-steps {
+  border-right: 1px solid var(--line);
+  background: var(--surface-sunken);
+  min-height: 0;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  overscroll-behavior: contain;
+}
+.rp-step {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-8);
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line-soft);
+  border-left: var(--sp-2) solid transparent;
+  color: var(--dim);
+  font: inherit;
+  font-size: var(--fs-md);
+  padding: var(--sp-6) var(--sp-12);
+  cursor: pointer;
+}
+.rp-step b {
+  font-weight: 500;
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rp-step span {
+  font-size: var(--fs-xs);
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+.rp-step:hover {
+  background: var(--surface-hover);
+  color: var(--ink-strong);
+}
+.rp-step.on {
+  background: var(--surface-tab-on);
+  color: var(--ink-strong);
+  border-left-color: var(--live-deep);
+}
+.rp-step.bad {
+  color: var(--bad);
+}
+.rp-step.warn {
+  color: var(--warn);
+}
+.rp-step.live {
+  color: var(--live);
+}
+.rp-pane {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+.dock-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  width: 100%;
+  margin: 0 0 var(--sp-12);
+  padding: var(--sp-8) var(--sp-12);
+  font: inherit;
+  font-size: var(--fs-md);
+  text-align: left;
+  color: var(--bad);
+  border: 1px solid color-mix(in srgb, var(--bad) 50%, transparent);
+  background: color-mix(in srgb, var(--bad) 6%, transparent);
+  border-radius: var(--r-md);
+}
+.dock-banner span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dock-banner b {
+  font-weight: 500;
+  color: var(--ink);
+}

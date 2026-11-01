@@ -1,0 +1,179 @@
+/* The run scope: ticket beside report, plus the rendered-markdown view. */
+.rp-s {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+.rp-s[hidden] {
+  display: none;
+}
+.rp-sb {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.rp-split {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: minmax(0, 1fr);
+}
+.rp-s2 {
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--line);
+}
+.rp-s2:last-child {
+  border-right: 0;
+}
+.rp-sh {
+  padding: var(--sp-8) var(--sp-12);
+  font-size: var(--fs-md);
+  background: var(--surface-section);
+  border-bottom: 1px solid var(--line);
+  flex: 0 0 auto;
+}
+.rp-pre {
+  background: var(--surface-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  overflow: auto;
+  max-height: calc(var(--sp-4) * 80);
+  margin: 0;
+  padding: var(--sp-12);
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink-body);
+}
+.rp-gap {
+  padding: var(--sp-12);
+  font-size: var(--fs-md);
+  line-height: 1.55;
+  color: var(--warn);
+}
+.rp-gap b {
+  display: block;
+  margin-bottom: var(--sp-4);
+}
+.rp-gap span {
+  color: var(--dim);
+}
+.rp-md {
+  padding: var(--sp-12) var(--sp-16);
+  font-size: var(--fs-md);
+  line-height: 1.6;
+  color: var(--ink-body);
+}
+.rp-sb > .rp-pre,
+.rp-sb > .rp-md,
+.rp-sb > .rp-gap {
+  flex: 1 0 auto;
+}
+.rp-md h1,
+.rp-md h2,
+.rp-md h3,
+.rp-md h4 {
+  margin: var(--sp-12) 0 var(--sp-6);
+  line-height: 1.3;
+  color: var(--ink-strong);
+}
+.rp-md h1,
+.rp-md h2 {
+  font-size: var(--fs-lg);
+}
+.rp-md h3 {
+  font-size: var(--fs-base);
+}
+.rp-md h1:first-child,
+.rp-md h2:first-child {
+  margin-top: 0;
+}
+.rp-md p {
+  margin: 0 0 var(--sp-8);
+}
+.rp-md code {
+  background: var(--code-inline-bg);
+  padding: var(--sp-1) var(--sp-4);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-md);
+}
+.rp-md pre.rp-code {
+  max-height: calc(var(--sp-4) * 80);
+  word-break: break-word;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-8) var(--sp-12);
+  margin: 0 0 var(--sp-8);
+  overflow: auto;
+  font-size: var(--fs-md);
+  line-height: 1.45;
+  white-space: pre;
+}
+.rp-md blockquote {
+  margin: 0 0 var(--sp-8);
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-12);
+  border-left: var(--sp-2) solid var(--line);
+  color: var(--dim);
+}
+.rp-md hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: var(--sp-12) 0;
+}
+.rp-li {
+  margin: 0 0 var(--sp-4);
+  padding-left: var(--sp-16);
+  position: relative;
+}
+.rp-li::before {
+  content: "·";
+  position: absolute;
+  left: var(--sp-4);
+  color: var(--faint);
+}
+.rp-md .rp-tr {
+  font-family: var(--font-mono);
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.rp-md .rp-task {
+  padding-left: var(--sp-24);
+}
+.rp-md .rp-task::before {
+  content: none;
+}
+.rp-md .rp-cb {
+  position: absolute;
+  left: var(--sp-3);
+  top: var(--sp-4);
+  width: var(--sp-12);
+  height: var(--sp-12);
+  border: 1px solid var(--faint);
+  border-radius: var(--r-sm);
+  font-size: var(--fs-xs);
+  line-height: 1;
+  text-align: center;
+  color: var(--ok);
+}
+.rp-md .rp-task-done {
+  color: var(--dim);
+}
+.rp-md .rp-task-done .rp-cb {
+  border-color: var(--ok);
+}
+.rp-md a {
+  color: var(--live-soft);
+}
+.rp-md strong {
+  color: var(--ink-strong);
+}

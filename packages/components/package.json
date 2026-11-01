@@ -249,6 +249,22 @@
       "types": "./dist/organisms/FailureView/FailureView.d.ts",
       "import": "./dist/organisms/FailureView/FailureView.js"
     },
+    "./Drawer": {
+      "types": "./dist/organisms/Drawer/Drawer.d.ts",
+      "import": "./dist/organisms/Drawer/Drawer.js"
+    },
+    "./RunScopeSection": {
+      "types": "./dist/organisms/RunScopeSection/RunScopeSection.d.ts",
+      "import": "./dist/organisms/RunScopeSection/RunScopeSection.js"
+    },
+    "./RunScopeSection/markdown": {
+      "types": "./dist/organisms/RunScopeSection/markdown.d.ts",
+      "import": "./dist/organisms/RunScopeSection/markdown.js"
+    },
+    "./Dock": {
+      "types": "./dist/organisms/Dock/Dock.d.ts",
+      "import": "./dist/organisms/Dock/Dock.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

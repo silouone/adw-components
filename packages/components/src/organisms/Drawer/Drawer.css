@@ -1,0 +1,224 @@
+/* The drawer: one node's card header, stats, split bar, gate chips and detail body. */
+.gate-host {
+  font-style: normal;
+  color: var(--dim);
+  margin-left: var(--sp-4);
+}
+.gate-fallback {
+  font-style: normal;
+  color: var(--warn);
+  margin-left: var(--sp-6);
+}
+.card-hd {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  margin-bottom: var(--sp-12);
+  flex-wrap: wrap;
+  padding: var(--sp-12) var(--sp-16) 0;
+}
+.card-hd b {
+  font-size: var(--fs-lg);
+}
+.card-role {
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: var(--sp-2) var(--sp-8);
+}
+.card-why {
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.card-reason {
+  margin: calc(var(--sp-4) * -1) var(--sp-16) var(--sp-12);
+  font-size: var(--fs-md);
+  color: var(--bad);
+  overflow-wrap: anywhere;
+}
+.card-stats {
+  display: flex;
+  gap: var(--sp-24);
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-16);
+  padding: 0 var(--sp-16);
+}
+.card-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.card-stats span {
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.card-stats b {
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.card-split {
+  padding: 0 var(--sp-16);
+}
+.sb {
+  display: flex;
+  height: var(--sp-6);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--line);
+  margin-bottom: var(--sp-8);
+}
+.s-model {
+  background: var(--model);
+}
+.s-tool {
+  background: var(--tool);
+}
+.sl {
+  display: flex;
+  gap: var(--sp-16);
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.sl span {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+.sl i {
+  width: var(--sp-8);
+  height: var(--sp-8);
+  border-radius: var(--r-xs);
+  display: inline-block;
+}
+.card-gates {
+  display: flex;
+  gap: var(--sp-6);
+  margin-top: var(--sp-12);
+  flex-wrap: wrap;
+  padding: 0 var(--sp-16);
+}
+.gg {
+  font-size: var(--fs-sm);
+  padding: var(--sp-2) var(--sp-8);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+}
+.gp {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.gf {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+.drawer-node,
+.drawer-kind,
+.drawer-attempt,
+.drawer-gates,
+.drawer-prompt,
+.drawer-system-prompt,
+.drawer-config,
+.drawer-review {
+  margin-top: var(--sp-8);
+  font-size: var(--fs-md);
+  padding: 0 var(--sp-16);
+}
+.review-axis {
+  color: var(--dim);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.review-clean {
+  color: var(--ok);
+  font-size: var(--fs-md);
+  margin-top: var(--sp-6);
+}
+.review-findings,
+.review-dispositions {
+  list-style: none;
+  margin: var(--sp-8) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+.review-finding,
+.review-disposition {
+  border: 1px solid var(--line);
+  border-left-width: var(--sp-2);
+  border-radius: var(--r-md);
+  padding: var(--sp-8) var(--sp-12);
+  background: var(--surface-deep);
+}
+.rf-sev,
+.rf-kind,
+.rd-sev {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: var(--sp-1) var(--sp-6);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  margin-right: var(--sp-6);
+}
+.rf-hard,
+.rd-wont-fix {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+.rf-judgement {
+  color: var(--warn);
+  border-color: var(--warn);
+}
+.rd-fixed {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.rf-loc {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  word-break: break-all;
+}
+.rf-summary {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-md);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.rf-cite {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.prompt-not-persisted,
+.prompt-mismatch {
+  color: var(--warn);
+  font-size: var(--fs-md);
+  margin: var(--sp-8) 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: calc(var(--sp-4) * 80);
+  overflow: auto;
+}
+.prompt-text,
+.config-captured {
+  background: var(--surface-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-12);
+  overflow: auto;
+  max-height: calc(var(--sp-4) * 80);
+  font-size: var(--fs-md);
+  margin: var(--sp-8) 0 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
