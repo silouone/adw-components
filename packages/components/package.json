@@ -237,6 +237,18 @@
       "types": "./dist/organisms/Lanes/Lanes.d.ts",
       "import": "./dist/organisms/Lanes/Lanes.js"
     },
+    "./RunHeader": {
+      "types": "./dist/organisms/RunHeader/RunHeader.d.ts",
+      "import": "./dist/organisms/RunHeader/RunHeader.js"
+    },
+    "./GanttStrip": {
+      "types": "./dist/organisms/GanttStrip/GanttStrip.d.ts",
+      "import": "./dist/organisms/GanttStrip/GanttStrip.js"
+    },
+    "./FailureView": {
+      "types": "./dist/organisms/FailureView/FailureView.d.ts",
+      "import": "./dist/organisms/FailureView/FailureView.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

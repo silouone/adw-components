@@ -1,0 +1,162 @@
+/* The failure view: a summary column beside a code / stack / output tab row. */
+.fv {
+  display: grid;
+  grid-template-columns: minmax(calc(var(--sp-4) * 55), calc(var(--sp-4) * 75)) minmax(0, 1fr);
+  gap: var(--sp-16);
+  padding: 0 var(--sp-16) var(--sp-16);
+}
+@media (max-width: 1100px) {
+  .fv {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.fv-sum {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+  min-width: 0;
+}
+.fv-x {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--sp-6) * 3);
+  height: calc(var(--sp-6) * 3);
+  border-radius: var(--r-round);
+  background: var(--bad);
+  color: var(--bg);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+}
+.fv-head {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.fv-rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.fv-row {
+  display: flex;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.fv-row dt {
+  flex: 0 0 calc(var(--sp-4) * 10);
+  color: var(--dim);
+}
+.fv-row dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.fv-gate {
+  color: var(--bad);
+}
+.fv-last {
+  color: var(--dim);
+  font-size: var(--fs-md);
+  border-left: var(--sp-2) solid var(--line);
+  padding-left: var(--sp-8);
+  overflow-wrap: anywhere;
+}
+.fv-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+.fv-tabs {
+  display: flex;
+  gap: var(--sp-4);
+  border-bottom: 1px solid var(--line);
+}
+.fv-tab {
+  background: none;
+  border: 0;
+  border-bottom: var(--sp-2) solid transparent;
+  color: var(--dim);
+  font: inherit;
+  font-size: var(--fs-md);
+  padding: var(--sp-4) var(--sp-8);
+  cursor: pointer;
+}
+.fv-tab.on {
+  color: var(--ink);
+  border-bottom-color: var(--live);
+}
+.fv-code,
+.fv-out,
+.fv-stack {
+  margin: 0;
+  max-height: calc(var(--sp-12) * 30);
+  overflow: auto;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-8) 0;
+}
+.fv-ln {
+  display: flex;
+  gap: var(--sp-12);
+  padding: 0 var(--sp-12);
+  white-space: pre;
+}
+.fv-ln i {
+  flex: 0 0 calc(var(--sp-12) * 3);
+  text-align: right;
+  font-style: normal;
+  color: var(--faint);
+  user-select: none;
+}
+.fv-hit {
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+.fv-caret {
+  color: var(--bad);
+}
+.fv-fr {
+  padding: 0 var(--sp-12);
+  white-space: pre;
+}
+.fv-fn {
+  color: var(--live);
+}
+.fv-own {
+  color: var(--ink);
+}
+.fv-lib {
+  opacity: 0.5;
+}
+.fv-code,
+.fv-out {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.fv-ans-red {
+  color: var(--bad);
+}
+.fv-ans-green {
+  color: var(--ok);
+}
+.fv-ans-yellow {
+  color: var(--warn);
+}
+.fv-ans-blue {
+  color: var(--live);
+}
+.fv-ans-magenta {
+  color: var(--ansi-magenta);
+}
+.fv-ans-cyan {
+  color: var(--ansi-cyan);
+}
+.fv-ans-dim {
+  color: var(--dim);
+}
