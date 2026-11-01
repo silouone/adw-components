@@ -146,5 +146,33 @@
   {
     "source": "src/web/ui/components/ActionBar",
     "target": "packages/components/src/organisms/ActionBar"
+  },
+  {
+    "source": "src/web/ui/components/RunTab",
+    "target": "packages/components/src/organisms/RunTab"
+  },
+  {
+    "source": "src/web/ui/components/CostTab",
+    "target": "packages/components/src/organisms/CostTab"
+  },
+  {
+    "source": "src/web/ui/components/ResultTab",
+    "target": "packages/components/src/organisms/ResultTab"
+  },
+  {
+    "source": "src/web/ui/components/RouteTab",
+    "target": "packages/components/src/organisms/RouteTab"
+  },
+  {
+    "source": "src/web/ui/components/GatesTab",
+    "target": "packages/components/src/organisms/GatesTab"
+  },
+  {
+    "source": "src/web/ui/components/ToolsTab",
+    "target": "packages/components/src/organisms/ToolsTab"
+  },
+  {
+    "source": "src/web/ui/components/WalkTab",
+    "target": "packages/components/src/organisms/WalkTab"
   }
 ]

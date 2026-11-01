@@ -1,0 +1,37 @@
+.resulttab {
+  display: grid;
+  gap: var(--sp-12);
+  padding: var(--sp-12);
+}
+.rs-note {
+  font-size: var(--fs-md);
+}
+/* rail density: set by density="rail" */
+.resulttab.rs-rail {
+  gap: var(--sp-24);
+  padding: var(--sp-16) var(--sp-12) var(--sp-24);
+}
+.resulttab.rs-rail > * {
+  min-width: 0;
+}
+.rs-cause {
+  color: var(--bad);
+  font-size: var(--fs-md);
+}
+.rs-reason {
+  background: var(--surface-deep);
+  word-break: break-word;
+  margin: 0;
+  max-height: var(--adw-rs-reason-height, calc(var(--sp-8) * 20));
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+  font-size: var(--fs-md);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-6) var(--sp-8);
+}
+.rs-ledger {
+  font-size: var(--fs-md);
+}

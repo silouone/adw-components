@@ -1,0 +1,29 @@
+.routetab {
+  display: grid;
+  gap: var(--sp-12);
+  padding: var(--sp-12);
+}
+/* rail density: set by density="rail" */
+.routetab.routetab-rail {
+  gap: var(--sp-24);
+  padding: var(--sp-16) var(--sp-12) var(--sp-24);
+}
+.routetab.routetab-rail > * {
+  min-width: 0;
+}
+.rs-stage.routetab-rail {
+  font-size: var(--fs-md);
+  row-gap: var(--sp-4);
+}
+.rs-chain {
+  font-size: var(--fs-md);
+}
+.rs-stage {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.rs-round {
+  display: block;
+}

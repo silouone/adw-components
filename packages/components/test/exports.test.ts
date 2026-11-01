@@ -50,6 +50,13 @@ const components = [
   ["RunnerRail", "RunnerRail"],
   ["FocusRail", "FocusRail"],
   ["ActionBar", "ActionBar"],
+  ["RunTab", "RunTab"],
+  ["CostTab", "CostTab"],
+  ["ResultTab", "ResultTab"],
+  ["RouteTab", "RouteTab"],
+  ["GatesTab", "GatesTab"],
+  ["ToolsTab", "ToolsTab"],
+  ["WalkTab", "WalkTab"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -86,6 +93,13 @@ const namedProps = new Set([
   "RunnerRail",
   "FocusRail",
   "ActionBar",
+  "RunTab",
+  "CostTab",
+  "ResultTab",
+  "RouteTab",
+  "GatesTab",
+  "ToolsTab",
+  "WalkTab",
 ]);
 const modules = ["glyphs"] as const;
 const expectedExports = [

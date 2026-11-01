@@ -173,6 +173,34 @@
       "types": "./dist/organisms/ActionBar/ActionBar.d.ts",
       "import": "./dist/organisms/ActionBar/ActionBar.js"
     },
+    "./RunTab": {
+      "types": "./dist/organisms/RunTab/RunTab.d.ts",
+      "import": "./dist/organisms/RunTab/RunTab.js"
+    },
+    "./CostTab": {
+      "types": "./dist/organisms/CostTab/CostTab.d.ts",
+      "import": "./dist/organisms/CostTab/CostTab.js"
+    },
+    "./ResultTab": {
+      "types": "./dist/organisms/ResultTab/ResultTab.d.ts",
+      "import": "./dist/organisms/ResultTab/ResultTab.js"
+    },
+    "./RouteTab": {
+      "types": "./dist/organisms/RouteTab/RouteTab.d.ts",
+      "import": "./dist/organisms/RouteTab/RouteTab.js"
+    },
+    "./GatesTab": {
+      "types": "./dist/organisms/GatesTab/GatesTab.d.ts",
+      "import": "./dist/organisms/GatesTab/GatesTab.js"
+    },
+    "./ToolsTab": {
+      "types": "./dist/organisms/ToolsTab/ToolsTab.d.ts",
+      "import": "./dist/organisms/ToolsTab/ToolsTab.js"
+    },
+    "./WalkTab": {
+      "types": "./dist/organisms/WalkTab/WalkTab.d.ts",
+      "import": "./dist/organisms/WalkTab/WalkTab.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

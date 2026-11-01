@@ -1,0 +1,42 @@
+.toolstab {
+  display: grid;
+  gap: var(--sp-12);
+  padding: var(--sp-12);
+}
+/* rail density: set by density="rail" */
+.toolstab.tl-rail {
+  gap: var(--sp-24);
+  padding: var(--sp-16) var(--sp-12) var(--sp-24);
+}
+.toolstab.tl-rail > * {
+  min-width: 0;
+}
+.tl-allowed,
+.tl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-4);
+  font-size: var(--fs-md);
+}
+.toolstab .toolstab-tag {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 0 var(--sp-4);
+}
+.tl-list {
+  display: grid;
+  gap: var(--sp-1);
+  font-size: var(--fs-md);
+}
+.tl-item {
+  overflow-wrap: anywhere;
+}
+.tl-call {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
