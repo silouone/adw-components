@@ -1,0 +1,141 @@
+/* a project section: a disclosure whose rail carries the live count, the pause controls,
+   the shown-ticket count, the health meter and the green rate */
+.grp {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  overflow: clip;
+  margin: 0 0 var(--sp-8);
+}
+.grp > summary.grp-hd {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-12) var(--sp-12);
+  margin: 0;
+}
+.grp > summary::-webkit-details-marker {
+  display: none;
+}
+.grp > summary:hover {
+  background: var(--panel2);
+}
+.grp[open] > summary.grp-hd {
+  border-bottom: 1px solid var(--line);
+}
+.grp[open] {
+  --adw-caret-turn: rotate(90deg);
+}
+.grp-hd b {
+  font-size: var(--fs-base);
+}
+.grp-n {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.legacy-note {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+}
+.legacy-note code {
+  color: var(--dim);
+}
+.m-ok {
+  background: var(--ok);
+}
+.m-bad {
+  background: var(--bad);
+}
+.m-none {
+  background: var(--faint);
+}
+.grp-rate {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.grp .grp-grid {
+  padding: var(--sp-12) var(--sp-16) var(--sp-16);
+  grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--adw-grp-card-min, calc(var(--sp-12) * 30)), 1fr)
+    );
+  gap: var(--sp-12);
+  display: grid;
+}
+.grp.grp-ledger > summary.grp-hd {
+  position: sticky;
+  top: calc(var(--ledger-top, 0px) + var(--adw-grp-ledger-offset, calc(var(--sp-2) * 17)));
+  z-index: var(--z-raised);
+  background: var(--panel);
+}
+.grp-empty {
+  margin: 0;
+  padding: var(--sp-12);
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+/* the section holding a live run says so on its own rail even collapsed */
+.grp-live {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-6);
+  font-size: var(--fs-xs);
+  color: var(--live);
+  border: 1px solid color-mix(in srgb, var(--live) 50%, transparent);
+  border-radius: var(--r-pill);
+  padding: var(--sp-2) var(--sp-8);
+  white-space: nowrap;
+}
+.grp-live .grp-beacon {
+  width: calc(var(--sp-1) * 5);
+  height: calc(var(--sp-1) * 5);
+}
+/* a paused run stays on the board, muted — the operator waiting, not a verdict */
+.grp-paused {
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  white-space: nowrap;
+}
+.grp-activity {
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  white-space: nowrap;
+}
+.grp-project-paused {
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: var(--sp-2) var(--sp-8);
+  white-space: nowrap;
+}
+.grp.grp-tight {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  overflow: hidden;
+  margin: 0 0 var(--sp-8);
+}
+.grp.grp-tight > summary.grp-hd {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  padding: var(--sp-8) var(--sp-12);
+  margin: 0;
+}
+.grp.grp-tight > summary.grp-hd:hover {
+  background: var(--panel2);
+}
+.grp-tight .grp-n {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: 0 var(--sp-6);
+  font-variant-numeric: tabular-nums;
+}

@@ -141,6 +141,18 @@
       "types": "./dist/organisms/Card/Card.d.ts",
       "import": "./dist/organisms/Card/Card.js"
     },
+    "./LedgerRow": {
+      "types": "./dist/organisms/LedgerRow/LedgerRow.d.ts",
+      "import": "./dist/organisms/LedgerRow/LedgerRow.js"
+    },
+    "./SectionView": {
+      "types": "./dist/organisms/SectionView/SectionView.d.ts",
+      "import": "./dist/organisms/SectionView/SectionView.js"
+    },
+    "./KpiPanel": {
+      "types": "./dist/organisms/KpiPanel/KpiPanel.d.ts",
+      "import": "./dist/organisms/KpiPanel/KpiPanel.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

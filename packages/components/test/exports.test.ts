@@ -42,6 +42,9 @@ const components = [
   ["ViewToggle", "ViewToggle"],
   ["SlotsPanel", "SlotsPanel"],
   ["Card", "Card"],
+  ["LedgerRow", "LedgerRow"],
+  ["SectionView", "SectionView"],
+  ["KpiPanel", "KpiPanel"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -70,6 +73,9 @@ const namedProps = new Set([
   "ViewToggle",
   "SlotsPanel",
   "Card",
+  "LedgerRow",
+  "SectionView",
+  "KpiPanel",
 ]);
 const modules = ["glyphs"] as const;
 const expectedExports = [
