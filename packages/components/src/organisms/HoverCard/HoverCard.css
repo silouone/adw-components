@@ -1,0 +1,102 @@
+/* The shared hover card (ticket adw-fe-26 R12). Pointer-transparent, so it
+     never steals the click that opens the Dock. */
+.hc {
+  position: fixed;
+  z-index: var(--z-popover);
+  width: calc(var(--sp-2) * 190);
+  padding: var(--sp-8) var(--sp-12);
+  font-size: var(--fs-md);
+  background: var(--bg);
+  border: 1px solid var(--faint);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+}
+.hc-head,
+.hc-line {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+.hc-head {
+  font-size: var(--fs-base);
+}
+.hc-line {
+  font-size: var(--fs-md);
+  margin-top: var(--sp-3);
+}
+.hc-dur {
+  margin-left: auto;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.hc-purpose {
+  margin: var(--sp-4) 0 var(--sp-6);
+}
+.hc-meta {
+  display: flex;
+  gap: var(--sp-8);
+  color: var(--dim);
+  font-size: var(--fs-md);
+}
+.hc-rig {
+  margin-top: var(--sp-6);
+}
+.hc-kpi {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+  margin-top: var(--sp-8);
+}
+.hc-kpi div {
+  background: var(--panel2);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-6);
+}
+.hc-kpi b {
+  display: block;
+  font-size: var(--fs-lg);
+}
+.hc-kpi i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-sm);
+}
+.hc-kpi .hc-nocap i {
+  color: var(--faint);
+}
+.hc-gates {
+  margin-top: var(--sp-8);
+  display: grid;
+  gap: var(--sp-3);
+}
+.hc-gate.pass > span {
+  color: var(--ok);
+}
+.hc-gate.fail > span {
+  color: var(--bad);
+}
+.hc-gate.skipped > span {
+  color: var(--dim);
+}
+.hc-fails {
+  margin: var(--sp-2) 0 var(--sp-4);
+  padding-left: var(--sp-16);
+  color: var(--bad-soft);
+}
+.hc-fails li.more {
+  color: var(--dim);
+  list-style: none;
+}
+.hc-reason {
+  margin-top: var(--sp-8);
+  color: var(--bad-text);
+  background: color-mix(in srgb, var(--bad) 14%, transparent);
+  padding: var(--sp-4) var(--sp-6);
+  border-radius: var(--r-md);
+}
+.hc-foot {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-sm);
+  color: var(--faint);
+}

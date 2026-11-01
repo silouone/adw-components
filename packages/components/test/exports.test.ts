@@ -61,6 +61,10 @@ const components = [
   ["UsagePanel", "UsagePanel"],
   ["BoardChips", "BoardChips"],
   ["SyncButton", "SyncButton"],
+  ["HoverCard", "HoverCard"],
+  ["Journey", "Journey"],
+  ["Ledger", "Ledger"],
+  ["Lanes", "Lanes"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -108,6 +112,10 @@ const namedProps = new Set([
   "UsagePanel",
   "BoardChips",
   "SyncButton",
+  "HoverCard",
+  "Journey",
+  "Ledger",
+  "Lanes",
 ]);
 const modules = ["glyphs", "FocusPanel/focusTabs"] as const;
 const expectedExports = [

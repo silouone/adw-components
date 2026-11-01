@@ -1,0 +1,158 @@
+/* The ledger (ticket adw-fe-26 R10): one row per step, a mini time bar. */
+.lg.lg-scroll {
+  max-height: var(--adw-ledger-max-height, calc(var(--sp-24) * 20));
+  overflow: auto;
+}
+.lg-row {
+  display: grid;
+  grid-template-columns: calc(var(--sp-2) * 11) calc(var(--sp-2) * 95) minmax(0, 1fr) calc(
+      var(--sp-2) *
+      100
+    ) calc(var(--sp-2) * 110) calc(var(--sp-2) * 35) calc(var(--sp-2) * 50);
+  gap: var(--sp-8);
+  align-items: center;
+  min-height: calc(var(--sp-2) * 15);
+  padding: var(--sp-4) var(--sp-12);
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.lg-row:hover {
+  background: var(--panel2);
+}
+.lg-row.sel {
+  background: var(--panel2);
+  box-shadow: inset var(--sp-2) 0 0 var(--live);
+}
+.lg-head {
+  min-height: 0;
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  cursor: default;
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+  z-index: var(--z-base);
+}
+.lg-head:hover {
+  background: var(--panel);
+}
+.lg-row.sub {
+  padding-left: calc(var(--sp-2) * 16);
+  opacity: 0.85;
+}
+.lg-row.bad {
+  background: color-mix(in srgb, var(--bad) 8%, transparent);
+}
+.lg-row.live {
+  background: color-mix(in srgb, var(--live) 6%, transparent);
+}
+.lg-row.ghost {
+  opacity: 0.5;
+  cursor: default;
+}
+.lg-row.ghost .lg-name {
+  color: var(--dim);
+  font-weight: 400;
+}
+.lg-name {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.lg-what {
+  color: var(--dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lg-gates {
+  display: inline-flex;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+}
+.lg-rig {
+  overflow: hidden;
+}
+.lg-mini {
+  position: relative;
+  height: var(--sp-8);
+  border-radius: var(--r-sm);
+  background: var(--line);
+}
+.lg-mini i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--r-sm);
+  background: var(--dim);
+}
+.lg-mini i.ok {
+  background: var(--ledger-ok);
+}
+.lg-mini i.bad {
+  background: var(--bad);
+}
+.lg-mini i.warn {
+  background: var(--warn);
+}
+.lg-mini i.live {
+  background: var(--live);
+}
+.lg-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.lg-dim {
+  color: var(--dim);
+  font-size: var(--fs-md);
+}
+.lg-fail {
+  padding: var(--sp-4) var(--sp-12) var(--sp-8) calc(var(--sp-2) * 27);
+  font-size: var(--fs-md);
+  color: var(--bad-soft);
+  background: color-mix(in srgb, var(--bad) 8%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.lg-fail i {
+  color: var(--dim);
+}
+.lg-gates .lg-chip {
+  gap: var(--sp-6);
+  font-size: var(--fs-md);
+  padding: var(--sp-4) var(--sp-12);
+  white-space: nowrap;
+}
+.lg-gates .lg-chip i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.lg-gates .lg-chip.ok {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.lg-gates .lg-chip.bad {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+.lg-gates .lg-chip.skipped {
+  color: var(--dim);
+  border-style: dashed;
+}
+.lg-row:is(button) {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
