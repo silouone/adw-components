@@ -1,0 +1,13 @@
+/* a blocked card's cause: one line, full text on hover (title) and on
+   keyboard focus (the ::after popover reads the same title) */
+.cause-word {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bad);
+  border: 1px solid color-mix(in srgb, var(--bad) 50%, transparent);
+  border-radius: var(--r-sm);
+  padding: 0 var(--sp-4);
+  margin-bottom: var(--sp-2);
+}

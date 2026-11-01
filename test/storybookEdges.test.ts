@@ -209,7 +209,7 @@ describe("every component is documented", () => {
 
   test("every exported component has its stories file", () => {
     const missing = Object.keys(exportsMap)
-      .filter((key) => typeof exportsMap[key] === "object")
+      .filter((key) => typeof exportsMap[key] === "object" && key !== "./glyphs")
       .map((key) => key.slice(2))
       .filter(
         (name) =>
@@ -244,12 +244,18 @@ describe("component stories stay inside the library", () => {
     ...new Bun.Glob("packages/components/src/**/*.stories.tsx").scanSync({ cwd: ROOT }),
   ];
 
-  test("imports are Storybook, the component beside it, or its own type", () => {
+  test("imports are Storybook, the component beside it, or its own fixture module", () => {
     for (const path of stories) {
+      const name = path.split("/").at(-2) as string;
       const imports = [...read(path).matchAll(/from\s+"([^"]+)"/g)].map((m) => m[1] as string);
-      expect(imports.filter((i) => i !== "@storybook/preact-vite" && !i.startsWith("./"))).toEqual(
-        [],
-      );
+      expect(
+        imports.filter(
+          (i) =>
+            i !== "@storybook/preact-vite" &&
+            i !== `../../../fixtures/${name}` &&
+            !i.startsWith("./"),
+        ),
+      ).toEqual([]);
     }
   });
 

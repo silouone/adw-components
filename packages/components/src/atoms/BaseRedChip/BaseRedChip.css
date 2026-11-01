@@ -1,0 +1,10 @@
+.base-red-chip {
+  flex: none;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  line-height: 1;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-sm);
+  color: var(--ink-on-bad);
+  background: var(--bad);
+}

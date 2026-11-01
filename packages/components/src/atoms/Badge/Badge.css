@@ -1,0 +1,19 @@
+.badge {
+  align-self: flex-start;
+  font-size: var(--fs-xs);
+  padding: var(--sp-1) var(--sp-6);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.badge.badge-round {
+  color: var(--dim);
+}
+.badge.watchdog {
+  color: var(--warn);
+  border-color: var(--warn);
+}
+.badge.dirty {
+  color: var(--warn);
+  border-color: var(--warn);
+}

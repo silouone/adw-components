@@ -27,11 +27,11 @@ describe("dist hygiene", () => {
     for (const file of js) expect(exported.has(file), `${file} has no export`).toBe(true);
   });
 
-  test("dist holds exactly the exports' js and d.ts, one css per component, and components.css", () => {
+  test("dist holds exactly the exports' js and d.ts, one css per component (none for a module), and components.css", () => {
     const expected = [
       ...targets.map((t) => rel(t).replace(/^dist\//, "")),
       ...targets
-        .filter((t) => t.endsWith(".js"))
+        .filter((t) => /^\.\/dist\/[a-z]+\/[^/]+\/[^/]+\.js$/.test(t))
         .map((t) =>
           rel(t)
             .replace(/^dist\//, "")

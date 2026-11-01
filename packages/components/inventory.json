@@ -1,0 +1,24 @@
+[
+  { "source": "src/web/ui/components/Arm", "target": "packages/components/src/atoms/Arm" },
+  { "source": "src/web/ui/components/Badge", "target": "packages/components/src/atoms/Badge" },
+  {
+    "source": "src/web/ui/components/BaseRedChip",
+    "target": "packages/components/src/atoms/BaseRedChip"
+  },
+  { "source": "src/web/ui/components/CopyId", "target": "packages/components/src/atoms/CopyId" },
+  {
+    "source": "src/web/ui/components/DockStrip",
+    "target": "packages/components/src/atoms/DockStrip"
+  },
+  {
+    "source": "src/web/ui/components/PhaseLegend",
+    "target": "packages/components/src/atoms/PhaseLegend"
+  },
+  {
+    "source": "src/web/ui/components/TabSection",
+    "target": "packages/components/src/atoms/TabSection"
+  },
+  { "source": "src/web/ui/components/UpNext", "target": "packages/components/src/atoms/UpNext" },
+  { "source": "src/web/ui/components/Verdict", "target": "packages/components/src/atoms/Verdict" },
+  { "source": "src/web/ui/glyphs.ts", "target": "packages/components/src/glyphs.ts" }
+]
