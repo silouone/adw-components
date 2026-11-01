@@ -277,6 +277,10 @@
       "types": "./dist/organisms/BacklogPanel/BacklogPanel.d.ts",
       "import": "./dist/organisms/BacklogPanel/BacklogPanel.js"
     },
+    "./DepGraph": {
+      "types": "./dist/organisms/DepGraph/DepGraph.d.ts",
+      "import": "./dist/organisms/DepGraph/DepGraph.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

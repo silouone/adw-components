@@ -1,0 +1,382 @@
+.dg-node.dg-focus {
+  border-color: var(--live);
+  outline: 1px solid var(--live);
+}
+/* ---- the dependency graph (adw-graph-03): waves as columns ---- */
+.dg {
+  position: relative;
+}
+.dg-svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.dg-colh {
+  position: absolute;
+  top: 14px;
+  box-sizing: border-box;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dim);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: var(--sp-4);
+}
+.dg-colh b {
+  font-weight: 600;
+  color: var(--ink);
+}
+.dg-colh em {
+  font-style: normal;
+  color: var(--faint);
+  text-transform: none;
+  letter-spacing: 0;
+}
+.dg-edge {
+  fill: none;
+  stroke: var(--faint);
+  stroke-width: 1.4;
+  transition:
+    opacity 0.12s,
+    stroke 0.12s;
+}
+.dg-edge.dg-unmet {
+  stroke: var(--dim);
+}
+.dg-edge.dg-met {
+  stroke: var(--faint);
+}
+.dg-edge.dg-crit {
+  stroke: var(--model);
+  stroke-width: 2;
+}
+.dg-edge.dg-cross {
+  stroke: color-mix(in srgb, var(--live) 55%, transparent);
+}
+.dg-edge.dg-on {
+  stroke: var(--live);
+  stroke-width: 2;
+}
+.dg-edge.dg-cross.dg-on {
+  stroke: var(--live);
+  opacity: 1;
+}
+.dg-edge.dg-cross.dg-dim {
+  stroke: var(--live);
+}
+.dg-edge.dg-dim {
+  opacity: 0.4;
+}
+/* The entire view (G11) is for sharing: done→done edges and closed cards must read. */
+.dg-entire .dg-edge.dg-met:not(.dg-on):not(.dg-crit) {
+  stroke: var(--dim);
+}
+.dg-entire .dg-edge.dg-cross.dg-met:not(.dg-on):not(.dg-crit):not(.dg-dim) {
+  stroke: color-mix(in srgb, var(--dim) 55%, transparent);
+}
+.dg-entire .dg-node.s-closed > * {
+  opacity: 0.9;
+}
+/* Cards stay OPAQUE so an edge passes behind them, never through them:
+     fading dims the content, never the background. */
+.dg-node {
+  position: absolute;
+  box-sizing: border-box;
+  padding: var(--sp-6) var(--sp-8) var(--sp-6) var(--sp-8);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  display: block;
+  overflow: hidden;
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--faint);
+  transition: border-color 0.12s;
+}
+.dg-node:hover {
+  border-color: var(--faint);
+}
+.dg-node > * {
+  transition: opacity 0.12s;
+}
+.dg-node.s-blocked {
+  border-left-color: var(--bad);
+}
+.dg-node.s-waiting {
+  border-left-color: var(--warn);
+}
+.dg-node.s-ready {
+  border-left-color: var(--ok);
+}
+.dg-node.s-running,
+.dg-node.s-in-flight {
+  border-left-color: var(--live);
+}
+.dg-node.s-closed {
+  background: var(--panel);
+}
+.dg-node.s-closed > * {
+  opacity: 0.62;
+}
+.dg-node.dg-manual {
+  border-style: dashed;
+}
+.dg-node.dg-outside {
+  border-style: dashed;
+  background: var(--panel);
+}
+.dg-node.dg-crit {
+  border-left-color: var(--model);
+  box-shadow: 0 0 0 1px var(--model) inset;
+}
+.dg-node.dg-dim {
+  border-color: var(--line);
+  border-left-color: var(--line);
+  box-shadow: none;
+}
+.dg-node.dg-dim > * {
+  opacity: 0.22;
+}
+.dg-node.dg-hit {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+  box-shadow: 0 0 10px 2px var(--ink);
+  z-index: var(--z-base);
+}
+.dg-top {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  font-size: var(--fs-md);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.dg-g {
+  font-style: normal;
+}
+.dg-node.s-blocked .dg-g {
+  color: var(--bad);
+}
+.dg-node.s-waiting .dg-g {
+  color: var(--warn);
+}
+.dg-node.s-ready .dg-g {
+  color: var(--ok);
+}
+.dg-node.s-running .dg-g,
+.dg-node.s-in-flight .dg-g {
+  color: var(--live);
+}
+.dg-node.s-closed .dg-g {
+  color: var(--dim);
+}
+.dg-seq {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dg-p1,
+.dg-drift {
+  font-style: normal;
+  font-size: var(--fs-xs);
+  padding: 0 var(--sp-4);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  color: var(--dim);
+}
+.dg-p1 {
+  color: var(--ink);
+}
+.dg-drift {
+  border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+  color: var(--warn);
+}
+.dg-st {
+  margin-left: auto;
+  color: var(--faint);
+  font-size: var(--fs-xs);
+}
+.dg-band.even {
+  background: var(--surface-lane-even);
+}
+.dg-band.odd {
+  background: var(--surface-lane-odd);
+}
+.dg-stripe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  border-radius: var(--r-md) 0 0 var(--r-md);
+  background: var(--proj, var(--faint));
+}
+.dg-lane {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+}
+.dg-node.dg-sq {
+  padding: 0;
+  border-width: 2px;
+  border-style: solid;
+  border-color: var(--faint);
+  border-radius: var(--r-sm);
+  background: var(--proj, var(--faint));
+}
+.dg-node.dg-sq.s-blocked {
+  border-color: var(--bad);
+}
+.dg-node.dg-sq.s-waiting {
+  border-color: var(--warn);
+}
+.dg-node.dg-sq.s-ready {
+  border-color: var(--ok);
+}
+.dg-node.dg-sq.s-running,
+.dg-node.dg-sq.s-in-flight {
+  border-color: var(--live);
+}
+.dg-node.dg-sq.s-closed {
+  opacity: 0.62;
+}
+.dg-node.dg-sq.dg-dim {
+  opacity: 0.22;
+}
+.dg-title {
+  display: block;
+  margin-top: var(--sp-4);
+  font:
+    11.5px / 1.3 -apple-system,
+    BlinkMacSystemFont,
+    "Inter",
+    system-ui,
+    sans-serif;
+  color: var(--ink-prose);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* live state (adw-graph-06): the overlays live INSIDE the card (G7) */
+.dg-sum {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  margin: 0 0 var(--sp-8);
+  letter-spacing: 0.02em;
+}
+.dg-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.dg-node.s-running,
+.dg-node.s-in-flight {
+  border-color: var(--live);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--live) 45%, transparent),
+    0 0 14px color-mix(in srgb, var(--live) 35%, transparent);
+}
+.dg-node.s-running .dg-fx,
+.dg-node.s-in-flight .dg-fx {
+  background-image: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in srgb, var(--live) 22%, transparent) 50%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: dg-sweep 2.4s linear infinite;
+}
+.dg-node.s-running .dg-g,
+.dg-node.s-in-flight .dg-g {
+  display: inline-block;
+  animation: dg-spin 1.6s linear infinite;
+}
+.dg-node.s-blocked .dg-fx {
+  background-image: repeating-linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bad) 20%, transparent) 0 6px,
+    transparent 6px 12px
+  );
+  animation: dg-alarm 3s ease-in-out infinite;
+}
+.dg-node.dg-dim.s-running,
+.dg-node.dg-dim.s-in-flight,
+.dg-node.dg-dim.s-blocked {
+  box-shadow: none;
+  border-color: var(--line);
+}
+.dg-node.dg-held .dg-title {
+  color: var(--dim);
+}
+.dg-via {
+  font-style: normal;
+  font-size: var(--fs-xs);
+  color: var(--bad);
+  opacity: 0.85;
+}
+.dg-edge.dg-flow {
+  stroke: var(--live);
+  stroke-dasharray: 6 5;
+  animation: dg-flow 1s linear infinite;
+}
+.dg-edge.dg-stalled {
+  stroke: var(--bad);
+  stroke-dasharray: 2 5;
+}
+.dg-edge.dg-cross.dg-flow:not(.dg-on):not(.dg-dim) {
+  stroke: color-mix(in srgb, var(--live) 55%, transparent);
+}
+.dg-edge.dg-cross.dg-stalled:not(.dg-on):not(.dg-dim) {
+  stroke: color-mix(in srgb, var(--bad) 55%, transparent);
+}
+.dg-dot {
+  fill: var(--live);
+  transition: opacity 0.12s;
+}
+.dg-dot.dg-dim {
+  opacity: 0.15;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dg-fx,
+  .dg-g,
+  .dg-edge.dg-flow {
+    animation: none !important;
+  }
+  .dg-dot {
+    display: none;
+  }
+}
+@keyframes dg-sweep {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+@keyframes dg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes dg-alarm {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bad) 15%, transparent);
+  }
+  50% {
+    box-shadow: inset 0 0 12px 1px color-mix(in srgb, var(--bad) 55%, transparent);
+  }
+}
+@keyframes dg-flow {
+  to {
+    stroke-dashoffset: -11;
+  }
+}

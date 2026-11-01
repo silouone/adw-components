@@ -242,5 +242,9 @@
   {
     "source": "src/web/ui/components/BacklogPanel",
     "target": "packages/components/src/organisms/BacklogPanel"
+  },
+  {
+    "source": "src/web/ui/components/DepGraph",
+    "target": "packages/components/src/organisms/DepGraph"
   }
 ]
