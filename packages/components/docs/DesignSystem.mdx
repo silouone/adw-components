@@ -1,0 +1,65 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Design system" />
+
+# Design system
+
+The tokens and the stateless Preact components of the adw-factory web console. The factory keeps the
+containers, the signals and the I/O; this library renders from props.
+
+## The contract
+
+1. **Pure view.** A component renders from its props and reports through callbacks. It may hold
+   interface state nobody else reads: a hover, an open flag, an arm timer, a "copied" flash.
+2. **Injected edges.** What it needs from the world arrives as a prop: `now`, `zoom`, `tz`,
+   `onCopy`, `onNavigate`, `hrefFor`.
+3. **Typed view-models are the contract.** Organisms and templates export their `<Name>Props` and
+   view-model types; no derivation function lives here.
+4. **Tokens only.** No hex, `rgb()`, `hsl()` or raw length other than `0`, `1px` and `100%` in a
+   component's CSS.
+5. **One component, one folder, one stylesheet.** `<Name>.tsx`, `.css`, `.stories.tsx` and
+   `.test.tsx` under its layer folder.
+6. **What a consumer may style.** Variants are props; a page places a component through a
+   documented `--adw-<component>-<thing>` property, never by selecting a library class.
+7. **Strings.** Every human-readable string is a prop; a component may default a glyph, never a word.
+8. **Glyphs, not icons.** The console's icon set is Unicode glyphs.
+9. **Layers.** Atom, molecule, organism, template, page: see Foundations/Layers.
+
+## The golden rule
+
+**compose → extend → local CSS in tokens → add**
+
+Before adding anything, compose what exists. If that falls short, extend an existing component with
+a prop. If it still falls short, write local CSS that resolves to tokens. Only then add a new
+component or a new token.
+
+## Red lines
+
+1. **Stateless.** No signal, `fetch`, `EventSource`, `location`, `history`, `localStorage`,
+   `navigator.clipboard`, `Date.now` and no import from `adw-factory`.
+2. **No world access.** `document`, `window` and `getComputedStyle` stay out; edges arrive as props.
+3. **Tokens only.** Every value resolves to a `@adw-factory/tokens` property or to a
+   `--adw-<component>-<thing>` property declared with a token fallback.
+4. **No words in code.** Every human-readable string is a prop.
+
+## How to add a component
+
+1. Create `src/<layer>/<Name>/` with `<Name>.tsx`, `<Name>.css`, `<Name>.stories.tsx` and
+   `<Name>.test.tsx`. Prefix every class with the component's prefix.
+2. Write the test first and watch it fail.
+3. Add the `exports` entry to `packages/components/package.json`:
+   `"./<Name>": { "types": "./dist/<layer>/<Name>/<Name>.d.ts", "import": "./dist/<layer>/<Name>/<Name>.js" }`.
+4. Give the story a literal title `<Layer>/<Name>` that matches its folder, and `tags: ["autodocs"]`.
+5. Run `bun run build`, then `bun run storybook` to see it in both themes.
+
+## The four-block description
+
+What · Where · When · Don't. Every component's docs open with four bold blocks, in this order:
+
+- **What** it is, in one sentence.
+- **Where** it sits in the layers and which screens use it.
+- **When** to reach for it.
+- **Don't**: what it must not be asked to do.
+
+For example, `Kpi`: **What** the one chip primitive. **Where** an atom inside cards and rows.
+**When** a short figure needs a chip. **Don't** format the value inside it.

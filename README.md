@@ -18,3 +18,18 @@ bun run format          # write the Biome formatting
 ```
 
 Bun 1.4.2 for everything; Node 22 only for Storybook. Builder rules: [`CLAUDE.md`](CLAUDE.md).
+
+## Storybook
+
+The library is documented in layer order (Foundations, Atoms, Molecules, Organisms, Templates,
+Pages), with a dark / light / system toolbar, at `https://main--<appId>.chromatic.com`. The app id
+is the one of the Chromatic project (Chromatic, Manage, Configure); it is not kept in this repo.
+
+```bash
+bun run storybook                    # dev server on :6006
+bun run build-storybook              # static build into storybook-static/ (not committed)
+bun run storybook:publish [branch]   # host a pushed branch on Chromatic, print the two links
+```
+
+Storybook runs under Node 22 (`.nvmrc`); everything else is bun. Chromatic hosts; it never gates:
+`chromatic.yml` runs on push to `main` and on dispatch, never on a pull request.

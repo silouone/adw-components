@@ -5,6 +5,7 @@
       "packages/**",
       "test/**",
       "examples/**",
+      ".storybook/**",
       "*.json",
       "!.adw",
       "!**/dist",

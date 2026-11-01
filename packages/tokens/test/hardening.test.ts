@@ -442,8 +442,10 @@ describe("package hygiene", () => {
     unknown
   >;
 
-  test("src/ holds exactly the five css files: no script, no stories", () => {
-    expect(readdirSync(SRC).sort()).toEqual([...SOURCES].sort());
+  test("src/ holds the five css files and the two Foundations stories", () => {
+    expect(readdirSync(SRC).sort()).toEqual(
+      [...SOURCES, "Tokens.stories.tsx", "TextStyles.stories.tsx"].sort(),
+    );
   });
 
   test("has no runtime dependency, no main and no bin", () => {

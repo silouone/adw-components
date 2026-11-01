@@ -46,9 +46,18 @@ describe("ci.yml mirrors the target's gates", () => {
     expect(workflow().jobs.build?.needs).toBe("check");
   });
 
-  test("test builds first (the tests read dist/), then runs bun test, after build", () => {
-    expect(runs("test")).toEqual([INSTALL, "bun run build", "bun test"]);
+  test("test builds first (the tests read dist/ and storybook-static/), then runs bun test, after build", () => {
+    expect(runs("test")).toEqual([INSTALL, "bun run build", "bun run build-storybook", "bun test"]);
     expect(workflow().jobs.test?.needs).toBe("build");
+  });
+
+  test("build and test set up node for Storybook", () => {
+    for (const job of ["build", "test"]) {
+      const uses = (workflow().jobs[job]?.steps ?? []).flatMap((s) =>
+        s.uses === undefined ? [] : [s.uses],
+      );
+      expect(uses.some((u) => u.startsWith("actions/setup-node@"))).toBe(true);
+    }
   });
 
   test("every action is pinned by a full commit sha", () => {
