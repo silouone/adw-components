@@ -1,0 +1,56 @@
+.pr-row {
+  display: flex;
+  gap: var(--sp-6);
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: var(--sp-4);
+}
+.pr-row a {
+  position: relative;
+  z-index: var(--z-base);
+}
+.pr-absent b {
+  color: var(--dim);
+}
+.pr-ci.none b {
+  color: var(--dim);
+}
+.pr-ci.ok b {
+  color: var(--ok);
+}
+.pr-ci.bad b {
+  color: var(--bad);
+}
+.pr-merge.conflicts b {
+  color: var(--bad);
+}
+.pr-merge.behind b {
+  color: var(--warn);
+}
+.pr-merge.parked b {
+  color: var(--dim);
+}
+.pr-absent.warn b,
+.pr-absent.warn i {
+  color: var(--warn);
+}
+.pr-ci a,
+.pr-num {
+  color: inherit;
+  text-decoration: none;
+}
+.pr-ci a:hover,
+.pr-num:hover {
+  text-decoration: underline;
+}
+.pr-dot {
+  font-size: var(--fs-2xs);
+  margin-left: var(--sp-2);
+  color: var(--dim);
+}
+.pr-num {
+  margin-left: auto;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  display: var(--adw-pr-num-display, inline);
+}

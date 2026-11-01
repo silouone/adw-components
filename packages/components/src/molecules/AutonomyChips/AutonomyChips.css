@@ -1,0 +1,11 @@
+.autonomy-chip {
+  flex: none;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  line-height: 1;
+  padding: var(--sp-3) var(--sp-6);
+  border-radius: var(--r-sm);
+  border: 1px dashed var(--dim);
+  color: var(--dim);
+  cursor: default;
+}
