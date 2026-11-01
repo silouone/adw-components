@@ -72,9 +72,13 @@ describe("dist js imports", () => {
   test("dist js imports only preact, preact/hooks and preact/jsx-runtime", () => {
     const allowed = new Set(["preact", "preact/hooks", "preact/jsx-runtime"]);
     for (const file of jsFiles()) {
-      const specs = [...readFileSync(file, "utf8").matchAll(/from\s*["']([^"']+)["']/g)].map(
-        (m) => m[1] as string,
-      );
+      // Only real import/export specifiers: a bare `from"…"` also matches minified data such as an
+      // edge's `from` field (`…from":le.from,…` in DepGraph).
+      const specs = [
+        ...readFileSync(file, "utf8").matchAll(
+          /\b(?:import|export)\b[^;"'`]*?\bfrom\s*["']([^"']+)["']/g,
+        ),
+      ].map((m) => m[1] as string);
       for (const spec of specs) expect(allowed.has(spec), `${file} imports ${spec}`).toBe(true);
     }
   });
