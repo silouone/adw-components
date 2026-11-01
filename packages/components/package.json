@@ -281,6 +281,14 @@
       "types": "./dist/organisms/DepGraph/DepGraph.d.ts",
       "import": "./dist/organisms/DepGraph/DepGraph.js"
     },
+    "./ReviewDesk": {
+      "types": "./dist/organisms/ReviewDesk/ReviewDesk.d.ts",
+      "import": "./dist/organisms/ReviewDesk/ReviewDesk.js"
+    },
+    "./GraphDrawerView": {
+      "types": "./dist/organisms/GraphDrawerView/GraphDrawerView.d.ts",
+      "import": "./dist/organisms/GraphDrawerView/GraphDrawerView.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

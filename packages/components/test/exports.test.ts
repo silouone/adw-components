@@ -75,6 +75,8 @@ const components = [
   ["BacklogSection", "BacklogSection"],
   ["BacklogPanel", "BacklogPanel"],
   ["DepGraph", "DepGraph"],
+  ["ReviewDesk", "ReviewDesk"],
+  ["GraphDrawerView", "GraphDrawerView"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -136,6 +138,8 @@ const namedProps = new Set([
   "BacklogSection",
   "BacklogPanel",
   "DepGraph",
+  "ReviewDesk",
+  "GraphDrawerView",
 ]);
 const modules = ["glyphs", "FocusPanel/focusTabs", "RunScopeSection/markdown"] as const;
 const expectedExports = [
