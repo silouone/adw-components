@@ -246,5 +246,13 @@
   {
     "source": "src/web/ui/components/DepGraph",
     "target": "packages/components/src/organisms/DepGraph"
+  },
+  {
+    "source": "src/web/ui/components/ReviewDesk",
+    "target": "packages/components/src/organisms/ReviewDesk"
+  },
+  {
+    "source": "src/web/ui/components/GraphDrawer",
+    "target": "packages/components/src/organisms/GraphDrawerView"
   }
 ]

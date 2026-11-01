@@ -1,0 +1,135 @@
+.bl-desk-sum b {
+  font-size: var(--fs-md);
+  color: var(--ink);
+}
+.bl-desk[open] > .bl-desk-sum {
+  border-bottom: 1px solid var(--line);
+}
+.bl-desk-n {
+  white-space: nowrap;
+}
+.bl-desk-n.ok {
+  color: var(--ok);
+}
+.bl-desk-mini {
+  display: inline-flex;
+  gap: var(--sp-8);
+  margin-left: var(--sp-4);
+}
+.bl-desk-mini em {
+  font-style: normal;
+  font-size: var(--fs-sm);
+  color: var(--rb);
+  white-space: nowrap;
+}
+.bl-desk-cols {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(calc(var(--sp-8) * 25), 1fr);
+  gap: var(--sp-8);
+  align-items: start;
+  overflow-x: auto;
+  padding: var(--sp-8) var(--sp-12) var(--sp-12);
+}
+.bl-desk-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  min-width: 0;
+  border-top: var(--sp-2) solid var(--rb);
+  padding-top: var(--sp-6);
+}
+.bl-desk-col.on {
+  background: color-mix(in srgb, var(--rb) 7%, transparent);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+}
+.bl-desk-hd {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0 var(--sp-2) var(--sp-4);
+  text-align: left;
+}
+.bl-desk-hd i {
+  font-style: normal;
+  color: var(--rb);
+}
+.bl-desk-hd b {
+  font-weight: 600;
+}
+.bl-desk-hd .bl-desk-count {
+  margin-left: auto;
+}
+.bl-desk-col.on .bl-desk-hd {
+  color: var(--rb);
+}
+.bl-desk-card {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: var(--sp-2) var(--sp-6);
+  align-items: center;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-6);
+  color: var(--ink);
+  min-width: 0;
+}
+.bl-desk-card:hover {
+  border-color: var(--faint);
+}
+.bl-desk-card b {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.bl-desk-card em {
+  font-style: normal;
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  justify-self: end;
+}
+.bl-desk-card .bl-desk-proj {
+  font-size: var(--fs-xs);
+}
+.bl-desk-title {
+  grid-column: 1 / -1;
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bl-desk-more {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-xs);
+  color: var(--dim);
+  background: none;
+  border: 0;
+  text-align: left;
+  padding: var(--sp-2);
+}
+.bl-desk-more:hover {
+  color: var(--ink);
+}
+.bl-desk .bl-desk-empty {
+  padding: var(--sp-6) 0;
+}
+/* doubled: keeps the old .bl .bl-desk specificity */
+.bl-desk.bl-desk {
+  margin: 0 0 var(--sp-12);
+}
+.bl-desk.bl-desk > summary.bl-desk-sum {
+  gap: var(--sp-12);
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
