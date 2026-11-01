@@ -1,0 +1,57 @@
+.gatestab {
+  display: grid;
+  gap: var(--sp-12);
+  padding: var(--sp-12);
+}
+/* rail density: set by density="rail" */
+.gatestab.gt-rail {
+  gap: var(--sp-24);
+  padding: var(--sp-16) var(--sp-12) var(--sp-24);
+}
+.gatestab.gt-rail > * {
+  min-width: 0;
+}
+.gt-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.gt-line .ok {
+  color: var(--ok);
+}
+.gt-line .bad {
+  color: var(--bad);
+}
+.gt-fail {
+  margin: var(--sp-2) 0 var(--sp-4) var(--sp-16);
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--sp-1);
+  font-size: var(--fs-md);
+  color: var(--bad);
+}
+.gt-base {
+  font-size: var(--fs-md);
+}
+.gt-base.ok {
+  color: var(--ok);
+}
+.gt-base.bad {
+  color: var(--bad);
+}
+.gt-live {
+  font-size: var(--fs-md);
+  color: var(--live);
+}
+.gt-target {
+  display: flex;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.gt-why {
+  font-size: var(--fs-md);
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,73 @@
+/* rail density: set by density="rail" */
+.costtab.ct-rail {
+  gap: var(--sp-24);
+  padding: var(--sp-16) var(--sp-12) var(--sp-24);
+}
+.costtab.ct-rail > * {
+  min-width: 0;
+}
+.ct-cell.ct-rail {
+  background: var(--panel2);
+  border-color: transparent;
+  padding: var(--sp-8) var(--sp-8);
+  gap: var(--sp-3);
+  font-size: var(--fs-md);
+}
+.ct-stage.ct-rail,
+.ct-attempt.ct-rail {
+  font-size: var(--fs-md);
+  row-gap: var(--sp-4);
+}
+.costtab {
+  display: grid;
+  gap: var(--sp-12);
+  padding: var(--sp-12);
+}
+.ct-cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6);
+}
+.ct-cell {
+  display: grid;
+  gap: var(--sp-1);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-8);
+  font-size: var(--fs-md);
+}
+.ct-cell b {
+  font-size: var(--fs-base);
+  font-weight: 600;
+}
+.ct-cell.ct-rail b {
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--ink);
+}
+.ct-meter,
+.ct-count,
+.ct-time,
+.ct-basis,
+.ct-agent {
+  font-size: var(--fs-md);
+}
+.ct-stage {
+  display: grid;
+  grid-template-columns: 1fr auto var(--adw-ct-share-width, calc(var(--sp-6) * 3.5)) auto;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.ct-attempt {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  gap: var(--sp-8);
+  font-size: var(--fs-md);
+}
+.ct-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-md);
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-3);
+}
