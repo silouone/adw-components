@@ -1,0 +1,49 @@
+.pop {
+  position: absolute;
+  left: calc(var(--sp-12) * 5);
+  top: calc(var(--sp-12) * 5);
+  z-index: var(--z-dropdown);
+  width: var(--adw-pop-width, calc(var(--sp-12) * 25));
+  padding: var(--sp-8) var(--sp-12);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel2);
+  color: var(--ink);
+  font-size: var(--fs-md);
+  text-align: left;
+  pointer-events: none;
+}
+.pop-hd {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+}
+.pop-hd .pop-rdot {
+  position: static;
+}
+.pop-st {
+  color: var(--dim);
+  margin-left: auto;
+}
+.pop-kind,
+.pop-hint {
+  margin: var(--sp-6) 0;
+  color: var(--dim);
+}
+.pop-kv {
+  margin: var(--sp-6) 0;
+}
+.pop-kv div {
+  display: flex;
+  gap: var(--sp-8);
+}
+.pop-kv dt {
+  width: calc(var(--sp-6) * 13);
+  color: var(--dim);
+}
+.pop-kv dd {
+  margin: 0;
+}
+.rail2.panel {
+  width: var(--adw-rail2-width, calc(var(--sp-6) * 55));
+}

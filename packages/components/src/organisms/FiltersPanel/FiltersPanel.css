@@ -1,0 +1,88 @@
+.fp .fp-chip {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  padding: var(--sp-4) var(--sp-12);
+  background: var(--panel2);
+  opacity: 0.5;
+  transition:
+    opacity 0.12s,
+    color 0.12s;
+  gap: var(--sp-6);
+  white-space: nowrap;
+}
+.fp .fp-chip i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.fp .fp-chip.on {
+  opacity: 1;
+}
+.fp .fp-chip.ok.on {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 50%, transparent);
+}
+.fp .fp-chip.bad.on {
+  color: var(--bad);
+  border-color: color-mix(in srgb, var(--bad) 50%, transparent);
+}
+.fp .fp-chip.live.on {
+  color: var(--live);
+  border-color: color-mix(in srgb, var(--live) 50%, transparent);
+}
+.fp .fp-chip.host.on {
+  color: var(--live);
+  border-color: color-mix(in srgb, var(--live) 50%, transparent);
+}
+.fp .fp-chip.on:not(.ok):not(.bad):not(.live):not(.host) {
+  color: var(--ink);
+}
+.fp .fp-chip b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.fp .fp-chip:hover {
+  opacity: 1;
+}
+.opt-legacy {
+  color: var(--dim);
+}
+.fp {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+  min-width: var(--adw-fp-min-width, calc(var(--sp-12) * 35));
+  max-width: var(--adw-fp-max-width, calc(var(--sp-8) * 80));
+}
+.fp-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+}
+.fp-l {
+  flex: 0 0 calc(var(--sp-8) * 8);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.fp-c {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-6);
+}
+.fp-q {
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--ink);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: var(--sp-4) var(--sp-12);
+  min-width: calc(var(--sp-8) * 25);
+}

@@ -1,0 +1,18 @@
+/* rail density: set by density="rail" */
+.actions.actions-rail {
+  margin-top: var(--sp-6);
+  gap: var(--sp-8);
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  margin-top: var(--sp-4);
+}
+.actions-left,
+.actions-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+}
