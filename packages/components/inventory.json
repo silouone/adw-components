@@ -230,5 +230,17 @@
   {
     "source": "src/web/ui/components/Dock",
     "target": "packages/components/src/organisms/Dock"
+  },
+  {
+    "source": "src/web/ui/components/BacklogRow",
+    "target": "packages/components/src/organisms/BacklogRow"
+  },
+  {
+    "source": "src/web/ui/components/BacklogSection",
+    "target": "packages/components/src/organisms/BacklogSection"
+  },
+  {
+    "source": "src/web/ui/components/BacklogPanel",
+    "target": "packages/components/src/organisms/BacklogPanel"
   }
 ]
