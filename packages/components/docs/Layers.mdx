@@ -1,0 +1,33 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Layers" />
+
+# Layers
+
+Components sit in five layers, in the order Storybook lists them. The level is decided by actual
+composition, not by how big a component looks, and a promotion from one layer to the next is a
+folder move with no import-path change.
+
+## Atoms
+
+Composes no other component and carries no domain. `Kpi` is the example: a glyph and a value in a
+pill.
+
+## Molecules
+
+Composes atoms, and may carry a domain word. `ArmButton` and `PhaseStrip` are the examples.
+
+## Organisms
+
+A region of a screen with a view-model: a card, a ledger, a rail. It renders from its typed
+`<Name>Props` and reports through callbacks.
+
+## Templates
+
+A frame that places organisms by slot: the three-column shell, the focus panel frame, the dock
+frame, the card grid section.
+
+## Pages
+
+A template filled with organisms, taking one `<Screen>View` and one `<Screen>Actions` object. Its
+story is fed by an invented fixture, never by a real run.
