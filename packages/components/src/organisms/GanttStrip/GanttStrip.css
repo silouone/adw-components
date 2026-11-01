@@ -1,0 +1,68 @@
+/* The gantt strip: the run header collapsed to one line. */
+.gantt-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-8) var(--sp-16);
+  cursor: pointer;
+  background: linear-gradient(180deg, var(--panel2), var(--panel));
+}
+.gantt-strip:hover {
+  background: var(--surface-raised);
+}
+.gs-chev {
+  color: var(--dim);
+  font-size: var(--fs-xs);
+  flex: none;
+}
+.gs-st {
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-8);
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+  white-space: nowrap;
+}
+.gs-st.ok {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.gs-st.bad {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+.gs-st.live {
+  color: var(--live);
+  border-color: var(--live);
+}
+.gs-st.dim {
+  color: var(--dim);
+  border-color: var(--dim);
+}
+.gs-id {
+  max-width: 38%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 600 var(--fs-base) var(--font-mono);
+}
+.gs-track {
+  flex: 1 1 0;
+  min-width: calc(var(--sp-4) * 10);
+  position: relative;
+  height: var(--sp-8);
+  border-radius: var(--r-sm);
+  background: var(--bg);
+}
+.gs-span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: var(--r-sm);
+  background: var(--live-span);
+}
+.gs-span.bad {
+  background: var(--bad);
+}
+.gs-dur {
+  flex: none;
+}

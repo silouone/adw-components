@@ -206,5 +206,17 @@
   {
     "source": "src/web/ui/components/Lanes",
     "target": "packages/components/src/organisms/Lanes"
+  },
+  {
+    "source": "src/web/ui/components/RunHeader",
+    "target": "packages/components/src/organisms/RunHeader"
+  },
+  {
+    "source": "src/web/ui/components/GanttStrip",
+    "target": "packages/components/src/organisms/GanttStrip"
+  },
+  {
+    "source": "src/web/ui/components/FailureView",
+    "target": "packages/components/src/organisms/FailureView"
   }
 ]
