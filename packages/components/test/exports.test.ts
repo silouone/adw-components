@@ -57,6 +57,10 @@ const components = [
   ["GatesTab", "GatesTab"],
   ["ToolsTab", "ToolsTab"],
   ["WalkTab", "WalkTab"],
+  ["FocusPanel", "FocusPanel"],
+  ["UsagePanel", "UsagePanel"],
+  ["BoardChips", "BoardChips"],
+  ["SyncButton", "SyncButton"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -100,8 +104,12 @@ const namedProps = new Set([
   "GatesTab",
   "ToolsTab",
   "WalkTab",
+  "FocusPanel",
+  "UsagePanel",
+  "BoardChips",
+  "SyncButton",
 ]);
-const modules = ["glyphs"] as const;
+const modules = ["glyphs", "FocusPanel/focusTabs"] as const;
 const expectedExports = [
   ...new Set([...components.map(([name]) => name), ...modules]),
   "components.css",
@@ -129,7 +137,7 @@ describe("manifest", () => {
     for (const field of ["main", "module", "types"]) expect(manifest[field]).toBeUndefined();
   });
 
-  test("exports are exactly the components, ./glyphs and ./components.css", () => {
+  test("exports are exactly the components, ./glyphs, ./FocusPanel/focusTabs and ./components.css", () => {
     expect(Object.keys(manifest.exports).sort()).toEqual([...expectedExports].sort());
   });
 });
@@ -191,5 +199,16 @@ describe("export targets", () => {
       ].sort(),
     );
     expect(readFileSync(abs("dist/glyphs.d.ts"), "utf8")).toContain("PROVIDER_GLYPH");
+  });
+
+  test("./FocusPanel/focusTabs resolves to the tab registry, in the FocusPanel folder", async () => {
+    const mod = (await import(abs("dist/organisms/FocusPanel/focusTabs.js"))) as Record<
+      string,
+      unknown
+    >;
+    expect(Object.keys(mod).sort()).toEqual(["FOCUS_TAB_RENDERERS", "focusBodyOf"]);
+    const dts = readFileSync(abs("dist/organisms/FocusPanel/focusTabs.d.ts"), "utf8");
+    expect(dts).toMatch(/export declare function focusBodyOf\b/);
+    expect(dts).toMatch(/export type FocusBody\b/);
   });
 });

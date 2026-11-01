@@ -1,14 +1,24 @@
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, posix } from "node:path";
-import { PACKAGE_DIR } from "./support/build";
+import { PACKAGE_DIR, readManifest } from "./support/build";
 
-// A copied test may reach only its component, its siblings, the glyph module, the
+// A copied test may reach only its component, its own folder's parts, its siblings, the glyph module, the
 // library's own fixtures and the test tooling. A factory path in a test is a test that
 // cannot move with its component.
 
 const PACKAGES = new Set(["preact", "preact/hooks", "@testing-library/preact", "bun:test"]);
 const COMPONENT_MODULE = /^src\/(?:atoms|molecules|organisms|templates|pages)\/([A-Za-z0-9]+)\/\1$/;
+/** Exported sub-parts of a component folder (`./FocusPanel/focusTabs`), as `src/<layer>/<Folder>/<file>`. */
+const SUB_PARTS: ReadonlySet<string> = new Set(
+  Object.values(readManifest().exports).flatMap((v) => {
+    const m =
+      typeof v === "string"
+        ? null
+        : /^\.\/dist\/([a-z]+\/([A-Za-z0-9]+)\/(?!\2\.js)[A-Za-z0-9]+)\.js$/.exec(v.import);
+    return m === null ? [] : [`src/${m[1]}`];
+  }),
+);
 const FIXTURE_MODULE = /^fixtures\/[A-Za-z0-9]+$/;
 
 const SPECIFIER = /(?:\bfrom\s*|\bimport\s*\(?\s*|\brequire\s*\(\s*)["']([^"']+)["']/g;
@@ -24,8 +34,12 @@ export const importProblem = (packagePath: string, specifier: string): string | 
     return `${packagePath}: imports "${specifier}", which is not a library test dependency`;
   }
   const target = posix.normalize(posix.join(posix.dirname(packagePath), specifier));
+  const ownPart = SUB_PARTS.has(target) && posix.dirname(target) === posix.dirname(packagePath);
   const reachable =
-    COMPONENT_MODULE.test(target) || target === "src/glyphs" || FIXTURE_MODULE.test(target);
+    COMPONENT_MODULE.test(target) ||
+    ownPart ||
+    target === "src/glyphs" ||
+    FIXTURE_MODULE.test(target);
   return reachable
     ? undefined
     : `${packagePath}: imports "${specifier}" (${target}), which is not a component, glyphs or a fixture of this package`;
@@ -74,6 +88,14 @@ describe("problemsOf", () => {
       'import { BASE_RED } from "../../../fixtures/BaseRedChip";',
     ].join("\n");
     expect(problemsOf(kpiTest, source)).toEqual([]);
+  });
+
+  test("accepts an exported sub-part of its own component folder only", () => {
+    const panelTest = "src/organisms/FocusPanel/FocusPanel.test.tsx";
+    expect(problemsOf(panelTest, 'import { x } from "./focusTabs";')).toEqual([]);
+    expect(
+      problemsOf(kpiTest, 'import { x } from "../../organisms/FocusPanel/focusTabs";'),
+    ).toHaveLength(1);
   });
 
   test("flags a component that is not at <layer>/<Name>/<Name>", () => {

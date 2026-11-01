@@ -1,0 +1,18 @@
+.bl-sync {
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: var(--sp-1) var(--sp-8);
+  cursor: pointer;
+}
+.bl-sync:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--dim);
+}
+.bl-sync:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}

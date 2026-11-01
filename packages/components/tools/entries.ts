@@ -15,7 +15,10 @@ export interface Entry {
   readonly css: string;
 }
 
-/** A module export (`./glyphs`): a bare `src/<name>.ts`, no stylesheet, no layer. */
+/**
+ * A module export: no stylesheet of its own. Either a bare `src/<name>.ts` (`./glyphs`) or a
+ * sub-part of a component folder, `src/<layer>/<Folder>/<file>.ts[x]` (`./FocusPanel/focusTabs`).
+ */
 export interface ModuleEntry {
   readonly subpath: string;
   readonly name: string;
@@ -25,7 +28,9 @@ export interface ModuleEntry {
 }
 
 const IMPORT_TARGET = new RegExp(`^\\./dist/(${LAYERS.join("|")})/([A-Za-z0-9]+)/\\2\\.js$`);
-const MODULE_TARGET = /^\.\/dist\/([A-Za-z0-9]+)\.js$/;
+const MODULE_TARGET = new RegExp(
+  `^\\./dist/(?:(${LAYERS.join("|")})/([A-Za-z0-9]+)/)?([A-Za-z0-9]+)\\.js$`,
+);
 
 const importOf = (value: Readonly<Record<string, unknown>>): string | undefined =>
   typeof value.import === "string" ? value.import : undefined;
@@ -69,9 +74,13 @@ const entryOf = (
   };
 };
 
-const isModuleExport = (value: unknown): boolean => {
+/** A bare `./name`, or a sub-part `./Folder/file`; a layered target under a one-segment subpath is a component export. */
+const isModuleExport = (key: string, value: unknown): boolean => {
   const target = isObject(value) ? importOf(value) : undefined;
-  return target !== undefined && MODULE_TARGET.test(target);
+  if (target === undefined) return false;
+  const match = MODULE_TARGET.exec(target);
+  if (match === null || IMPORT_TARGET.test(target)) return false;
+  return match[1] === undefined || key.includes("/", 2);
 };
 
 const moduleOf = (
@@ -79,20 +88,22 @@ const moduleOf = (
   value: Readonly<Record<string, unknown>>,
   exists: (path: string) => boolean,
 ): ModuleEntry => {
-  const name = MODULE_TARGET.exec(importOf(value) ?? "")?.[1] as string;
+  const [, layer, folder, file] = MODULE_TARGET.exec(importOf(value) ?? "") as RegExpExecArray;
+  const base = layer === undefined ? `${file}` : `${layer}/${folder}/${file}`;
+  const name = layer === undefined ? `${file}` : `${folder}/${file}`;
   if (key !== `./${name}`) {
     throw new Error(
       `export "${key}": the subpath must be "./${name}" to match ${String(value.import)}`,
     );
   }
-  if (value.types !== `./dist/${name}.d.ts`) {
+  if (value.types !== `./dist/${base}.d.ts`) {
     throw new Error(
-      `export "${key}": "types" must be ./dist/${name}.d.ts to mirror "import", got ${JSON.stringify(value.types)}`,
+      `export "${key}": "types" must be ./dist/${base}.d.ts to mirror "import", got ${JSON.stringify(value.types)}`,
     );
   }
-  const src = `src/${name}.ts`;
-  if (!exists(src)) throw new Error(`export "${key}" has no source at ${src}`);
-  return { subpath: key, name, src, js: `dist/${name}.js`, dts: `dist/${name}.d.ts` };
+  const src = [`src/${base}.ts`, `src/${base}.tsx`].find(exists);
+  if (src === undefined) throw new Error(`export "${key}" has no source at src/${base}.ts[x]`);
+  return { subpath: key, name, src, js: `dist/${base}.js`, dts: `dist/${base}.d.ts` };
 };
 
 /** One entry per layered component export; string exports (`./components.css`) and module exports (`./glyphs`) are not. */
@@ -101,18 +112,19 @@ export const entriesOf = (
   exists: (path: string) => boolean,
 ): readonly Entry[] =>
   Object.entries(exportsMap).flatMap(([key, value]) =>
-    !isObject(value) || isModuleExport(value) ? [] : [entryOf(key, value, exists)],
+    !isObject(value) || isModuleExport(key, value) ? [] : [entryOf(key, value, exists)],
   );
 
 /**
- * One entry per module export (`./glyphs` → `src/glyphs.ts`).
+ * One entry per module export (`./glyphs` → `src/glyphs.ts`,
+ * `./FocusPanel/focusTabs` → `src/organisms/FocusPanel/focusTabs.tsx`).
  */
 export const modulesOf = (
   exportsMap: Readonly<Record<string, unknown>>,
   exists: (path: string) => boolean,
 ): readonly ModuleEntry[] =>
   Object.entries(exportsMap).flatMap(([key, value]) =>
-    isObject(value) && isModuleExport(value) ? [moduleOf(key, value, exists)] : [],
+    isObject(value) && isModuleExport(key, value) ? [moduleOf(key, value, exists)] : [],
   );
 
 const layerRank = (layer: string): number => LAYERS.indexOf(layer as (typeof LAYERS)[number]);

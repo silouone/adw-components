@@ -174,5 +174,21 @@
   {
     "source": "src/web/ui/components/WalkTab",
     "target": "packages/components/src/organisms/WalkTab"
+  },
+  {
+    "source": "src/web/ui/components/FocusPanel",
+    "target": "packages/components/src/organisms/FocusPanel"
+  },
+  {
+    "source": "src/web/ui/components/UsagePanel",
+    "target": "packages/components/src/organisms/UsagePanel"
+  },
+  {
+    "source": "src/web/ui/components/BoardChips",
+    "target": "packages/components/src/organisms/BoardChips"
+  },
+  {
+    "source": "src/web/ui/components/SyncButton",
+    "target": "packages/components/src/organisms/SyncButton"
   }
 ]

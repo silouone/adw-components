@@ -201,6 +201,26 @@
       "types": "./dist/organisms/WalkTab/WalkTab.d.ts",
       "import": "./dist/organisms/WalkTab/WalkTab.js"
     },
+    "./FocusPanel": {
+      "types": "./dist/organisms/FocusPanel/FocusPanel.d.ts",
+      "import": "./dist/organisms/FocusPanel/FocusPanel.js"
+    },
+    "./FocusPanel/focusTabs": {
+      "types": "./dist/organisms/FocusPanel/focusTabs.d.ts",
+      "import": "./dist/organisms/FocusPanel/focusTabs.js"
+    },
+    "./UsagePanel": {
+      "types": "./dist/organisms/UsagePanel/UsagePanel.d.ts",
+      "import": "./dist/organisms/UsagePanel/UsagePanel.js"
+    },
+    "./BoardChips": {
+      "types": "./dist/organisms/BoardChips/BoardChips.d.ts",
+      "import": "./dist/organisms/BoardChips/BoardChips.js"
+    },
+    "./SyncButton": {
+      "types": "./dist/organisms/SyncButton/SyncButton.d.ts",
+      "import": "./dist/organisms/SyncButton/SyncButton.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

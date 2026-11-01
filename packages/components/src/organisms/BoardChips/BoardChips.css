@@ -1,0 +1,14 @@
+.kpi-face {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+.kpi-face .live {
+  color: var(--live);
+}
+.kpi-face .ok {
+  color: var(--ok);
+}
+.kpi-face .bad {
+  color: var(--bad);
+}

@@ -1,0 +1,153 @@
+/* FOCUS PANEL READABILITY. Three planes: the tab bar sunk (--bg), the
+   header raised (--panel2), the body on --panel. Text is --ink for values
+   and --dim for labels: --faint (under 2:1 on --panel) is for hairlines,
+   never for words. Each rule is compounded onto its own class (.fp-rail,
+   .rt-rail, ...) so it wins over the per-tab rules below whatever their order. */
+/* rail density: set by density="rail" */
+.fp-eyebrow.fp-rail {
+  color: var(--dim);
+}
+.fp-tabs.fp-rail {
+  background: var(--bg);
+  padding: 0 var(--sp-4);
+}
+.fp-tab.fp-rail {
+  min-width: 0;
+  padding: var(--sp-8) 0 var(--sp-8);
+  gap: var(--sp-4);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+  border-radius: var(--r-md) var(--r-md) 0 0;
+}
+.fp-glyph.fp-rail {
+  font-size: var(--fs-base);
+}
+.fp-label.fp-rail {
+  white-space: nowrap;
+}
+.fp-tab.fp-rail:hover {
+  background: var(--panel2);
+}
+.fp-tab.fp-rail.on {
+  background: var(--panel);
+}
+.fp-head.fp-rail {
+  margin: var(--sp-12) var(--sp-12) 0;
+  padding: var(--sp-12) var(--sp-12);
+  gap: var(--sp-6);
+  background: var(--panel2);
+  border-left: var(--sp-2) solid hsl(var(--hue) var(--hue-s-rule) var(--hue-l-rule) / 0.75);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+}
+.fp-short.fp-rail {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+.fp-title.fp-rail {
+  color: var(--ink);
+  opacity: 0.86;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+}
+.fp-status.fp-rail {
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.fp-tabs {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-base);
+  display: flex;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+.fp-tab,
+.fp-close {
+  font: inherit;
+  color: var(--dim);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: var(--sp-6) 0;
+}
+.fp-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-xs);
+}
+.fp-glyph {
+  font-size: var(--fs-lg);
+}
+.fp-tab:hover {
+  color: var(--ink);
+}
+.fp-tab.on {
+  color: hsl(var(--hue) var(--hue-s-text) var(--hue-l-text));
+  box-shadow: inset 0 calc(var(--sp-2) * -1) hsl(var(--hue) var(--hue-s-line) var(--hue-l-line));
+}
+.fp-close {
+  flex: none;
+  width: calc(var(--sp-6) * 5);
+  font-size: var(--fs-lg);
+}
+.fp-head {
+  padding: var(--sp-8) var(--sp-12) var(--sp-12);
+  border-left: var(--sp-2) solid hsl(var(--hue) var(--hue-s-line) var(--hue-l-line));
+  margin: var(--sp-8) 0 0;
+  display: grid;
+  gap: var(--sp-4);
+}
+.fp-eyebrow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-8);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.fp-idline {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-6);
+}
+.fp-short {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: hsl(var(--hue) var(--hue-s-text) var(--hue-l-text));
+}
+.fp-suffix {
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.fp-title {
+  color: var(--dim);
+  font-size: var(--fs-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.fp-status {
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.fp-status.run {
+  color: var(--live);
+}
+.fp-status.ok {
+  color: var(--ok);
+}
+.fp-status.bad {
+  color: var(--bad);
+}
+.fp-status.warn {
+  color: var(--warn);
+}
+.fp-beacon {
+  margin-right: var(--sp-6);
+}
