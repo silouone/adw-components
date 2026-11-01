@@ -1,0 +1,28 @@
+.bl-section > summary {
+  list-style: none;
+}
+.bl-section > summary::-webkit-details-marker {
+  display: none;
+}
+.bl-section[open] > .bl-section-head {
+  border-bottom: 1px solid var(--line);
+}
+.bl-section-head b {
+  font-size: var(--fs-md);
+  text-transform: capitalize;
+}
+.bl-section[open] {
+  --adw-caret-turn: rotate(90deg);
+}
+.bl-section-count {
+  min-width: calc(var(--sp-2) * 11);
+  text-align: center;
+}
+.bl-section-note {
+  font-size: var(--fs-sm);
+  color: var(--faint);
+}
+.bl-section-body {
+  display: flex;
+  flex-direction: column;
+}

@@ -265,6 +265,18 @@
       "types": "./dist/organisms/Dock/Dock.d.ts",
       "import": "./dist/organisms/Dock/Dock.js"
     },
+    "./BacklogRow": {
+      "types": "./dist/organisms/BacklogRow/BacklogRow.d.ts",
+      "import": "./dist/organisms/BacklogRow/BacklogRow.js"
+    },
+    "./BacklogSection": {
+      "types": "./dist/organisms/BacklogSection/BacklogSection.d.ts",
+      "import": "./dist/organisms/BacklogSection/BacklogSection.js"
+    },
+    "./BacklogPanel": {
+      "types": "./dist/organisms/BacklogPanel/BacklogPanel.d.ts",
+      "import": "./dist/organisms/BacklogPanel/BacklogPanel.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

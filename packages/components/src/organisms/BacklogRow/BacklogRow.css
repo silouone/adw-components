@@ -1,0 +1,149 @@
+.bl-pr {
+  color: var(--live);
+}
+/* ---- a row ---- */
+.bl-row {
+  padding: var(--sp-6) var(--sp-12);
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+  font-size: var(--fs-md);
+  outline: none;
+}
+.bl-row:first-child {
+  border-top: 0;
+}
+.bl-row:hover,
+.bl-row.cur {
+  background: var(--panel2);
+}
+.bl-row.sel {
+  box-shadow: inset var(--sp-2) 0 0 var(--live);
+  background: var(--surface-selected);
+}
+.bl-row:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--live);
+}
+.bl-row.closed .bl-title {
+  color: var(--dim);
+}
+.bl-glyph {
+  font-style: normal;
+  text-align: center;
+}
+.bl-title {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.bl-lane {
+  font-size: var(--fs-sm);
+  color: var(--dim);
+}
+.bl-prio {
+  font-size: var(--fs-sm);
+  font-variant-numeric: tabular-nums;
+}
+.bl-why {
+  font-size: var(--fs-md);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.bl-why.bad {
+  color: var(--bad);
+}
+.bl-why.warn {
+  color: var(--warn);
+}
+.bl-why.ok {
+  color: var(--ok);
+}
+.bl-why.live {
+  color: var(--live);
+}
+.bl-why.dim {
+  color: var(--dim);
+}
+.bl-wave {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--dim);
+  border: 1px solid currentColor;
+  border-radius: var(--r-sm);
+  padding: 0 var(--sp-4);
+  margin-right: var(--sp-4);
+}
+.bl-dep-chip {
+  font: inherit;
+  background: none;
+  border: 0;
+  padding: 0 var(--sp-1);
+  cursor: pointer;
+  text-decoration: underline dotted;
+}
+.bl-dep-chip:hover {
+  color: var(--ink);
+}
+.bl-last {
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.bl-acts {
+  display: flex;
+  gap: var(--sp-4);
+  justify-content: flex-end;
+  align-items: center;
+  opacity: 0.3;
+  transition: opacity 0.1s;
+}
+.bl-row:hover .bl-acts,
+.bl-row.cur .bl-acts,
+.bl-row:focus-within .bl-acts {
+  opacity: 1;
+}
+.bl-review-off {
+  color: var(--warn);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+}
+.bl-pr-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-4);
+  justify-self: end;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+  line-height: calc(var(--sp-2) * 8);
+  padding: 0 var(--sp-6);
+  border-radius: var(--r-sm);
+  color: var(--rb);
+  border: 1px solid color-mix(in srgb, var(--rb) 55%, transparent);
+}
+.bl-pr-cell i {
+  font-style: normal;
+}
+.bl-pr-cell b {
+  font-weight: 600;
+}
+.bl-pr-cell em {
+  font-style: normal;
+  color: var(--dim);
+}
+.bl-pr-cell u {
+  text-decoration: none;
+  color: var(--pr-accent);
+  font-weight: 700;
+}
+.bl-pr-cell:is(a):hover {
+  background: color-mix(in srgb, var(--rb) 12%, transparent);
+}
