@@ -153,6 +153,26 @@
       "types": "./dist/organisms/KpiPanel/KpiPanel.d.ts",
       "import": "./dist/organisms/KpiPanel/KpiPanel.js"
     },
+    "./FiltersPanel": {
+      "types": "./dist/organisms/FiltersPanel/FiltersPanel.d.ts",
+      "import": "./dist/organisms/FiltersPanel/FiltersPanel.js"
+    },
+    "./NetworkTree": {
+      "types": "./dist/organisms/NetworkTree/NetworkTree.d.ts",
+      "import": "./dist/organisms/NetworkTree/NetworkTree.js"
+    },
+    "./RunnerRail": {
+      "types": "./dist/organisms/RunnerRail/RunnerRail.d.ts",
+      "import": "./dist/organisms/RunnerRail/RunnerRail.js"
+    },
+    "./FocusRail": {
+      "types": "./dist/organisms/FocusRail/FocusRail.d.ts",
+      "import": "./dist/organisms/FocusRail/FocusRail.js"
+    },
+    "./ActionBar": {
+      "types": "./dist/organisms/ActionBar/ActionBar.d.ts",
+      "import": "./dist/organisms/ActionBar/ActionBar.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

@@ -126,5 +126,25 @@
   {
     "source": "src/web/ui/components/KpiPanel",
     "target": "packages/components/src/organisms/KpiPanel"
+  },
+  {
+    "source": "src/web/ui/components/FiltersPanel",
+    "target": "packages/components/src/organisms/FiltersPanel"
+  },
+  {
+    "source": "src/web/ui/components/NetworkTree",
+    "target": "packages/components/src/organisms/NetworkTree"
+  },
+  {
+    "source": "src/web/ui/components/RunnerRail",
+    "target": "packages/components/src/organisms/RunnerRail"
+  },
+  {
+    "source": "src/web/ui/components/FocusRail",
+    "target": "packages/components/src/organisms/FocusRail"
+  },
+  {
+    "source": "src/web/ui/components/ActionBar",
+    "target": "packages/components/src/organisms/ActionBar"
   }
 ]
