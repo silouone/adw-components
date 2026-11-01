@@ -1,0 +1,28 @@
+.vt {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--panel);
+  overflow: hidden;
+}
+.vt button {
+  background: none;
+  border: 0;
+  color: var(--dim);
+  font: inherit;
+  font-size: var(--fs-md);
+  padding: var(--sp-3) var(--sp-8);
+  cursor: pointer;
+}
+.vt button:hover {
+  color: var(--ink);
+  background: var(--panel2);
+}
+.vt button.on {
+  color: var(--ink);
+  background: var(--panel2);
+}

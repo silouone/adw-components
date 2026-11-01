@@ -1,0 +1,85 @@
+.up-fused {
+  cursor: pointer;
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-4) var(--sp-12);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.up-fused:hover {
+  border-color: var(--faint);
+}
+.up-fused.up-fused-on {
+  border-color: var(--live);
+}
+.up-fr {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-6);
+  font-size: var(--fs-md);
+}
+.up-fr i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.up-fr b {
+  font-weight: 600;
+}
+.up-fr em {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-sm);
+}
+.up-fr.ok b {
+  color: var(--ok);
+}
+.up-fr.warn b {
+  color: var(--warn);
+}
+.up-fr.bad b {
+  color: var(--bad);
+}
+.up-mini {
+  display: inline-block;
+  width: var(--adw-up-mini-width, calc(var(--sp-2) * 17));
+  height: var(--sp-3);
+  border-radius: var(--r-xs);
+  background: var(--line);
+  overflow: hidden;
+}
+.up-mini > span {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-xs);
+  background: currentColor;
+}
+.up-fr.ok .up-mini > span {
+  background: var(--ok);
+}
+.up-fr.warn .up-mini > span {
+  background: var(--warn);
+}
+.up-fr.bad .up-mini > span {
+  background: var(--bad);
+}
+.up-car {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-2xs);
+}
+.up-fused.up-fused-loading {
+  opacity: var(--adw-up-loading-opacity, 0.6);
+}
+/* doubled: keeps the specificity of the header rule it replaces */
+.up-fused.up-fused {
+  align-self: center;
+  margin-left: auto;
+}

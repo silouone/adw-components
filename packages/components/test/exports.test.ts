@@ -32,6 +32,15 @@ const components = [
   ["RangeChips", "RangeChips"],
   ["Rig", "RigTag"],
   ["StepThread", "StepThread"],
+  ["CopyRunMenu", "CopyRunMenu"],
+  ["LaneNames", "LaneNames"],
+  ["RunRounds", "RunRounds"],
+  ["SlotsChip", "SlotsChip"],
+  ["StageHeader", "StageHeader"],
+  ["UsageChip", "UsageChip"],
+  ["ViewTabs", "ViewTabs"],
+  ["ViewToggle", "ViewToggle"],
+  ["SlotsPanel", "SlotsPanel"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -50,6 +59,15 @@ const namedProps = new Set([
   "PrChips",
   "RangeChips",
   "StepThread",
+  "CopyRunMenu",
+  "LaneNames",
+  "RunRounds",
+  "SlotsChip",
+  "StageHeader",
+  "UsageChip",
+  "ViewTabs",
+  "ViewToggle",
+  "SlotsPanel",
 ]);
 const modules = ["glyphs"] as const;
 const expectedExports = [
