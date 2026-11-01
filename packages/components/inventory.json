@@ -190,5 +190,21 @@
   {
     "source": "src/web/ui/components/SyncButton",
     "target": "packages/components/src/organisms/SyncButton"
+  },
+  {
+    "source": "src/web/ui/components/HoverCard",
+    "target": "packages/components/src/organisms/HoverCard"
+  },
+  {
+    "source": "src/web/ui/components/Journey",
+    "target": "packages/components/src/organisms/Journey"
+  },
+  {
+    "source": "src/web/ui/components/Ledger",
+    "target": "packages/components/src/organisms/Ledger"
+  },
+  {
+    "source": "src/web/ui/components/Lanes",
+    "target": "packages/components/src/organisms/Lanes"
   }
 ]

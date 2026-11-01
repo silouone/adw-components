@@ -1,0 +1,215 @@
+/* The journey (ticket adw-fe-26 R11): phases, a bar, a station line. */
+.jn {
+  padding: var(--sp-12) var(--sp-16);
+}
+.jn-bar {
+  display: flex;
+  gap: var(--sp-2);
+  height: calc(var(--sp-2) * 13);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+.jn-seg {
+  min-width: var(--sp-2);
+  border: 0;
+  padding: 0 var(--sp-6);
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--ink-on-fill);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  cursor: pointer;
+  background: hsl(var(--ph) var(--hue-s-deep) var(--hue-l-deep));
+}
+.jn-seg:hover {
+  filter: brightness(1.3);
+}
+.jn-seg.bad {
+  background: var(--bad);
+}
+.jn-left {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-8);
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--panel2) 0 var(--sp-6),
+    var(--panel) var(--sp-6) var(--sp-12)
+  );
+}
+.jn-line {
+  display: flex;
+  align-items: center;
+  margin: var(--sp-24) 0 var(--sp-16);
+}
+.jn-hop {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.jn-hop:first-child {
+  flex: none;
+}
+.jn-rail {
+  flex: 1;
+  height: var(--sp-2);
+  min-width: var(--sp-12);
+  background: var(--faint);
+}
+.jn-rail.pending {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--faint) 0 var(--sp-4),
+    transparent var(--sp-4) var(--sp-8)
+  );
+}
+.jn-st {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-6);
+  border: 0;
+  border-radius: var(--r-md);
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  cursor: pointer;
+}
+.jn-st.sel {
+  background: var(--panel2);
+  box-shadow: inset 0 0 0 1px var(--faint);
+}
+.jn-ring {
+  width: calc(var(--sp-2) * 15);
+  height: calc(var(--sp-2) * 15);
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-round);
+  font-weight: 700;
+  border: var(--sp-2) solid hsl(var(--ph) var(--hue-s-ph-ring) var(--hue-l-ph-ring));
+  color: hsl(var(--ph) var(--hue-s-ph-text) var(--hue-l-ph-text));
+  background: var(--bg);
+}
+.jn-st.bad .jn-ring {
+  border-color: var(--bad);
+  color: var(--bad);
+}
+.jn-st.warn .jn-ring {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+.jn-st.live .jn-ring {
+  box-shadow: 0 0 0 var(--sp-4) color-mix(in srgb, var(--live) 25%, transparent);
+  animation: live-edge 1.6s ease-in-out infinite;
+}
+.jn-st.pending .jn-ring {
+  border-style: dashed;
+  border-color: var(--faint);
+  color: var(--dim);
+}
+.jn-st.pending .jn-name {
+  color: var(--dim);
+}
+.jn-loop {
+  position: absolute;
+  top: calc(var(--sp-2) * 5 * -1);
+  right: var(--sp-2);
+  font-size: var(--fs-md);
+  color: var(--warn);
+}
+.jn-dur {
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.jn-pct {
+  font-size: var(--fs-sm);
+  color: hsl(var(--ph) var(--hue-s-ph-dim) var(--hue-l-ph-dim));
+}
+.jn-detail {
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: var(--sp-8) var(--sp-12);
+  background: var(--bg);
+}
+.jn-dh {
+  display: flex;
+  gap: var(--sp-8);
+  align-items: baseline;
+  margin-bottom: var(--sp-6);
+}
+.jn-dname {
+  font-weight: 600;
+  color: hsl(var(--ph) var(--hue-s-ph-text) var(--hue-l-ph-text));
+}
+.jn-dcount {
+  color: var(--dim);
+  font-size: var(--fs-md);
+}
+.jn-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+  flex-wrap: wrap;
+  padding: var(--sp-6) var(--sp-4);
+  border-top: 1px solid var(--line);
+  cursor: pointer;
+}
+.jn-step:hover,
+.jn-step.sel {
+  background: var(--panel2);
+}
+.jn-step.ghost {
+  opacity: 0.5;
+  cursor: default;
+}
+.jn-why {
+  flex: 1;
+  min-width: calc(var(--sp-2) * 60);
+  color: var(--dim);
+}
+.jn-t {
+  margin-left: auto;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+.jn-step .jn-chip {
+  gap: var(--sp-6);
+  font-size: var(--fs-md);
+  padding: var(--sp-4) var(--sp-12);
+  white-space: nowrap;
+}
+.jn-step .jn-chip i {
+  font-style: normal;
+  color: var(--dim);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.jn-step .jn-chip.ok {
+  color: var(--ok);
+  border-color: var(--ok);
+}
+.jn-step .jn-chip.bad {
+  color: var(--bad);
+  border-color: var(--bad);
+}
+.jn-step .jn-chip.skipped {
+  color: var(--dim);
+  border-style: dashed;
+}
+.jn.jn-stale .jn-st.live .jn-ring {
+  animation: none;
+}
+.jn-step:is(button) {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}

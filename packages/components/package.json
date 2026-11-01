@@ -221,6 +221,22 @@
       "types": "./dist/organisms/SyncButton/SyncButton.d.ts",
       "import": "./dist/organisms/SyncButton/SyncButton.js"
     },
+    "./HoverCard": {
+      "types": "./dist/organisms/HoverCard/HoverCard.d.ts",
+      "import": "./dist/organisms/HoverCard/HoverCard.js"
+    },
+    "./Journey": {
+      "types": "./dist/organisms/Journey/Journey.d.ts",
+      "import": "./dist/organisms/Journey/Journey.js"
+    },
+    "./Ledger": {
+      "types": "./dist/organisms/Ledger/Ledger.d.ts",
+      "import": "./dist/organisms/Ledger/Ledger.js"
+    },
+    "./Lanes": {
+      "types": "./dist/organisms/Lanes/Lanes.d.ts",
+      "import": "./dist/organisms/Lanes/Lanes.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {
