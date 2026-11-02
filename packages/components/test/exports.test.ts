@@ -82,6 +82,10 @@ const components = [
   ["BoardGrid", "BoardGrid"],
   ["RunPageFrame", "RunPageFrame"],
   ["BacklogFrame", "BacklogFrame"],
+  ["BoardPage", "BoardPage"],
+  ["BacklogPage", "BacklogPage"],
+  ["RunPage", "RunPage"],
+  ["AppFrame", "AppFrame"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -150,6 +154,10 @@ const namedProps = new Set([
   "BoardGrid",
   "RunPageFrame",
   "BacklogFrame",
+  "BoardPage",
+  "BacklogPage",
+  "RunPage",
+  "AppFrame",
 ]);
 const modules = ["glyphs", "FocusPanel/focusTabs", "RunScopeSection/markdown"] as const;
 const expectedExports = [

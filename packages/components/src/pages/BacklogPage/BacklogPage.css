@@ -1,0 +1,330 @@
+/* BacklogPage owns the page-level rules: the project chips, the filter bar, the next-up row, the column header, the empty notes and the toast. The sticky head belongs to the frame. */
+/* ---- project chips ---- */
+.bl-projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-6);
+  align-items: center;
+  margin: 0 0 var(--sp-8);
+}
+.bl-pchip {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  padding: var(--sp-4) var(--sp-12);
+  background: var(--panel2);
+  gap: var(--sp-8);
+  white-space: nowrap;
+}
+.bl-pchip:hover {
+  color: var(--ink);
+  border-color: var(--faint);
+}
+.bl-pchip.on {
+  color: var(--ink);
+  border-color: var(--live);
+}
+.bl-pchip.bl-nostore {
+  border-style: dashed;
+  color: var(--faint);
+  cursor: default;
+}
+.bl-pchip.dim {
+  opacity: 0.35;
+  cursor: default;
+}
+.bl-pbar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 7ch;
+  height: var(--fs-lg);
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  font-size: var(--fs-xs);
+}
+.bl-pbar i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--live);
+  opacity: 0.28;
+}
+.bl-pbar b {
+  position: relative;
+  font-weight: 600;
+  color: var(--ink);
+}
+.bl-bfeature {
+  font-size: var(--fs-md);
+  color: var(--dim);
+}
+.bl-n {
+  display: inline-flex;
+  gap: var(--sp-6);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.bl-n b {
+  font-weight: 600;
+}
+.bl-more {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--faint);
+  background: none;
+  border: 0;
+  padding: var(--sp-4) var(--sp-6);
+}
+.bl-more:hover {
+  color: var(--dim);
+}
+/* ---- filter bar ---- */
+.bl-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-12);
+  align-items: center;
+  padding: var(--sp-8) var(--sp-12);
+  margin: 0 0 var(--sp-12);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+}
+.bl-search {
+  flex: 0 1 36ch;
+  min-width: 24ch;
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-6) var(--sp-8);
+  outline: none;
+}
+.bl-search:focus {
+  border-color: var(--live);
+}
+.bl-search::placeholder {
+  color: var(--faint);
+}
+.bl-fgroup {
+  display: flex;
+  gap: var(--sp-4);
+  align-items: center;
+  flex-wrap: wrap;
+}
+.bl-fgroup > em {
+  font-style: normal;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-right: var(--sp-4);
+}
+.bl-fchip {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  padding: var(--sp-3) var(--sp-8);
+  background: var(--bg);
+  gap: var(--sp-6);
+}
+.bl-fchip i {
+  font-style: normal;
+}
+.bl-fchip:hover {
+  color: var(--ink);
+}
+.bl-fchip.on {
+  color: var(--ink);
+  border-color: var(--faint);
+  background: var(--panel2);
+}
+.bl-fchip b {
+  font-weight: 500;
+  color: var(--faint);
+  font-size: var(--fs-xs);
+}
+.bl-fclear {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  background: none;
+  border: 0;
+}
+.bl-fclear:hover {
+  color: var(--ink);
+}
+.bl-closed-toggle {
+  margin-left: auto;
+}
+/* ---- next up ---- */
+.bl-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-8) var(--sp-12);
+  margin: 0 0 var(--sp-12);
+  border: 1px solid color-mix(in srgb, var(--ok) 35%, transparent);
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--ok) 5%, transparent);
+}
+.bl-hero > em {
+  font-style: normal;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ok);
+  white-space: nowrap;
+}
+.bl-hero-title {
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bl-hero .bl-id {
+  flex: 1;
+}
+.bl-cmd {
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-4) var(--sp-8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 46%;
+}
+.bl-proj {
+  display: inline-block;
+  justify-self: start;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+  padding: var(--sp-1) var(--sp-6);
+  border-radius: var(--r-sm);
+  border: 1px solid currentColor;
+  opacity: 0.85;
+}
+.bl-btn {
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-sm);
+  color: var(--dim);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: var(--sp-2) var(--sp-6);
+  white-space: nowrap;
+  display: inline-flex;
+  gap: var(--sp-4);
+  align-items: center;
+}
+.bl-btn:hover {
+  color: var(--ink);
+  border-color: var(--faint);
+}
+.bl-fline {
+  margin: 0 0 var(--sp-8);
+  text-align: left;
+}
+.bl-pwrap {
+  position: relative;
+  display: inline-block;
+}
+.bl-pwrap:hover {
+  --adw-bl-ppanel-display: block;
+}
+.bl-hero-copy {
+  color: var(--ok);
+  border-color: color-mix(in srgb, var(--ok) 50%, transparent);
+}
+.bl-toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-24);
+  transform: translateX(-50%);
+  background: var(--panel2);
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  border-radius: var(--r-md);
+  padding: var(--sp-6) var(--sp-12);
+  font-size: var(--fs-md);
+  z-index: var(--z-toast);
+}
+.bl-empty {
+  color: var(--faint);
+  font-size: var(--fs-md);
+  padding: var(--sp-24) 0;
+  text-align: center;
+}
+/* ---- the column grid: the header and every row share it ---- */
+.bl-cols {
+  display: grid;
+  align-items: center;
+  column-gap: var(--sp-12);
+  grid-template-columns:
+    2ch 14ch minmax(14ch, 34ch) minmax(22ch, 1fr) 6ch 3ch minmax(20ch, 42ch) 18ch
+    22ch;
+}
+.bl-thead {
+  position: sticky;
+  top: var(--bl-thead-top, 0);
+  z-index: var(--z-raised);
+  background: var(--bg);
+  padding: var(--sp-8) var(--sp-16) var(--sp-6);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.bl-thead > span:nth-child(8) {
+  text-align: right;
+}
+.bl-id {
+  color: var(--dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.bl-prchip i {
+  font-style: normal;
+  color: var(--rb, var(--dim));
+}
+.bl-prchip.on {
+  border-color: var(--rb, var(--faint));
+  color: var(--rb, var(--ink));
+}
+/* ---- the graph button, in the chip row ---- */
+.bl-gbtn {
+  margin-left: auto;
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--fs-md);
+  color: var(--dim);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  padding: var(--sp-4) var(--sp-12);
+  white-space: nowrap;
+}
+.bl-gbtn:hover {
+  color: var(--ink);
+  border-color: var(--faint);
+}
+.bl-gbtn.on {
+  color: var(--ink);
+  border-color: var(--live);
+}
