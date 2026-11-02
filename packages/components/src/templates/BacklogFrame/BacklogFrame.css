@@ -1,0 +1,21 @@
+.backlog-frame-notice {
+  display: block;
+  margin: 0;
+  padding: var(--sp-8) var(--sp-24);
+  background: color-mix(in srgb, var(--warn) 12%, transparent);
+  border-bottom: 1px solid var(--warn);
+  color: var(--warn);
+  font-size: var(--fs-md);
+}
+.backlog-frame {
+  padding: 0 var(--sp-4) calc(var(--sp-12) * 5);
+}
+/* the head stays on screen while the list scrolls; the page measures its offset into --bl-head-top */
+.backlog-frame-head {
+  position: sticky;
+  top: var(--bl-head-top, 0);
+  z-index: var(--z-sticky);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}

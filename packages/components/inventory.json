@@ -254,5 +254,25 @@
   {
     "source": "src/web/ui/components/GraphDrawer",
     "target": "packages/components/src/organisms/GraphDrawerView"
+  },
+  {
+    "source": "src/web/ui/components/Shell",
+    "target": "packages/components/src/templates/ShellFrame"
+  },
+  {
+    "source": "src/web/ui/components/AppHeader",
+    "target": "packages/components/src/templates/AppHeaderFrame"
+  },
+  {
+    "source": "src/web/ui/components/Board",
+    "target": "packages/components/src/templates/BoardGrid"
+  },
+  {
+    "source": "src/web/ui/components/RunPage",
+    "target": "packages/components/src/templates/RunPageFrame"
+  },
+  {
+    "source": "src/web/ui/components/BacklogPage",
+    "target": "packages/components/src/templates/BacklogFrame"
   }
 ]

@@ -1,0 +1,53 @@
+.app-header-frame {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-16);
+  padding: var(--sp-16) var(--sp-4) var(--sp-12);
+  flex-wrap: wrap;
+}
+.app-header-frame-brand {
+  font-family: ui-monospace, monospace;
+  font-weight: 600;
+  font-size: calc(var(--sp-8) * 2);
+  line-height: calc(var(--sp-6) * 5);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+.app-header-frame-tabs {
+  display: flex;
+  gap: var(--sp-4);
+  padding: var(--sp-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--panel);
+}
+.app-header-frame-tab {
+  font-size: var(--fs-md);
+  padding: var(--sp-4) var(--sp-12);
+  border-radius: var(--r-pill);
+  color: var(--dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.app-header-frame-tab:hover {
+  color: var(--ink);
+}
+.app-header-frame-tab.on {
+  background: var(--panel2);
+  color: var(--ink);
+  font-weight: 600;
+}
+.app-header-frame-ctx {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  min-height: calc(var(--sp-6) * 5);
+  gap: var(--sp-16);
+  flex: 1;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+.app-header-frame-ctx.app-header-frame-ctx-tight {
+  flex-wrap: nowrap;
+  gap: var(--sp-8);
+}

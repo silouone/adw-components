@@ -289,6 +289,26 @@
       "types": "./dist/organisms/GraphDrawerView/GraphDrawerView.d.ts",
       "import": "./dist/organisms/GraphDrawerView/GraphDrawerView.js"
     },
+    "./ShellFrame": {
+      "types": "./dist/templates/ShellFrame/ShellFrame.d.ts",
+      "import": "./dist/templates/ShellFrame/ShellFrame.js"
+    },
+    "./AppHeaderFrame": {
+      "types": "./dist/templates/AppHeaderFrame/AppHeaderFrame.d.ts",
+      "import": "./dist/templates/AppHeaderFrame/AppHeaderFrame.js"
+    },
+    "./BoardGrid": {
+      "types": "./dist/templates/BoardGrid/BoardGrid.d.ts",
+      "import": "./dist/templates/BoardGrid/BoardGrid.js"
+    },
+    "./RunPageFrame": {
+      "types": "./dist/templates/RunPageFrame/RunPageFrame.d.ts",
+      "import": "./dist/templates/RunPageFrame/RunPageFrame.js"
+    },
+    "./BacklogFrame": {
+      "types": "./dist/templates/BacklogFrame/BacklogFrame.d.ts",
+      "import": "./dist/templates/BacklogFrame/BacklogFrame.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {
