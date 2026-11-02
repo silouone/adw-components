@@ -274,5 +274,21 @@
   {
     "source": "src/web/ui/components/BacklogPage",
     "target": "packages/components/src/templates/BacklogFrame"
+  },
+  {
+    "source": "src/web/ui/components/RunPage",
+    "target": "packages/components/src/pages/RunPage"
+  },
+  {
+    "source": "src/web/ui/containers/App.tsx",
+    "target": "packages/components/src/pages/AppFrame"
+  },
+  {
+    "source": "src/web/ui/components/BacklogPage",
+    "target": "packages/components/src/pages/BacklogPage"
+  },
+  {
+    "source": "src/web/ui/components/BoardPage",
+    "target": "packages/components/src/pages/BoardPage"
   }
 ]

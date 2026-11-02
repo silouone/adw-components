@@ -309,6 +309,22 @@
       "types": "./dist/templates/BacklogFrame/BacklogFrame.d.ts",
       "import": "./dist/templates/BacklogFrame/BacklogFrame.js"
     },
+    "./RunPage": {
+      "types": "./dist/pages/RunPage/RunPage.d.ts",
+      "import": "./dist/pages/RunPage/RunPage.js"
+    },
+    "./AppFrame": {
+      "types": "./dist/pages/AppFrame/AppFrame.d.ts",
+      "import": "./dist/pages/AppFrame/AppFrame.js"
+    },
+    "./BacklogPage": {
+      "types": "./dist/pages/BacklogPage/BacklogPage.d.ts",
+      "import": "./dist/pages/BacklogPage/BacklogPage.js"
+    },
+    "./BoardPage": {
+      "types": "./dist/pages/BoardPage/BoardPage.d.ts",
+      "import": "./dist/pages/BoardPage/BoardPage.js"
+    },
     "./components.css": "./dist/components.css"
   },
   "peerDependencies": {

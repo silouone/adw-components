@@ -252,10 +252,15 @@ describe("component stories stay inside the library", () => {
   const LOWER_COMPONENT = /^\.\.\/\.\.\/(?:atoms|molecules|organisms)\/[A-Za-z0-9]+\/[A-Za-z0-9]+$/;
   const FIXTURE = /^\.\.\/\.\.\/\.\.\/fixtures\/[A-Za-z0-9]+$/;
 
+  // fixture per screen state (spec B6.7): so a story under `src/pages/` may also import `storybook/test`
+  // and the fixture modules, flat or under the screen's folder.
+  const PAGE_FIXTURE = /^\.\.\/\.\.\/\.\.\/fixtures\/(?:[A-Za-z0-9]+|[a-z]+\/[a-z-]+)$/;
+
   test("imports are Storybook, the component beside it, or its own fixture module", () => {
     for (const path of stories) {
       const name = path.split("/").at(-2) as string;
       const isTemplate = path.startsWith("packages/components/src/templates/");
+      const isPage = path.startsWith("packages/components/src/pages/");
       const imports = [...read(path).matchAll(/from\s+"([^"]+)"/g)].map((m) => m[1] as string);
       expect(
         imports.filter(
@@ -263,15 +268,20 @@ describe("component stories stay inside the library", () => {
             i !== "@storybook/preact-vite" &&
             i !== `../../../fixtures/${name}` &&
             !i.startsWith("./") &&
-            !(isTemplate && (LOWER_COMPONENT.test(i) || FIXTURE.test(i))),
+            !(isTemplate && (LOWER_COMPONENT.test(i) || FIXTURE.test(i))) &&
+            !(isPage && (i === "storybook/test" || PAGE_FIXTURE.test(i))),
         ),
       ).toEqual([]);
     }
   });
 
-  test("only template stories reach another component or its fixtures", () => {
+  test("only template and page stories reach another component or its fixtures", () => {
     const stray = stories
-      .filter((p) => !p.startsWith("packages/components/src/templates/"))
+      .filter(
+        (p) =>
+          !p.startsWith("packages/components/src/templates/") &&
+          !p.startsWith("packages/components/src/pages/"),
+      )
       .flatMap((p) =>
         [...read(p).matchAll(/from\s+"([^"]+)"/g)]
           .map((m) => m[1] as string)
