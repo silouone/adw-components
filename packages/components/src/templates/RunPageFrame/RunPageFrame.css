@@ -1,0 +1,74 @@
+.run-page-frame-crumb {
+  display: inline-block;
+  padding: var(--sp-12) var(--sp-24) 0;
+  color: var(--dim);
+  font-size: var(--fs-md);
+  text-decoration: none;
+  flex: 0 0 auto;
+}
+.run-page-frame-crumb:hover {
+  color: var(--ink);
+}
+.run-page-frame-notices {
+  margin: 0 0 var(--sp-12);
+  padding: var(--sp-8) var(--sp-12);
+  list-style: none;
+  border: 1px solid var(--warn);
+  border-radius: var(--r-md);
+  color: var(--warn);
+  font-size: var(--fs-md);
+  background: color-mix(in srgb, var(--warn) 7%, transparent);
+}
+.run-page-frame-console {
+  margin: var(--sp-8) var(--sp-16) 0;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--panel);
+  overflow: hidden;
+}
+.run-page-frame-console-full {
+  margin-bottom: 0;
+}
+.run-page-frame-console.run-page-frame-console-docked {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: visible;
+}
+.run-page-frame-console.run-page-frame-console-dock-shut {
+  flex: 1 1 auto;
+}
+/* the dock takes every pixel the console does not use; its panel owns the only scroll region */
+.run-page-frame-dock {
+  flex: 1 0 calc(var(--sp-12) * 18 + var(--sp-4));
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  margin: var(--sp-8) var(--sp-16) var(--sp-12);
+  max-width: 100%;
+  overflow: hidden;
+  position: static;
+}
+.run-page-frame-dock[hidden] {
+  display: none;
+}
+.run-page-frame-dock.run-page-frame-dock-full {
+  margin-top: 0;
+}
+.run-page-frame-dock.run-page-frame-dock-shut {
+  flex: 0 0 auto;
+}
+@media (max-width: 820px) {
+  .run-page-frame-crumb {
+    padding: var(--sp-8) var(--sp-8) 0;
+  }
+  .run-page-frame-console {
+    margin: var(--sp-8) var(--sp-8) 0;
+  }
+  .run-page-frame-dock {
+    margin: var(--sp-8) var(--sp-8) var(--sp-8);
+    flex: 1 0 calc(var(--sp-12) * 15);
+  }
+}

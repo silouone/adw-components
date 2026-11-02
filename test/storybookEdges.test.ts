@@ -246,19 +246,42 @@ describe("component stories stay inside the library", () => {
     ...new Bun.Glob("packages/components/src/**/*.stories.tsx").scanSync({ cwd: ROOT }),
   ];
 
+  // A template places organisms by slot, and its story fills every slot with them and their fixtures
+  // (spec B6.6): so a story under `src/templates/` may also reach a component of a lower layer and
+  // that component's fixture module. Nothing else widens.
+  const LOWER_COMPONENT = /^\.\.\/\.\.\/(?:atoms|molecules|organisms)\/[A-Za-z0-9]+\/[A-Za-z0-9]+$/;
+  const FIXTURE = /^\.\.\/\.\.\/\.\.\/fixtures\/[A-Za-z0-9]+$/;
+
   test("imports are Storybook, the component beside it, or its own fixture module", () => {
     for (const path of stories) {
       const name = path.split("/").at(-2) as string;
+      const isTemplate = path.startsWith("packages/components/src/templates/");
       const imports = [...read(path).matchAll(/from\s+"([^"]+)"/g)].map((m) => m[1] as string);
       expect(
         imports.filter(
           (i) =>
             i !== "@storybook/preact-vite" &&
             i !== `../../../fixtures/${name}` &&
-            !i.startsWith("./"),
+            !i.startsWith("./") &&
+            !(isTemplate && (LOWER_COMPONENT.test(i) || FIXTURE.test(i))),
         ),
       ).toEqual([]);
     }
+  });
+
+  test("only template stories reach another component or its fixtures", () => {
+    const stray = stories
+      .filter((p) => !p.startsWith("packages/components/src/templates/"))
+      .flatMap((p) =>
+        [...read(p).matchAll(/from\s+"([^"]+)"/g)]
+          .map((m) => m[1] as string)
+          .filter(
+            (i) =>
+              LOWER_COMPONENT.test(i) ||
+              (FIXTURE.test(i) && !i.endsWith(`/${p.split("/").at(-2)}`)),
+          ),
+      );
+    expect(stray).toEqual([]);
   });
 
   test("none reads the world: no fetch, EventSource, storage, location, clock or signal", () => {

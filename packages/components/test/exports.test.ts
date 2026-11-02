@@ -77,6 +77,11 @@ const components = [
   ["DepGraph", "DepGraph"],
   ["ReviewDesk", "ReviewDesk"],
   ["GraphDrawerView", "GraphDrawerView"],
+  ["ShellFrame", "ShellFrame"],
+  ["AppHeaderFrame", "AppHeaderFrame"],
+  ["BoardGrid", "BoardGrid"],
+  ["RunPageFrame", "RunPageFrame"],
+  ["BacklogFrame", "BacklogFrame"],
 ] as const;
 // The components whose props are a named `<Name>Props` rather than an inline type.
 const namedProps = new Set([
@@ -140,6 +145,11 @@ const namedProps = new Set([
   "DepGraph",
   "ReviewDesk",
   "GraphDrawerView",
+  "ShellFrame",
+  "AppHeaderFrame",
+  "BoardGrid",
+  "RunPageFrame",
+  "BacklogFrame",
 ]);
 const modules = ["glyphs", "FocusPanel/focusTabs", "RunScopeSection/markdown"] as const;
 const expectedExports = [
