@@ -1,6 +1,7 @@
 // `<DepGraph/>`: cards, columns, critical path, hover lineage, click, focus, live state, CSS and the
-// golden layout over literal inputs. The search, multi-project, laned, collapsed and entire-view
-// groups of the factory test are not yet ported (see the build report).
+// golden layout over literal inputs, then the entire view, multi-project marks, swimlanes, collapsed
+// squares, search lighting and the small ad-hoc graphs. Matching a query is derivation and stays in the
+// factory: here `view.searching` and `view.hits` arrive as literals.
 
 import { afterEach, describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -20,7 +21,14 @@ import {
   depGraphView,
 } from "../../../fixtures/DepGraph";
 import { SECTION_GLYPH } from "../../glyphs";
-import { DepGraph, type DepGraphProps } from "./DepGraph";
+import {
+  type BacklogGraph,
+  DepGraph,
+  type DepGraphMulti,
+  type DepGraphProps,
+  type DepGraphView,
+  type GraphLayout,
+} from "./DepGraph";
 
 afterEach(cleanup);
 
@@ -714,24 +722,25 @@ describe("<DepGraph/> — live state CSS", () => {
   });
 });
 
+const variants = depGraphOf(
+  [
+    depGraphNode("out", 0, {
+      outside: true,
+      kind: "outside",
+      state: undefined,
+      open: false,
+      status: "done",
+    }),
+    depGraphNode("done", 0, { closed: true, state: undefined, status: "done" }),
+    depGraphNode("rej", 0, { closed: true, state: undefined, status: "rejected" }),
+    depGraphNode("man", 1, { kind: "manual", state: undefined, status: "manual" }),
+    depGraphNode("drift", 1, { openDeps: 1, priority: 1 }),
+    depGraphNode("plain", 2, { priority: 3 }),
+  ],
+  [depGraphEdge("out", "drift"), depGraphEdge("drift", "plain")],
+);
+
 describe("<DepGraph/> — CSS", () => {
-  const variants = depGraphOf(
-    [
-      depGraphNode("out", 0, {
-        outside: true,
-        kind: "outside",
-        state: undefined,
-        open: false,
-        status: "done",
-      }),
-      depGraphNode("done", 0, { closed: true, state: undefined, status: "done" }),
-      depGraphNode("rej", 0, { closed: true, state: undefined, status: "rejected" }),
-      depGraphNode("man", 1, { kind: "manual", state: undefined, status: "manual" }),
-      depGraphNode("drift", 1, { openDeps: 1, priority: 1 }),
-      depGraphNode("plain", 2, { priority: 3 }),
-    ],
-    [depGraphEdge("out", "drift"), depGraphEdge("drift", "plain")],
-  );
   const dimRules = () =>
     [...css.matchAll(/\.dg-node\.dg-dim\s*\{([^}]*)\}/g)].map((m) => m[1] ?? "");
 
@@ -911,5 +920,807 @@ describe("<DepGraph/> — live state edge cases", () => {
     const g = depGraphOf([running("a", 1)], [], 1);
     const { container } = mountGraph(g, { summary: ["◌ 1 running"] });
     expect(container.querySelector(".dg-sum")?.textContent).toBe("◌ 1 running");
+  });
+});
+
+const closedNode = (id: string, wave: number) =>
+  depGraphNode(id, wave, { closed: true, state: undefined, status: "done", open: false });
+const mountEntire = (graph: BacklogGraph) =>
+  render(
+    <DepGraph
+      graph={graph}
+      layout={depGraphLayout(graph)}
+      view={depGraphView(graph)}
+      onSelect={() => {}}
+      entire
+    />,
+  );
+const headsOf = (c: Element) =>
+  Array.from(c.querySelectorAll(".dg-colh")).map((h) => h.textContent);
+
+describe("<DepGraph/> — entire graph", () => {
+  const ENTIRE = depGraphOf(
+    [
+      closedNode("e-00", 1),
+      closedNode("e-01", 2),
+      depGraphNode("e-02", 3),
+      depGraphNode("e-03", 4),
+    ],
+    [
+      depGraphEdge("e-00", "e-01", { met: true }),
+      depGraphEdge("e-01", "e-02", { met: true }),
+      depGraphEdge("e-02", "e-03"),
+    ],
+    4,
+  );
+
+  test("only the entire view carries dg-entire, the default view does not", () => {
+    expect(
+      mountEntire(ENTIRE).container.querySelector(".dg")?.classList.contains("dg-entire"),
+    ).toBe(true);
+    cleanup();
+    expect(mount().container.querySelector(".dg")?.classList.contains("dg-entire")).toBe(false);
+  });
+
+  test("the entire view draws done→done edges and closed cards legibly enough to share", () => {
+    expect(css).toMatch(
+      /\.dg-entire\s+\.dg-edge\.dg-met:not\(\.dg-on\):not\(\.dg-crit\)\s*\{[^}]*stroke:\s*var\(--dim\)/,
+    );
+    expect(css).toMatch(/\.dg-entire\s+\.dg-node\.s-closed\s*>\s*\*\s*\{[^}]*opacity:\s*0?\.9\b/);
+  });
+
+  test("headers are exactly wave 1..n, with no sub-line", () => {
+    const { container } = mountEntire(ENTIRE);
+    expect(headsOf(container)).toEqual(
+      Array.from({ length: ENTIRE.maxWave }, (_, i) => `wave ${i + 1}`),
+    );
+  });
+
+  test("closed cards are present and muted, and every edge is drawn", () => {
+    const { container } = mountEntire(ENTIRE);
+    expect(cardOf(container, "e-00").classList.contains("s-closed")).toBe(true);
+    expect(cards(container)).toHaveLength(ENTIRE.nodes.length);
+    expect(paths(container)).toHaveLength(ENTIRE.edges.length);
+  });
+
+  test("an outside dep renders in wave 1 with no done / outside column", () => {
+    const g = depGraphOf(
+      [
+        depGraphNode("elsewhere-9", 1, {
+          outside: true,
+          kind: "outside",
+          state: undefined,
+          open: false,
+          status: "done",
+        }),
+        depGraphNode("t-01", 2),
+      ],
+      [depGraphEdge("elsewhere-9", "t-01")],
+    );
+    const { container } = mountEntire(g);
+    expect(headsOf(container)).toEqual(["wave 1", "wave 2"]);
+    expect(cards(container)).toHaveLength(2);
+    expect(container.textContent).not.toContain("done / outside");
+    expect(container.textContent).not.toContain("fires now");
+  });
+
+  test("the default view of the same rows still has a done / outside column", () => {
+    const g = depGraphOf(
+      [
+        depGraphNode("elsewhere-9", 0, {
+          outside: true,
+          kind: "outside",
+          state: undefined,
+          open: false,
+          status: "done",
+        }),
+        depGraphNode("t-01", 1),
+      ],
+      [depGraphEdge("elsewhere-9", "t-01")],
+    );
+    expect(mountGraph(g).container.textContent).toContain("done / outside");
+  });
+});
+
+const twoProjects = depGraphOf(
+  [
+    depGraphNode("a-01", 1, { project: "alpha" }),
+    depGraphNode("b-01", 2, { project: "beta" }),
+    depGraphNode("b-02", 3, { project: "beta" }),
+  ],
+  [depGraphEdge("a-01", "b-01", { cross: true }), depGraphEdge("b-01", "b-02")],
+  3,
+);
+const projectColors: ReadonlyMap<string, string> = new Map([
+  ["alpha", "proj-0"],
+  ["beta", "proj-1"],
+]);
+const twoMulti: DepGraphMulti = { projects: 2, colors: projectColors };
+const mountMulti = (over: Partial<DepGraphProps> = {}) =>
+  render(
+    <DepGraph
+      graph={twoProjects}
+      layout={depGraphLayout(twoProjects)}
+      view={depGraphView(twoProjects, { summary: ["2 projects", "1 cross-project"] })}
+      onSelect={() => {}}
+      multi={twoMulti}
+      {...over}
+    />,
+  );
+
+describe("<DepGraph/> — multi-project marks", () => {
+  test("cards carry a stripe in the project colour and the project name", () => {
+    const { container } = mountMulti();
+    const stripe = (id: string) => cardOf(container, id).firstElementChild as HTMLElement;
+    expect(stripe("a-01").className).toBe("dg-stripe proj-0");
+    expect(stripe("b-01").className).toBe("dg-stripe proj-1");
+    expect(stripe("a-01").style.background).toBe("");
+    expect(stOf(container, "a-01")?.startsWith("alpha · ")).toBe(true);
+    expect(stOf(container, "b-02")?.startsWith("beta · ")).toBe(true);
+  });
+
+  test("cross edges carry dg-cross and others do not", () => {
+    const { container } = mountMulti();
+    expect(edgeOf(container, "a-01", "b-01").classList.contains("dg-cross")).toBe(true);
+    expect(edgeOf(container, "b-01", "b-02").classList.contains("dg-cross")).toBe(false);
+  });
+
+  test("the summary reads the project and cross-project counts", () => {
+    const { container } = mountMulti();
+    expect(container.querySelector(".dg-sum")?.textContent).toBe("2 projects · 1 cross-project");
+  });
+
+  test("summary={false} renders no summary line, the default renders it", () => {
+    expect(mountMulti({ summary: false }).container.querySelector(".dg-sum")).toBeNull();
+    cleanup();
+    expect(mountMulti().container.querySelector(".dg-sum")).not.toBeNull();
+  });
+
+  test("without multi the markup carries no marks", () => {
+    const { container } = mountGraph(twoProjects);
+    expect(container.querySelector(".dg-stripe")).toBeNull();
+    expect(container.querySelector(".dg-cross")).toBeNull();
+    expect(container.querySelector(".dg-sum")).toBeNull();
+    expect(stOf(container, "a-01")).not.toContain("·");
+  });
+
+  test("css draws cross edges in --live at 55 % (a color-mix) and keeps the lineage rules", () => {
+    expect(/\.dg-edge\.dg-cross\s*\{([^}]*)\}/.exec(css)?.[1]).toMatch(
+      /color-mix\(in srgb, var\(--live\) 55%, transparent\)/,
+    );
+    expect(/\.dg-stripe\s*\{([^}]*)\}/.exec(css)?.[1]).toMatch(/width:\s*3px/);
+    expect(css.indexOf(".dg-edge.dg-cross")).toBeLessThan(css.indexOf(".dg-edge.dg-on"));
+  });
+});
+
+const lanedLayout: GraphLayout = {
+  ...depGraphLayout(twoProjects),
+  lanes: [
+    { project: "alpha", y: 0, h: 70 },
+    { project: "beta", y: 70, h: 140 },
+  ],
+};
+const lanedView = depGraphView(twoProjects, { bands: ["dg-band even", "dg-band odd"] });
+
+describe("<DepGraph/> — swimlane bands", () => {
+  test("one .dg-lane per band, alternating shades, before the svg", () => {
+    const { container } = render(
+      <DepGraph
+        graph={twoProjects}
+        layout={lanedLayout}
+        view={lanedView}
+        onSelect={() => {}}
+        multi={twoMulti}
+      />,
+    );
+    const lanes = Array.from(container.querySelectorAll<HTMLElement>(".dg-lane"));
+    const svg = container.querySelector(".dg-svg");
+    expect(lanes).toHaveLength(2);
+    expect(svg).not.toBeNull();
+    lanes.forEach((lane, i) => {
+      const band = lanedLayout.lanes?.[i];
+      expect(lane.style.top).toBe(`${band?.y}px`);
+      expect(lane.style.height).toBe(`${band?.h}px`);
+      expect(lane.style.width).toBe(`${lanedLayout.width}px`);
+      expect(lane.dataset.lane).toBe(band?.project ?? "");
+      expect(lane.className).toBe(`dg-lane ${i === 0 ? "dg-band even" : "dg-band odd"}`);
+      expect(lane.style.background).toBe("");
+      expect(lane.compareDocumentPosition(svg as Element) & Node.DOCUMENT_POSITION_FOLLOWING).toBe(
+        Node.DOCUMENT_POSITION_FOLLOWING,
+      );
+    });
+  });
+
+  test("without lanes there is no .dg-lane", () => {
+    const { container } = mountMulti();
+    expect(container.querySelector(".dg-lane")).toBeNull();
+  });
+});
+
+const collapse = (layout: GraphLayout, ids: readonly string[]): GraphLayout => ({
+  ...layout,
+  nodes: layout.nodes.map((n) =>
+    ids.includes(n.id) ? { ...n, w: 12, h: 12, collapsed: true as const } : n,
+  ),
+});
+const mountSquares = (
+  graph: BacklogGraph,
+  collapsed: readonly string[],
+  over: Partial<DepGraphProps> = {},
+) =>
+  render(
+    <DepGraph
+      graph={graph}
+      layout={collapse(depGraphLayout(graph), collapsed)}
+      view={depGraphView(graph)}
+      onSelect={() => {}}
+      multi={twoMulti}
+      {...over}
+    />,
+  );
+const dimmed = (c: Element) =>
+  cards(c)
+    .filter((n) => n.classList.contains("dg-dim"))
+    .map((n) => n.dataset.id ?? "")
+    .sort();
+
+describe("<DepGraph/> — collapsed squares", () => {
+  const A = depGraphOf(
+    [
+      depGraphNode("a-01", 1, { project: "alpha" }),
+      depGraphNode("a-02", 2, { project: "alpha" }),
+      depGraphNode("b-01", 2, { project: "beta", reason: "waiting on review" }),
+      depGraphNode("b-02", 3, { project: "beta" }),
+    ],
+    [
+      depGraphEdge("a-01", "a-02"),
+      depGraphEdge("a-01", "b-01", { cross: true }),
+      depGraphEdge("b-01", "b-02"),
+    ],
+    3,
+  );
+  const squaresA = ["a-01", "a-02"];
+
+  test("renders a .dg-sq button with the project colour and its section class", () => {
+    const { container } = mountSquares(A, squaresA);
+    const sq = cardOf(container, "a-01");
+    expect(sq.classList.contains("dg-sq")).toBe(true);
+    expect(sq.children).toHaveLength(0);
+    expect(sq.textContent).toBe("");
+    expect(sq.style.width).toBe("12px");
+    expect(sq.style.height).toBe("12px");
+    expect(sq.classList.contains("proj-0")).toBe(true);
+    expect(sq.style.background).toBe("");
+    expect(sq.classList.contains("s-waiting")).toBe(true);
+    const card = cardOf(container, "b-01");
+    expect(card.classList.contains("dg-sq")).toBe(false);
+    expect(card.style.width).toBe("212px");
+  });
+
+  test("a collapsed square with no project colour carries no proj class and no inline background", () => {
+    const { container } = mountSquares(A, squaresA, { multi: { projects: 2, colors: new Map() } });
+    const sq = cardOf(container, "a-01");
+    expect(Array.from(sq.classList).some((c) => c.startsWith("proj-"))).toBe(false);
+    expect(sq.style.background).toBe("");
+  });
+
+  test("the tooltip carries project · kind · status and the title", () => {
+    const { container } = mountSquares(A, squaresA);
+    const [first, second] = (cardOf(container, "a-01").getAttribute("title") ?? "").split("\n");
+    expect(first).toMatch(/^alpha · ticket · \S/);
+    expect(second).toBe("a-01 — title of a-01");
+  });
+
+  test("clicking a square calls onSelect with its id", () => {
+    const picked: string[] = [];
+    const { container } = mountSquares(A, squaresA, { onSelect: (id) => picked.push(id) });
+    fireEvent.click(cardOf(container, "a-01"));
+    expect(picked).toEqual(["a-01"]);
+  });
+
+  test("hovering a square lights its lineage and dims the rest", () => {
+    const { container } = mountSquares(A, squaresA);
+    fireEvent.mouseEnter(cardOf(container, "a-02"));
+    expect(dimmed(container)).toEqual(["b-01", "b-02"]);
+    expect(
+      paths(container)
+        .filter((p) => p.classList.contains("dg-on"))
+        .map((p) => `${endOf(p, 0)}>${endOf(p, 1)}`),
+    ).toEqual(["a-01>a-02"]);
+    fireEvent.mouseLeave(cardOf(container, "a-02"));
+    expect(container.querySelectorAll(".dg-dim, .dg-on")).toHaveLength(0);
+  });
+
+  const B = depGraphOf(
+    [
+      depGraphNode("a", 1, { project: "alpha", critical: true }),
+      depGraphNode("b", 2, {
+        project: "alpha",
+        state: "blocked",
+        status: "blocked",
+        reason: "needs a key",
+      }),
+      depGraphNode("c", 2, { project: "alpha", kind: "epic" }),
+      depGraphNode("d", 3, { project: "beta" }),
+    ],
+    [depGraphEdge("a", "b", { critical: true }), depGraphEdge("b", "d")],
+    3,
+  );
+  const squaresB = ["a", "b", "c"];
+
+  test("a square keeps dg-crit, dg-focus and its status class", () => {
+    const { container } = mountSquares(B, squaresB, { focus: "a" });
+    const a = cardOf(container, "a");
+    expect(a.classList.contains("dg-sq")).toBe(true);
+    expect(a.classList.contains("dg-crit")).toBe(true);
+    expect(a.classList.contains("dg-focus")).toBe(true);
+    expect(a.classList.contains("s-waiting")).toBe(true);
+    expect(cardOf(container, "b").classList.contains("s-blocked")).toBe(true);
+    expect(cardOf(container, "c").classList.contains("dg-focus")).toBe(false);
+  });
+
+  test("the tooltip of a blocked square ends with the reason", () => {
+    const { container } = mountSquares(B, squaresB);
+    expect(cardOf(container, "b").getAttribute("title")).toContain(
+      "b — title of b\n\nblocked: needs a key",
+    );
+  });
+
+  test("the tooltip type segment follows the node's kind", () => {
+    const { container } = mountSquares(B, squaresB);
+    expect(cardOf(container, "c").getAttribute("title")).toMatch(/^alpha · epic · /);
+    expect(cardOf(container, "a").getAttribute("title")).toMatch(/^alpha · ticket · /);
+  });
+
+  test("a square with no colour entry has no project class, so it falls back to --faint", () => {
+    const { container } = mountSquares(B, squaresB, {
+      multi: { projects: 2, colors: new Map([["beta", "proj-1"]]) },
+    });
+    const sq = cardOf(container, "a");
+    expect(Array.from(sq.classList).some((c) => c.startsWith("proj-"))).toBe(false);
+    expect(sq.style.background).toBe("");
+    expect(css).toMatch(/\.dg-node\.dg-sq\s*\{[^}]*var\(--proj,\s*var\(--faint\)\)/);
+  });
+
+  test("every square is a button and selects its own id", () => {
+    const picked: string[] = [];
+    const { container } = mountSquares(B, squaresB, { onSelect: (id) => picked.push(id) });
+    for (const id of squaresB) {
+      const sq = cardOf(container, id);
+      expect(sq.tagName).toBe("BUTTON");
+      expect(sq.getAttribute("type")).toBe("button");
+      fireEvent.click(sq);
+    }
+    expect(picked).toEqual(["a", "b", "c"]);
+  });
+
+  test("lineage crosses between a card and squares", () => {
+    const { container } = mountSquares(B, squaresB);
+    fireEvent.mouseEnter(cardOf(container, "d"));
+    expect(dimmed(container)).toEqual(["c"]);
+    fireEvent.mouseLeave(cardOf(container, "d"));
+    fireEvent.mouseEnter(cardOf(container, "a"));
+    expect(dimmed(container)).toEqual(["c"]);
+    expect(cardOf(container, "d").classList.contains("dg-dim")).toBe(false);
+  });
+
+  test("a critical edge into a square keeps both marks while hovered", () => {
+    const { container } = mountSquares(B, squaresB);
+    fireEvent.mouseEnter(cardOf(container, "b"));
+    const e = edgeOf(container, "a", "b");
+    expect(e.classList.contains("dg-on")).toBe(true);
+    expect(e.classList.contains("dg-crit")).toBe(true);
+  });
+
+  test("without multi a collapsed layout still renders squares", () => {
+    const { container } = mountSquares(B, squaresB, { multi: undefined });
+    expect(container.querySelectorAll(".dg-node.dg-sq")).toHaveLength(3);
+    expect(cardOf(container, "a").getAttribute("title")).toContain(" · ticket · ");
+  });
+});
+
+const searched = (
+  graph: BacklogGraph,
+  hitIds: readonly string[],
+  over: Partial<DepGraphView> = {},
+) => depGraphView(graph, { searching: true, hits: new Set(hitIds), ...over });
+const idsWith = (c: Element, klass: string): readonly string[] =>
+  Array.from(c.querySelectorAll<HTMLElement>(`.dg-node.${klass}`))
+    .map((n) => n.dataset.id ?? "")
+    .sort();
+const edgesWith = (c: Element, klass: string): readonly string[] =>
+  Array.from(c.querySelectorAll<SVGPathElement>(`path.dg-edge.${klass}`))
+    .map((p) => `${endOf(p, 0)}>${endOf(p, 1)}`)
+    .sort();
+const dimDots = (c: Element) => dots(c).filter((d) => d.classList.contains("dg-dim"));
+const mountView = (
+  graph: BacklogGraph,
+  view: DepGraphView,
+  over: Partial<DepGraphProps> = {},
+  layout: GraphLayout = depGraphLayout(graph),
+) => render(<DepGraph graph={graph} layout={layout} view={view} onSelect={() => {}} {...over} />);
+
+const SEARCH = depGraphOf(
+  [
+    depGraphNode("adw-product-40", 1),
+    depGraphNode("adw-product-41", 1, { critical: true }),
+    depGraphNode("adw-other-1", 1),
+    depGraphNode("adw-product-42", 2),
+    depGraphNode("adw-other-2", 2),
+  ],
+  [
+    depGraphEdge("adw-product-40", "adw-product-42"),
+    depGraphEdge("adw-product-41", "adw-product-42"),
+    depGraphEdge("adw-other-1", "adw-other-2"),
+    depGraphEdge("adw-product-41", "adw-other-2"),
+  ],
+);
+const PRODUCT = ["adw-product-40", "adw-product-41", "adw-product-42"];
+const OTHER = ["adw-other-1", "adw-other-2"];
+
+describe("<DepGraph/> — search lighting", () => {
+  test("hits get dg-hit, every other node dg-dim; edges dim unless both ends hit", () => {
+    const { container } = mountView(SEARCH, searched(SEARCH, PRODUCT));
+    expect(idsWith(container, "dg-hit")).toEqual(PRODUCT);
+    expect(idsWith(container, "dg-dim")).toEqual(OTHER);
+    expect(edgesWith(container, "dg-dim")).toEqual([
+      "adw-other-1>adw-other-2",
+      "adw-product-41>adw-other-2",
+    ]);
+    expect(container.querySelectorAll(".dg-edge.dg-hit")).toHaveLength(0);
+  });
+
+  test("a view that is not searching lights and dims nothing", () => {
+    const { container } = mountView(SEARCH, depGraphView(SEARCH));
+    expect(container.querySelectorAll(".dg-hit, .dg-dim")).toHaveLength(0);
+  });
+
+  test("collapsed squares light and dim the same way", () => {
+    const g = depGraphOf(
+      SEARCH.nodes.map((n) => ({ ...n, project: "alpha" })),
+      SEARCH.edges,
+    );
+    const layout = collapse(
+      depGraphLayout(g),
+      g.nodes.map((n) => n.id),
+    );
+    const { container } = mountView(g, searched(g, PRODUCT), { multi: twoMulti }, layout);
+    expect(container.querySelectorAll(".dg-node.dg-sq")).toHaveLength(5);
+    expect(idsWith(container, "dg-hit")).toEqual(PRODUCT);
+    expect(idsWith(container, "dg-dim")).toEqual(OTHER);
+  });
+
+  test("hover lineage wins while hovered; the search lighting returns on leave", () => {
+    const view = searched(SEARCH, PRODUCT);
+    const { container } = mountView(SEARCH, view);
+    fireEvent.mouseEnter(cardOf(container, "adw-other-1"));
+    const lineage = view.lineages.get("adw-other-1") ?? new Set<string>();
+    expect(container.querySelectorAll(".dg-hit")).toHaveLength(0);
+    expect(idsWith(container, "dg-dim")).toEqual(
+      SEARCH.nodes
+        .map((n) => n.id)
+        .filter((id) => !lineage.has(id))
+        .sort(),
+    );
+    expect(idsWith(container, "dg-dim")).toEqual(PRODUCT);
+    fireEvent.mouseLeave(cardOf(container, "adw-other-1"));
+    expect(idsWith(container, "dg-hit")).toEqual(PRODUCT);
+    expect(idsWith(container, "dg-dim")).toEqual(OTHER);
+  });
+
+  test("dg-hit coexists with dg-focus and dg-crit on one node", () => {
+    const { container } = mountView(SEARCH, searched(SEARCH, ["adw-product-41"]), {
+      focus: "adw-product-41",
+    });
+    const c = cardOf(container, "adw-product-41");
+    for (const k of ["dg-hit", "dg-focus", "dg-crit"]) expect(c.classList.contains(k)).toBe(true);
+  });
+
+  test("the hit style is its own: not the critical orange nor the focus blue", () => {
+    const body = /\.dg-node\.dg-hit\s*\{([^}]*)\}/.exec(css)?.[1];
+    expect(body).toBeDefined();
+    expect(body).not.toContain("var(--model)");
+    expect(body).not.toContain("var(--live)");
+  });
+
+  const G = depGraphOf(
+    [
+      depGraphNode("run-1", 1, { state: "running", status: "running" }),
+      depGraphNode("run-2", 2),
+      depGraphNode("x-1", 2, { project: "sabado" }),
+    ],
+    [depGraphEdge("run-1", "run-2"), depGraphEdge("run-1", "x-1")],
+  );
+
+  test("a query matching nothing dims every node, edge and flow dot, and lights none", () => {
+    const { container } = mountView(G, searched(G, []));
+    expect(idsWith(container, "dg-dim")).toEqual(["run-1", "run-2", "x-1"]);
+    expect(idsWith(container, "dg-hit")).toEqual([]);
+    expect(container.querySelectorAll("path.dg-edge.dg-dim")).toHaveLength(2);
+    expect(dots(container)).toHaveLength(4);
+    expect(dimDots(container)).toHaveLength(4);
+  });
+
+  test("flow dots dim unless both ends of their edge are hits", () => {
+    const { container } = mountView(G, searched(G, ["run-1", "run-2"]));
+    expect(dots(container)).toHaveLength(4);
+    expect(dimDots(container)).toHaveLength(2);
+  });
+
+  test("a re-render with a new view re-lights the graph, and clearing restores it", () => {
+    const layout = depGraphLayout(G);
+    const el = (view: DepGraphView) => (
+      <DepGraph graph={G} layout={layout} view={view} onSelect={() => {}} />
+    );
+    const out = render(el(depGraphView(G)));
+    out.rerender(el(searched(G, ["x-1"])));
+    expect(idsWith(out.container, "dg-hit")).toEqual(["x-1"]);
+    expect(idsWith(out.container, "dg-dim")).toEqual(["run-1", "run-2"]);
+    out.rerender(el(depGraphView(G)));
+    expect(out.container.querySelectorAll(".dg-hit, .dg-dim")).toHaveLength(0);
+  });
+
+  test("hovering a hit while searching shows its lineage, not the search lighting", () => {
+    const { container } = mountView(G, searched(G, ["run-2"]));
+    fireEvent.mouseEnter(cardOf(container, "run-2"));
+    expect(container.querySelectorAll(".dg-hit")).toHaveLength(0);
+    expect(idsWith(container, "dg-dim")).toEqual(["x-1"]);
+    fireEvent.mouseLeave(cardOf(container, "run-2"));
+    expect(idsWith(container, "dg-hit")).toEqual(["run-2"]);
+  });
+
+  test("a node is lit iff its id is in view.hits, whatever its project or kind", () => {
+    const byProject = mountView(G, searched(G, ["x-1"]));
+    expect(idsWith(byProject.container, "dg-hit")).toEqual(["x-1"]);
+    cleanup();
+    const g = depGraphOf(
+      [
+        depGraphNode("elsewhere-9", 1, {
+          outside: true,
+          kind: "outside",
+          state: undefined,
+          open: false,
+          status: "done",
+        }),
+        depGraphNode("t-01", 2),
+      ],
+      [depGraphEdge("elsewhere-9", "t-01")],
+    );
+    const { container } = mountView(g, searched(g, ["elsewhere-9"]));
+    expect(idsWith(container, "dg-hit")).toEqual(["elsewhere-9"]);
+    expect(idsWith(container, "dg-dim")).toEqual(["t-01"]);
+    for (const c of cards(container)) expect(c.textContent).not.toContain("undefined");
+  });
+});
+
+describe("<DepGraph/> — small graphs", () => {
+  test("an empty graph renders an empty frame without throwing", () => {
+    const { container } = mountGraph(depGraphOf([], [], 0));
+    expect(container.querySelector(".dg")).not.toBeNull();
+    expect(cards(container)).toHaveLength(0);
+    expect(paths(container)).toHaveLength(0);
+    expect(container.querySelectorAll(".dg-colh")).toHaveLength(0);
+  });
+
+  test("a card with no edges dims every other card when hovered", () => {
+    const g = depGraphOf(
+      [depGraphNode("a", 1), depGraphNode("b", 1), depGraphNode("c", 2)],
+      [depGraphEdge("a", "c")],
+    );
+    const { container } = mountGraph(g);
+    fireEvent.mouseEnter(cardOf(container, "b"));
+    expect(cardOf(container, "b").classList.contains("dg-dim")).toBe(false);
+    expect(dimmed(container)).toEqual(["a", "c"]);
+    expect(paths(container).every((p) => p.classList.contains("dg-dim"))).toBe(true);
+  });
+
+  test("a long title stays whole in the DOM; the ellipsis is the CSS's job", () => {
+    const title = "very ".repeat(60).trim();
+    const { container } = mountGraph(depGraphOf([depGraphNode("t", 1, { title })], [], 1));
+    expect(cardOf(container, "t").querySelector(".dg-title")?.textContent).toBe(title);
+    expect(css).toMatch(/\.dg-title\s*\{[^}]*text-overflow:\s*ellipsis/);
+  });
+
+  test("the drift badge counts every open dep", () => {
+    const { container } = mountGraph(depGraphOf([depGraphNode("t", 1, { openDeps: 3 })], [], 1));
+    expect(cardOf(container, "t").textContent).toContain("⚠ 3 dep open");
+  });
+
+  test("manual and outside cards carry their dashed classes; closed is s-closed; rejected is ✕", () => {
+    const { container } = mountGraph(variants);
+    expect(idsWith(container, "dg-manual")).toEqual(["man"]);
+    expect(idsWith(container, "dg-outside")).toEqual(["out"]);
+    const done = cardOf(container, "done");
+    expect(done.classList.contains("s-closed")).toBe(true);
+    expect(done.querySelector(".dg-g")?.textContent).toBe(SECTION_GLYPH.closed);
+    expect(cardOf(container, "rej").querySelector(".dg-g")?.textContent).toBe("✕");
+  });
+
+  test("the drift badge reads ⚠ n dep open, only when openDeps > 0", () => {
+    const { container } = mountGraph(variants);
+    expect(cardOf(container, "drift").textContent).toContain("⚠ 1 dep open");
+    expect(cardOf(container, "plain").textContent).not.toContain("⚠");
+  });
+
+  test("a card with no state that is not closed is s-other with the other glyph", () => {
+    const { container } = mountGraph(variants);
+    const man = cardOf(container, "man");
+    expect(man.classList.contains("s-other")).toBe(true);
+    expect(man.querySelector(".dg-g")?.textContent).toBe(SECTION_GLYPH.other);
+  });
+
+  test("hovering lights exactly the lineage's edges, and nothing is lit at rest", () => {
+    const { container } = mount();
+    expect(container.querySelectorAll(".dg-on")).toHaveLength(0);
+    fireEvent.mouseEnter(cardOf(container, "cqc-be-04"));
+    const lineage = CQC_VIEW.lineages.get("cqc-be-04") ?? new Set<string>();
+    for (const p of paths(container)) {
+      const inside = lineage.has(endOf(p, 0)) && lineage.has(endOf(p, 1));
+      expect(p.classList.contains("dg-on")).toBe(inside);
+      expect(p.classList.contains("dg-dim")).toBe(!inside);
+    }
+    fireEvent.mouseLeave(cardOf(container, "cqc-be-04"));
+    expect(container.querySelectorAll(".dg-on")).toHaveLength(0);
+  });
+
+  test("a critical card outside the hovered lineage is dimmed but stays critical", () => {
+    const g = depGraphOf(
+      [depGraphNode("a", 1, { critical: true }), depGraphNode("b", 1, { critical: true })],
+      [],
+      1,
+    );
+    const { container } = mountGraph(g);
+    fireEvent.mouseEnter(cardOf(container, "a"));
+    const b = cardOf(container, "b");
+    expect(b.classList.contains("dg-dim")).toBe(true);
+    expect(b.classList.contains("dg-crit")).toBe(true);
+  });
+});
+
+describe("<DepGraph/> — class coverage of the entire, multi, laned, squares and search groups", () => {
+  test("every dg-* class they render has a rule", () => {
+    const multi = mountMulti();
+    const laned = render(
+      <DepGraph
+        graph={twoProjects}
+        layout={lanedLayout}
+        view={lanedView}
+        onSelect={() => {}}
+        multi={twoMulti}
+      />,
+    );
+    const squares = mountView(
+      twoProjects,
+      depGraphView(twoProjects),
+      { multi: twoMulti },
+      collapse(depGraphLayout(twoProjects), ["a-01"]),
+    );
+    const hit = mountView(SEARCH, searched(SEARCH, PRODUCT));
+    const dg = dgClasses(multi.container, laned.container, squares.container, hit.container);
+    for (const c of ["dg-stripe", "dg-cross", "dg-lane", "dg-band", "dg-sq", "dg-hit", "dg-sum"]) {
+      expect(dg).toContain(c);
+    }
+    expect(dg.filter((c) => !hasRule(c))).toEqual([]);
+  });
+});
+
+describe("<DepGraph/> — hardening: degenerate inputs", () => {
+  const G = depGraphOf(
+    [
+      depGraphNode("run-1", 1, { state: "running", status: "running" }),
+      depGraphNode("run-2", 2),
+      depGraphNode("x-1", 2, { project: "sabado" }),
+    ],
+    [depGraphEdge("run-1", "run-2"), depGraphEdge("run-1", "x-1")],
+  );
+
+  test("the entire view never reads done / outside, even for a wave 0 column", () => {
+    const g = depGraphOf(
+      [closedNode("z-0", 0), depGraphNode("z-1", 1)],
+      [depGraphEdge("z-0", "z-1")],
+      1,
+    );
+    const { container } = mountEntire(g);
+    expect(headsOf(container)).toEqual(["wave 0", "wave 1"]);
+    expect(container.textContent).not.toContain("done / outside");
+    expect(container.textContent).not.toContain("fires now");
+  });
+
+  test("with multi, a project with no colour entry has no stripe but keeps its name in .dg-st", () => {
+    const { container } = mountMulti({
+      multi: { projects: 2, colors: new Map([["beta", "proj-1"]]) },
+    });
+    expect(cardOf(container, "a-01").querySelector(".dg-stripe")).toBeNull();
+    expect(stOf(container, "a-01")?.startsWith("alpha · ")).toBe(true);
+    expect(cardOf(container, "b-01").querySelector(".dg-stripe")).not.toBeNull();
+  });
+
+  test("with multi, a node with no project has no stripe and no project prefix", () => {
+    const g = depGraphOf([depGraphNode("n-1", 1), depGraphNode("a-01", 1, { project: "alpha" })]);
+    const { container } = mountView(g, depGraphView(g), { multi: twoMulti });
+    expect(cardOf(container, "n-1").querySelector(".dg-stripe")).toBeNull();
+    expect(stOf(container, "n-1")).not.toContain("·");
+    expect(cardOf(container, "a-01").querySelector(".dg-stripe")).not.toBeNull();
+  });
+
+  test("an empty lanes array draws no lane", () => {
+    const { container } = mountView(
+      twoProjects,
+      lanedView,
+      { multi: twoMulti },
+      { ...lanedLayout, lanes: [] },
+    );
+    expect(container.querySelector(".dg-lane")).toBeNull();
+  });
+
+  test("a square whose reason is empty has no blocked suffix in its tooltip", () => {
+    const g = depGraphOf([
+      depGraphNode("s-1", 1, { project: "alpha", state: "blocked", status: "blocked", reason: "" }),
+    ]);
+    const { container } = mountView(
+      g,
+      depGraphView(g),
+      { multi: twoMulti },
+      collapse(depGraphLayout(g), ["s-1"]),
+    );
+    const title = cardOf(container, "s-1").getAttribute("title") ?? "";
+    expect(title).not.toContain("blocked:");
+    expect(title.split("\n")).toHaveLength(2);
+  });
+
+  test("a running square keeps its section class and draws no card furniture", () => {
+    const { container } = mountView(G, depGraphView(G), {}, collapse(depGraphLayout(G), ["run-1"]));
+    const sq = cardOf(container, "run-1");
+    expect(sq.classList.contains("s-running")).toBe(true);
+    expect(sq.querySelector(".dg-fx, .dg-top, .dg-title")).toBeNull();
+  });
+
+  test("hovering a lit square drops its dg-hit, and leaving restores it", () => {
+    const g = depGraphOf(
+      [depGraphNode("p-1", 1, { project: "alpha" }), depGraphNode("p-2", 2, { project: "alpha" })],
+      [depGraphEdge("p-1", "p-2")],
+    );
+    const { container } = mountView(
+      g,
+      searched(g, ["p-1"]),
+      { multi: twoMulti },
+      collapse(depGraphLayout(g), ["p-1", "p-2"]),
+    );
+    expect(idsWith(container, "dg-hit")).toEqual(["p-1"]);
+    fireEvent.mouseEnter(cardOf(container, "p-1"));
+    expect(container.querySelectorAll(".dg-hit")).toHaveLength(0);
+    fireEvent.mouseLeave(cardOf(container, "p-1"));
+    expect(idsWith(container, "dg-hit")).toEqual(["p-1"]);
+  });
+
+  test("hits naming ids that are not in the graph light and dim nothing extra", () => {
+    const { container } = mountView(G, searched(G, ["ghost", "run-1"]));
+    expect(idsWith(container, "dg-hit")).toEqual(["run-1"]);
+    expect(idsWith(container, "dg-dim")).toEqual(["run-2", "x-1"]);
+  });
+
+  test("when every node is a hit nothing is dimmed, not a node, an edge nor a dot", () => {
+    const { container } = mountView(G, searched(G, ["run-1", "run-2", "x-1"]));
+    expect(idsWith(container, "dg-hit")).toEqual(["run-1", "run-2", "x-1"]);
+    expect(container.querySelectorAll(".dg-dim")).toHaveLength(0);
+  });
+
+  test("hovering an id with no lineage entry leaves the search lighting in place", () => {
+    const { container } = mountView(G, searched(G, ["run-2"], { lineages: new Map() }));
+    fireEvent.mouseEnter(cardOf(container, "run-1"));
+    expect(idsWith(container, "dg-hit")).toEqual(["run-2"]);
+    expect(idsWith(container, "dg-dim")).toEqual(["run-1", "x-1"]);
+    expect(container.querySelectorAll(".dg-on")).toHaveLength(0);
+  });
+
+  test("flow dots follow the hovered lineage: lit on its edge, dimmed on the others", () => {
+    const { container } = mountView(G, depGraphView(G));
+    fireEvent.mouseEnter(cardOf(container, "run-2"));
+    const all = dots(container);
+    expect(all).toHaveLength(4);
+    expect(all.filter((d) => d.classList.contains("dg-on"))).toHaveLength(2);
+    expect(dimDots(container)).toHaveLength(2);
+    fireEvent.mouseLeave(cardOf(container, "run-2"));
+    expect(container.querySelectorAll("circle.dg-on, circle.dg-dim")).toHaveLength(0);
   });
 });
