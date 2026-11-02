@@ -77,7 +77,8 @@
 .dg-entire .dg-edge.dg-cross.dg-met:not(.dg-on):not(.dg-crit):not(.dg-dim) {
   stroke: color-mix(in srgb, var(--dim) 55%, transparent);
 }
-.dg-entire .dg-node.s-closed > * {
+.dg-entire .dg-node.s-closed > :not(.dg-top),
+.dg-entire .dg-node.s-closed .dg-top > :not(.dg-stag) {
   opacity: 0.9;
 }
 /* Cards stay OPAQUE so an edge passes behind them, never through them:
@@ -120,7 +121,8 @@
 .dg-node.s-closed {
   background: var(--panel);
 }
-.dg-node.s-closed > * {
+.dg-node.s-closed > :not(.dg-top),
+.dg-node.s-closed .dg-top > :not(.dg-stag) {
   opacity: 0.62;
 }
 .dg-node.dg-manual {

@@ -971,7 +971,10 @@ describe("<DepGraph/> — entire graph", () => {
     expect(css).toMatch(
       /\.dg-entire\s+\.dg-edge\.dg-met:not\(\.dg-on\):not\(\.dg-crit\)\s*\{[^}]*stroke:\s*var\(--dim\)/,
     );
-    expect(css).toMatch(/\.dg-entire\s+\.dg-node\.s-closed\s*>\s*\*\s*\{[^}]*opacity:\s*0?\.9\b/);
+    // The fade spares the status tag: every child but the top row, and the top row but the tag.
+    expect(css).toMatch(
+      /\.dg-entire \.dg-node\.s-closed > :not\(\.dg-top\),\s*\.dg-entire \.dg-node\.s-closed \.dg-top > :not\(\.dg-stag\)\s*\{[^}]*opacity:\s*0?\.9\b/,
+    );
   });
 
   test("headers are exactly wave 1..n, with no sub-line", () => {
@@ -1787,6 +1790,11 @@ describe("<DepGraph/> — status tags", () => {
     const multi: DepGraphMulti = { projects: 2, colors: new Map([["alpha", "proj-1"]]) };
     const { container } = mountStatus({ graph, multi });
     expect(cardOf(container, "st-ready").querySelector(".dg-st")?.textContent).toBe("alpha");
+  });
+
+  test("the closed-card fade spares the status tag, so DONE stays bright", () => {
+    expect(css).not.toMatch(/\.dg-node\.s-closed > \*/);
+    expect(css).toMatch(/\.dg-node\.s-closed \.dg-top > :not\(\.dg-stag\)/);
   });
 
   test("the tag CSS: token colours only, never shrinks; done wins the stripe; via is a warning", () => {
