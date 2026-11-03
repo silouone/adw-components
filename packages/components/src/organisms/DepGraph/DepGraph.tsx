@@ -109,6 +109,17 @@ export interface GraphLive {
   readonly held: ReadonlySet<string>;
 }
 
+/** The colour family of a card's status tag. */
+export type StatusTone =
+  | "done"
+  | "dropped"
+  | "blocked"
+  | "waiting"
+  | "ready"
+  | "running"
+  | "inflight"
+  | "queued";
+
 export interface DepGraphView {
   readonly live: GraphLive;
   readonly summary: readonly string[];
@@ -118,6 +129,11 @@ export interface DepGraphView {
   readonly bands: readonly string[];
   readonly nodeW: number;
   readonly statusText: ReadonlyMap<string, string>;
+  /**
+   * The status tag's word per tone. When set, every full card leads with a coloured tag and its
+   * grey label keeps the project only; when absent, cards read as before (status text, no tag).
+   */
+  readonly tagLabels?: Readonly<Record<StatusTone, string>> | undefined;
   /** Every node's ancestors and descendants, itself included. */
   readonly lineages: ReadonlyMap<string, ReadonlySet<string>>;
 }
@@ -147,6 +163,20 @@ export interface DepGraphProps {
 
 function sectionOf(n: BacklogGraphNode): SectionKey {
   return n.closed ? "closed" : (n.state ?? "other");
+}
+
+const OPEN_TONES: Readonly<Record<BacklogState, StatusTone>> = {
+  blocked: "blocked",
+  waiting: "waiting",
+  ready: "ready",
+  running: "running",
+  "in-flight": "inflight",
+};
+
+/** A card's tag tone: closed done / dropped, the open state's own tone, else queued. */
+export function statusTone(n: BacklogGraphNode): StatusTone {
+  if (n.closed) return n.status === "done" ? "done" : "dropped";
+  return n.state === undefined ? "queued" : OPEN_TONES[n.state];
 }
 
 function headerOf(
@@ -186,7 +216,7 @@ export function DepGraph({
   const lineage = hovered === undefined ? undefined : view.lineages.get(hovered);
   const nodesById = new Map(graph.nodes.map((n) => [n.id, n] as const));
   const edgesByKey = new Map(graph.edges.map((e) => [`${e.from}>${e.to}`, e] as const));
-  const { live, summary: parts, searching, hits } = view;
+  const { live, summary: parts, searching, hits, tagLabels: tags } = view;
   const litOf = (from: string, to: string): boolean =>
     lineage?.has(from) === true && lineage.has(to);
   const hit = (id: string): boolean => lineage === undefined && hits.has(id);
@@ -323,6 +353,7 @@ export function DepGraph({
                 "dg-node",
                 `s-${section}`,
                 n.kind === "manual" && "dg-manual",
+                n.closed && n.status === "done" && "dg-done",
                 n.outside && "dg-outside",
                 n.critical && "dg-crit",
                 n.id === focus && "dg-focus",
@@ -341,14 +372,19 @@ export function DepGraph({
               {fx && <i class="dg-fx" aria-hidden="true" />}
               <span class="dg-top">
                 <i class="dg-g">{n.status === "rejected" ? "✕" : SECTION_GLYPH[section]}</i>
+                {tags !== undefined && (
+                  <i class={`dg-stag dg-stag-${statusTone(n)}`}>{tags[statusTone(n)]}</i>
+                )}
                 <span class="dg-seq">{n.label}</span>
                 {n.priority === 1 && <i class="dg-p1">P1</i>}
                 {n.openDeps > 0 && <i class="dg-drift">⚠ {n.openDeps} dep open</i>}
                 {n.heldBy !== undefined && <i class="dg-via">⛔ via {n.heldBy}</i>}
                 <span class="dg-st">
-                  {multi !== undefined && n.project !== undefined
-                    ? `${n.project} · ${view.statusText.get(n.id) ?? ""}`
-                    : (view.statusText.get(n.id) ?? "")}
+                  {tags !== undefined
+                    ? (n.project ?? "")
+                    : multi !== undefined && n.project !== undefined
+                      ? `${n.project} · ${view.statusText.get(n.id) ?? ""}`
+                      : (view.statusText.get(n.id) ?? "")}
                 </span>
               </span>
               <span class="dg-title">{n.title}</span>

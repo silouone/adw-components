@@ -77,7 +77,8 @@
 .dg-entire .dg-edge.dg-cross.dg-met:not(.dg-on):not(.dg-crit):not(.dg-dim) {
   stroke: color-mix(in srgb, var(--dim) 55%, transparent);
 }
-.dg-entire .dg-node.s-closed > * {
+.dg-entire .dg-node.s-closed > :not(.dg-top),
+.dg-entire .dg-node.s-closed .dg-top > :not(.dg-stag) {
   opacity: 0.9;
 }
 /* Cards stay OPAQUE so an edge passes behind them, never through them:
@@ -120,7 +121,8 @@
 .dg-node.s-closed {
   background: var(--panel);
 }
-.dg-node.s-closed > * {
+.dg-node.s-closed > :not(.dg-top),
+.dg-node.s-closed .dg-top > :not(.dg-stag) {
   opacity: 0.62;
 }
 .dg-node.dg-manual {
@@ -179,6 +181,7 @@
   color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 .dg-p1,
 .dg-drift {
@@ -200,6 +203,9 @@
   margin-left: auto;
   color: var(--faint);
   font-size: var(--fs-xs);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .dg-band.even {
   background: var(--surface-lane-even);
@@ -318,7 +324,7 @@
 .dg-via {
   font-style: normal;
   font-size: var(--fs-xs);
-  color: var(--bad);
+  color: var(--warn);
   opacity: 0.85;
 }
 .dg-edge.dg-flow {
@@ -379,4 +385,66 @@
   to {
     stroke-dashoffset: -11;
   }
+}
+
+/* Status tags: one word per card, the card's state at a glance (done vs not done first). */
+.dg-stag {
+  flex-shrink: 0;
+  font-style: normal;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  padding: 0 var(--sp-6);
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+}
+.dg-stag-done {
+  background: var(--ok);
+  border-color: var(--ok);
+  color: var(--panel);
+}
+.dg-stag-blocked {
+  background: var(--bad);
+  border-color: var(--bad);
+  color: var(--ink);
+}
+.dg-stag-waiting {
+  background: var(--warn);
+  border-color: var(--warn);
+  color: var(--panel);
+}
+.dg-stag-queued {
+  background: var(--dim);
+  border-color: var(--dim);
+  color: var(--panel);
+}
+.dg-stag-running {
+  background: var(--live);
+  border-color: var(--live);
+  color: var(--panel);
+}
+.dg-stag-inflight {
+  border-color: var(--live);
+  color: var(--live);
+}
+.dg-stag-ready {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+.dg-stag-dropped {
+  border-color: var(--line);
+  color: var(--faint);
+  text-decoration: line-through;
+}
+/* A done card: status wins over the project stripe, and its words recede. */
+.dg-done > .dg-stripe {
+  background: var(--ok);
+}
+.dg-node.dg-done .dg-g {
+  color: var(--ok);
+}
+.dg-node.dg-done .dg-seq,
+.dg-node.dg-done .dg-title {
+  opacity: 0.55;
 }

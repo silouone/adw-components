@@ -1,5 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/preact-vite";
-import { CQC_GRAPH, CQC_LAYOUT, CQC_VIEW } from "../../../fixtures/DepGraph";
+import {
+  CQC_GRAPH,
+  CQC_LAYOUT,
+  CQC_VIEW,
+  STATUS_GRAPH,
+  STATUS_LAYOUT,
+  STATUS_VIEW,
+} from "../../../fixtures/DepGraph";
 import { DepGraph } from "./DepGraph";
 
 const meta = {
@@ -45,4 +52,9 @@ export const SearchHit: Story = {
       hits: new Set(["cqc-be-04"]),
     },
   },
+};
+
+/** Every status a card can read, each led by its tag: done vs not done at a glance. */
+export const StatusTags: Story = {
+  args: { graph: STATUS_GRAPH, layout: STATUS_LAYOUT, view: STATUS_VIEW },
 };

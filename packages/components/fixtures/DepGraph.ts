@@ -287,3 +287,48 @@ export const LIVE_VIEW: DepGraphView = depGraphView(LIVE_GRAPH, {
   summary: ["◌ 2 running", "✕ 1 blocked", "⛔ 4 held behind a block"],
   texts: { "g-04": "running · 12m", "g-05": "in flight · 3m" },
 });
+
+/** One card per status a card can read: closed done / dropped, the five open states, and queued. */
+export const STATUS_GRAPH: BacklogGraph = depGraphOf(
+  [
+    node("st-done", 0, {
+      label: "done",
+      status: "done",
+      state: undefined,
+      closed: true,
+      open: false,
+    }),
+    node("st-dropped", 0, {
+      label: "dropped",
+      status: "rejected",
+      state: undefined,
+      closed: true,
+      open: false,
+    }),
+    node("st-blocked", 1, { label: "blocked", status: "blocked", state: "blocked" }),
+    node("st-waiting", 1, { label: "waiting", state: "waiting", heldBy: "blocked" }),
+    node("st-ready", 1, { label: "ready", state: "ready" }),
+    node("st-running", 2, { label: "running", status: "in-progress", state: "running" }),
+    node("st-in-flight", 2, { label: "in-flight", status: "in-review", state: "in-flight" }),
+    node("st-queued", 2, { label: "queued", kind: "manual", state: undefined }),
+  ],
+  [edge("st-done", "st-ready", { met: true }), edge("st-blocked", "st-waiting")],
+);
+
+/** The words of the status tags; the component never spells a status itself. */
+export const STATUS_TAG_LABELS = {
+  done: "DONE",
+  dropped: "DROPPED",
+  blocked: "BLOCKED",
+  waiting: "WAITING",
+  ready: "READY",
+  running: "RUNNING",
+  inflight: "IN FLIGHT",
+  queued: "QUEUED",
+} as const;
+
+export const STATUS_LAYOUT: GraphLayout = depGraphLayout(STATUS_GRAPH);
+
+export const STATUS_VIEW: DepGraphView = depGraphView(STATUS_GRAPH, {
+  tagLabels: STATUS_TAG_LABELS,
+});

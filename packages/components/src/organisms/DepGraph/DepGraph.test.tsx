@@ -11,14 +11,18 @@ import {
   CQC_LAYOUT,
   CQC_LAYOUT_HIDING_DONE,
   CQC_VIEW,
-  LIVE_GRAPH,
-  LIVE_LAYOUT,
-  LIVE_VIEW,
   depGraphEdge,
   depGraphLayout,
   depGraphNode,
   depGraphOf,
   depGraphView,
+  LIVE_GRAPH,
+  LIVE_LAYOUT,
+  LIVE_VIEW,
+  STATUS_GRAPH,
+  STATUS_LAYOUT,
+  STATUS_TAG_LABELS,
+  STATUS_VIEW,
 } from "../../../fixtures/DepGraph";
 import { SECTION_GLYPH } from "../../glyphs";
 import {
@@ -28,6 +32,7 @@ import {
   type DepGraphProps,
   type DepGraphView,
   type GraphLayout,
+  statusTone,
 } from "./DepGraph";
 
 afterEach(cleanup);
@@ -966,7 +971,10 @@ describe("<DepGraph/> — entire graph", () => {
     expect(css).toMatch(
       /\.dg-entire\s+\.dg-edge\.dg-met:not\(\.dg-on\):not\(\.dg-crit\)\s*\{[^}]*stroke:\s*var\(--dim\)/,
     );
-    expect(css).toMatch(/\.dg-entire\s+\.dg-node\.s-closed\s*>\s*\*\s*\{[^}]*opacity:\s*0?\.9\b/);
+    // The fade spares the status tag: every child but the top row, and the top row but the tag.
+    expect(css).toMatch(
+      /\.dg-entire \.dg-node\.s-closed > :not\(\.dg-top\),\s*\.dg-entire \.dg-node\.s-closed \.dg-top > :not\(\.dg-stag\)\s*\{[^}]*opacity:\s*0?\.9\b/,
+    );
   });
 
   test("headers are exactly wave 1..n, with no sub-line", () => {
@@ -1722,5 +1730,84 @@ describe("<DepGraph/> — hardening: degenerate inputs", () => {
     expect(dimDots(container)).toHaveLength(2);
     fireEvent.mouseLeave(cardOf(container, "run-2"));
     expect(container.querySelectorAll("circle.dg-on, circle.dg-dim")).toHaveLength(0);
+  });
+});
+
+describe("<DepGraph/> — status tags", () => {
+  const TONES = {
+    "st-done": "done",
+    "st-dropped": "dropped",
+    "st-blocked": "blocked",
+    "st-waiting": "waiting",
+    "st-ready": "ready",
+    "st-running": "running",
+    "st-in-flight": "inflight",
+    "st-queued": "queued",
+  } as const;
+  const mountStatus = (over: Partial<DepGraphProps> = {}) =>
+    mount({ graph: STATUS_GRAPH, layout: STATUS_LAYOUT, view: STATUS_VIEW, ...over });
+
+  test("statusTone maps closed done / rejected, the five open states and the rest", () => {
+    for (const n of STATUS_GRAPH.nodes) {
+      expect(statusTone(n)).toBe(TONES[n.id as keyof typeof TONES]);
+    }
+  });
+
+  test("without view.tagLabels a card shows no tag and keeps its status text (unchanged markup)", () => {
+    const { container } = mountStatus({ view: { ...STATUS_VIEW, tagLabels: undefined } });
+    expect(container.querySelectorAll(".dg-stag")).toHaveLength(0);
+    expect(cardOf(container, "st-ready").querySelector(".dg-st")?.textContent).toBe("ready");
+  });
+
+  test("with view.tagLabels every full card shows one tag: the view's word, the tone's class", () => {
+    const { container } = mountStatus();
+    for (const [id, tone] of Object.entries(TONES)) {
+      const tags = cardOf(container, id).querySelectorAll(".dg-stag");
+      expect(tags).toHaveLength(1);
+      expect(tags[0]?.textContent).toBe(STATUS_TAG_LABELS[tone]);
+      expect(tags[0]?.classList.contains(`dg-stag-${tone}`)).toBe(true);
+    }
+  });
+
+  test("the tag sits right after the glyph, before the ticket id", () => {
+    const { container } = mountStatus();
+    const top = cardOf(container, "st-waiting").querySelector(".dg-top");
+    const kids = Array.from(top?.children ?? []).map((el) => el.className.split(" ")[0]);
+    expect(kids.slice(0, 3)).toEqual(["dg-g", "dg-stag", "dg-seq"]);
+  });
+
+  test("only a done card is dg-done; a dropped one and open ones are not", () => {
+    const { container } = mountStatus();
+    const done = cards(container).filter((c) => c.classList.contains("dg-done"));
+    expect(done.map((c) => c.dataset.id)).toEqual(["st-done"]);
+  });
+
+  test("with tags and several projects the grey label names the project only", () => {
+    const graph = {
+      ...STATUS_GRAPH,
+      nodes: STATUS_GRAPH.nodes.map((n) => ({ ...n, project: "alpha" })),
+    };
+    const multi: DepGraphMulti = { projects: 2, colors: new Map([["alpha", "proj-1"]]) };
+    const { container } = mountStatus({ graph, multi });
+    expect(cardOf(container, "st-ready").querySelector(".dg-st")?.textContent).toBe("alpha");
+  });
+
+  test("the closed-card fade spares the status tag, so DONE stays bright", () => {
+    expect(css).not.toMatch(/\.dg-node\.s-closed > \*/);
+    expect(css).toMatch(/\.dg-node\.s-closed \.dg-top > :not\(\.dg-stag\)/);
+  });
+
+  test("the tag CSS: token colours only, never shrinks; done wins the stripe; via is a warning", () => {
+    expect(css).toMatch(/\.dg-stag\s*\{[^}]*flex-shrink:\s*0/);
+    const tone = (t: string) => new RegExp(`\\.dg-stag-${t}\\s*\\{([^}]*)\\}`).exec(css)?.[1] ?? "";
+    expect(tone("done")).toContain("var(--ok)");
+    expect(tone("blocked")).toContain("var(--bad)");
+    expect(tone("waiting")).toContain("var(--warn)");
+    expect(tone("queued")).toContain("var(--dim)");
+    expect(tone("inflight")).toContain("var(--live)");
+    expect(tone("ready")).toContain("var(--ok)");
+    expect(css).toMatch(/\.dg-done > \.dg-stripe\s*\{[^}]*var\(--ok\)/);
+    expect(/\.dg-via\s*\{([^}]*)\}/.exec(css)?.[1]).toContain("var(--warn)");
+    expect(css).toMatch(/\.dg-seq\s*\{[^}]*flex-shrink:\s*0/);
   });
 });
